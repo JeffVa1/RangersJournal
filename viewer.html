@@ -6,7 +6,7 @@
   <title>Book Viewer</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body class="viewer-page">
   <header class="viewer-header">
     <a class="back-link" href="index.html">← Library</a>
     <div class="viewer-title">
@@ -15,6 +15,14 @@
     </div>
     <div class="viewer-controls">
       <button id="mode-toggle" class="control-button" type="button">Double Page</button>
+      <button
+        id="magnify-toggle"
+        class="control-button magnify-button"
+        type="button"
+        aria-pressed="false"
+      >
+        🔍 Magnify
+      </button>
     </div>
   </header>
 

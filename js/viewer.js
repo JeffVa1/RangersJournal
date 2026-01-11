@@ -4,12 +4,15 @@ const pageContainer = document.getElementById("page-container");
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const modeToggle = document.getElementById("mode-toggle");
+const magnifyToggle = document.getElementById("magnify-toggle");
 
 const mediaQuery = window.matchMedia("(max-width: 720px)");
 
 let pages = [];
 let currentIndex = 0;
 let isDoublePage = false;
+let isMagnifyEnabled = false;
+const magnification = 2;
 
 const getBookId = () => {
   const params = new URLSearchParams(window.location.search);
@@ -41,9 +44,63 @@ const createPageImage = (src, alt) => {
   return img;
 };
 
+const updateMagnifierState = () => {
+  pageContainer.classList.toggle("magnifier-active", isMagnifyEnabled);
+  magnifyToggle.setAttribute("aria-pressed", String(isMagnifyEnabled));
+};
+
+const handleMagnifierMove = (event, img, lens) => {
+  if (!isMagnifyEnabled) {
+    return;
+  }
+
+  const rect = img.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+    lens.style.opacity = "0";
+    return;
+  }
+
+  const lensWidth = lens.offsetWidth;
+  const lensHeight = lens.offsetHeight;
+
+  lens.style.left = `${x}px`;
+  lens.style.top = `${y}px`;
+  lens.style.backgroundImage = `url('${img.src}')`;
+  lens.style.backgroundSize = `${rect.width * magnification}px ${
+    rect.height * magnification
+  }px`;
+  lens.style.backgroundPosition = `${-(x * magnification - lensWidth / 2)}px ${
+    -(y * magnification - lensHeight / 2)
+  }px`;
+  lens.style.opacity = "1";
+};
+
+const createPageFrame = (src, alt) => {
+  const frame = document.createElement("div");
+  frame.className = "page-frame";
+  const img = createPageImage(src, alt);
+  const lens = document.createElement("div");
+  lens.className = "magnifier-lens";
+  lens.setAttribute("aria-hidden", "true");
+
+  frame.addEventListener("mousemove", (event) =>
+    handleMagnifierMove(event, img, lens)
+  );
+  frame.addEventListener("mouseleave", () => {
+    lens.style.opacity = "0";
+  });
+
+  frame.append(img, lens);
+  return frame;
+};
+
 const renderPages = () => {
   pageContainer.innerHTML = "";
   pageContainer.className = `page-container ${isDoublePage ? "double" : "single"}`;
+  updateMagnifierState();
 
   if (!pages.length) {
     return;
@@ -54,17 +111,17 @@ const renderPages = () => {
     const rightSrc = pages[currentIndex + 1];
 
     pageContainer.appendChild(
-      createPageImage(leftSrc, `Page ${currentIndex + 1}`)
+      createPageFrame(leftSrc, `Page ${currentIndex + 1}`)
     );
 
     if (rightSrc) {
       pageContainer.appendChild(
-        createPageImage(rightSrc, `Page ${currentIndex + 2}`)
+        createPageFrame(rightSrc, `Page ${currentIndex + 2}`)
       );
     }
   } else {
     const src = pages[currentIndex];
-    pageContainer.appendChild(createPageImage(src, `Page ${currentIndex + 1}`));
+    pageContainer.appendChild(createPageFrame(src, `Page ${currentIndex + 1}`));
   }
 
   updateIndicator();
@@ -146,6 +203,11 @@ const handleResize = () => {
   }
 };
 
+const toggleMagnify = () => {
+  isMagnifyEnabled = !isMagnifyEnabled;
+  updateMagnifierState();
+};
+
 const handleKey = (event) => {
   if (event.key === "ArrowRight") {
     goNext();
@@ -200,6 +262,7 @@ const loadBook = () => {
 prevButton.addEventListener("click", goPrev);
 nextButton.addEventListener("click", goNext);
 modeToggle.addEventListener("click", toggleMode);
+magnifyToggle.addEventListener("click", toggleMagnify);
 window.addEventListener("keydown", handleKey);
 mediaQuery.addEventListener("change", handleResize);
 
