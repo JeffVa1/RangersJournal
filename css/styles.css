@@ -153,11 +153,12 @@ body {
   width: 100%;
   max-width: 84%;
   max-height: 76vh;
+  background: transparent;
 }
 
 .page-container.double .page-image {
-  max-width: 94%;
-  max-height: 84vh;
+  max-width: 96%;
+  max-height: 86vh;
 }
 
 .viewer-nav {
