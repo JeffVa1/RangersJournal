@@ -12,7 +12,7 @@ let pages = [];
 let currentIndex = 0;
 let isDoublePage = false;
 let isMagnifyEnabled = false;
-const magnification = 2;
+const magnification = 1.25;
 
 const getBookId = () => {
   const params = new URLSearchParams(window.location.search);
