@@ -157,8 +157,12 @@ body {
 }
 
 .page-container.double .page-image {
-  max-width: 96%;
-  max-height: 86vh;
+  max-width: 97%;
+  max-height: 88vh;
+}
+
+.page-container.single .page-frame {
+  background: transparent;
 }
 
 .viewer-nav {
