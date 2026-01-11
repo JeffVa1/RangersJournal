@@ -242,11 +242,78 @@ body {
 }
 
 @media (max-width: 720px) {
+  .library-page,
+  .viewer-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .site-header,
+  .viewer-header {
+    padding: 1.5rem 6vw 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .library {
+    padding: 0.5rem 6vw 2rem;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .book-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .book-cover {
+    width: 110px;
+    flex-shrink: 0;
+  }
+
+  .viewer-header {
+    gap: 1rem;
+  }
+
+  .viewer-controls {
+    width: 100%;
+  }
+
+  .viewer-controls .control-button {
+    flex: 1 1 auto;
+  }
+
+  .viewer {
+    padding: 0.5rem 6vw 1rem;
+  }
+
+  .page-container {
+    width: 100%;
+  }
+
+  .page-image {
+    max-width: 100%;
+    max-height: 70vh;
+  }
+
   .viewer-header {
     align-items: flex-start;
   }
 
   .page-container.double {
     grid-template-columns: 1fr;
+  }
+
+  .viewer-nav {
+    padding: 0.75rem 6vw 1.5rem;
+    position: static;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .viewer-nav .control-button {
+    width: 100%;
   }
 }
