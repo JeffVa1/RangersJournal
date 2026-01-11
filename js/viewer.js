@@ -13,6 +13,14 @@ let currentIndex = 0;
 let isDoublePage = false;
 let isMagnifyEnabled = false;
 const magnification = 1.25;
+const singlePageCovers = new Set(["cover.png", "end-cover.png"]);
+
+const isCoverPage = (index) => {
+  const src = pages[index] || "";
+  return singlePageCovers.has(src.split("/").pop());
+};
+
+const isSinglePageInDoubleMode = (index) => isCoverPage(index);
 
 const getBookId = () => {
   const params = new URLSearchParams(window.location.search);
@@ -106,7 +114,7 @@ const renderPages = () => {
     return;
   }
 
-  if (isDoublePage) {
+  if (isDoublePage && !isSinglePageInDoubleMode(currentIndex)) {
     const leftSrc = pages[currentIndex];
     const rightSrc = pages[currentIndex + 1];
 
@@ -132,7 +140,7 @@ const renderPages = () => {
 const updateButtons = () => {
   if (isDoublePage) {
     prevButton.disabled = currentIndex <= 0;
-    nextButton.disabled = currentIndex >= pages.length - 2;
+    nextButton.disabled = currentIndex >= pages.length - 1;
   } else {
     prevButton.disabled = currentIndex <= 0;
     nextButton.disabled = currentIndex >= pages.length - 1;
@@ -164,7 +172,13 @@ const preloadAdjacent = () => {
 
 const goNext = () => {
   if (isDoublePage) {
-    currentIndex = clampIndex(currentIndex + 2);
+    if (currentIndex === 0) {
+      currentIndex = clampIndex(1);
+    } else if (currentIndex >= pages.length - 2) {
+      currentIndex = clampIndex(pages.length - 1);
+    } else {
+      currentIndex = clampIndex(currentIndex + 2);
+    }
   } else {
     currentIndex = clampIndex(currentIndex + 1);
   }
@@ -173,7 +187,13 @@ const goNext = () => {
 
 const goPrev = () => {
   if (isDoublePage) {
-    currentIndex = clampIndex(currentIndex - 2);
+    if (currentIndex <= 1) {
+      currentIndex = clampIndex(0);
+    } else if (currentIndex === pages.length - 1) {
+      currentIndex = clampIndex(pages.length - 3);
+    } else {
+      currentIndex = clampIndex(currentIndex - 2);
+    }
   } else {
     currentIndex = clampIndex(currentIndex - 1);
   }
@@ -183,7 +203,13 @@ const goPrev = () => {
 const toggleMode = () => {
   isDoublePage = !isDoublePage;
   if (isDoublePage) {
-    currentIndex = currentIndex % 2 === 0 ? currentIndex : currentIndex - 1;
+    if (isCoverPage(pages.length - 1) && currentIndex >= pages.length - 2) {
+      currentIndex = clampIndex(pages.length - 3);
+    } else if (currentIndex === pages.length - 1) {
+      currentIndex = clampIndex(pages.length - 2);
+    } else if (currentIndex !== 0 && currentIndex % 2 !== 0) {
+      currentIndex = currentIndex - 1;
+    }
     modeToggle.textContent = "Single Page";
   } else {
     modeToggle.textContent = "Double Page";
