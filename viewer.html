@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book Viewer</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="viewer-page">
+  <header class="viewer-header">
+    <a class="back-link" href="index.html">← Library</a>
+    <div class="viewer-title">
+      <h1 id="book-title">Loading…</h1>
+      <p id="page-indicator" class="page-indicator"></p>
+    </div>
+    <div class="viewer-controls">
+      <button id="mode-toggle" class="control-button" type="button">Double Page</button>
+      <button
+        id="magnify-toggle"
+        class="control-button magnify-button"
+        type="button"
+        aria-pressed="false"
+      >
+        🔍 Magnify
+      </button>
+    </div>
+  </header>
+
+  <main class="viewer" id="viewer">
+    <div class="page-container" id="page-container" aria-live="polite"></div>
+  </main>
+
+  <footer class="viewer-nav">
+    <button id="prev-button" class="control-button" type="button">Previous</button>
+    <button id="next-button" class="control-button" type="button">Next</button>
+  </footer>
+
+  <script src="js/viewer.js"></script>
+</body>
+</html>
