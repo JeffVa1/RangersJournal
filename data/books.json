@@ -5,7 +5,7 @@
     "cover": "assets/books/book1/pages/cover.png",
     "spine": "assets/books/book1/pages/spine.png",
     "manifest": "assets/books/book1/manifest.json",
-    "color": "#d8a856"
+    "color": "#d60000"
   },
   {
     "id": "book2",
@@ -13,6 +13,6 @@
     "cover": "assets/books/book2/pages/cover.png",
     "spine": "assets/books/book2/pages/spine.png",
     "manifest": "assets/books/book2/manifest.json",
-    "color": "#7c8cff"
+    "color": "#9900d1"
   }
 ]
