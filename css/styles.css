@@ -75,7 +75,7 @@ body {
 .book-card:hover,
 .book-card:focus-visible {
   transform: translateY(-4px);
-  transform: scale(1.5%);
+  transform: scale(1.5);
 }
 
 .book-cover {
