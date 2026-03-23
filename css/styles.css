@@ -61,22 +61,21 @@ body {
 }
 
 .book-card {
-  background: var(--panel);
   border-radius: 12px;
   padding: 0.85rem;
-  box-shadow: 0 12px 25px rgba(25, 24, 23, 0.08);
   text-decoration: none;
+  text-align: center;
   color: inherit;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .book-card:hover,
 .book-card:focus-visible {
   transform: translateY(-4px);
-  box-shadow: 0 16px 30px rgba(25, 24, 23, 0.12);
+  transform: scale(1.5%);
 }
 
 .book-cover {
