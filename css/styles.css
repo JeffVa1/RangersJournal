@@ -150,15 +150,15 @@ textarea {
   grid-column: 3 / 4;
   justify-self: center;
   align-self: center;
-  width: min(100%, 24rem);
+  width: min(100%, 28rem);
   padding: calc(1rem + var(--library-hover-safe-space, 0rem)) 0;
   margin-top: calc(-1 * var(--library-hover-safe-space, 0rem));
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  align-items: center;
-  align-content: center;
-  gap: 2.25rem 1.75rem;
+  align-items: flex-end;
+  align-content: flex-end;
+  gap: 0.75rem;
   overflow: visible;
   min-height: 0;
 }
@@ -167,13 +167,14 @@ textarea {
   text-decoration: none;
   color: inherit;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   text-align: center;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 0;
   width: max-content;
-  max-width: min(100%, 24rem);
-  transform-origin: top center;
+  max-width: none;
+  transform-origin: bottom center;
   transition: transform 0.2s ease;
 }
 
@@ -185,8 +186,8 @@ textarea {
 .book img {
   display: block;
   width: auto;
-  height: clamp(220px, 34vw, 360px);
-  max-width: min(72vw, 320px);
+  height: clamp(260px, 42vw, 460px);
+  max-width: min(18vw, 90px);
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -425,9 +426,11 @@ textarea {
   .library {
     padding: calc(0.5rem + var(--library-hover-safe-space, 0rem)) 6vw 2rem;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 0.75rem;
     width: 100%;
     overflow: visible;
+    flex-wrap: nowrap;
+    align-items: flex-end;
   }
 
   .book {
@@ -435,8 +438,8 @@ textarea {
   }
 
   .book img {
-    height: clamp(180px, 58vw, 320px);
-    max-width: min(82vw, 320px);
+    height: clamp(220px, 56vw, 320px);
+    max-width: min(20vw, 72px);
   }
 
   .page-intro {

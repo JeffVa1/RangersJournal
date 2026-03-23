@@ -31,14 +31,14 @@ const setSubtitle = (text) => {
   }, 140);
 };
 
-const createBookCard = ({ id, title, cover, color }) => {
+const createBookCard = ({ id, title, spine, color }) => {
   const card = document.createElement("a");
   card.className = "book";
   card.href = `preview.html?book=${encodeURIComponent(id)}`;
 
   const img = document.createElement("img");
-  img.src = cover;
-  img.alt = `${title} cover`;
+  img.src = spine;
+  img.alt = `${title} spine`;
   img.loading = "lazy";
 
   card.append(img);
