@@ -151,10 +151,6 @@ body {
 .page-image {
   width: 100%;
   height: auto;
-  background: var(--panel);
-  border-radius: 8px;
-  box-shadow: 0 20px 35px rgba(25, 24, 23, 0.12);
-  border: 1px solid var(--border);
   max-height: 78vh;
   max-width: 88%;
   object-fit: contain;
@@ -309,10 +305,7 @@ body {
     width: 100%;
   }
 
-  .page-image {
-    max-width: 100%;
-    max-height: 70vh;
-  }
+
 
   .viewer-header {
     align-items: flex-start;
