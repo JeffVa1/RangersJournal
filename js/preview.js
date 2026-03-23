@@ -1,3 +1,5 @@
+import { getBookId, loadBook, loadText } from "./book-data.js";
+
 const previewTitleEl = document.getElementById("preview-book-title");
 const previewLinkEl = document.getElementById("preview-book-link");
 const previewCoverEl = document.getElementById("preview-book-cover");
@@ -8,11 +10,6 @@ const placeholderSummary = [
   "This area is intentionally long enough to test scrolling behavior, panel spacing, and readability over the translucent treatment. Once your real summaries are ready, this block can be replaced with book-specific text without changing the layout.",
   "Use this section later for teaser copy, setting context, content warnings, character notes, or links into companion material. Clicking the cover on the left should remain the direct path into the reading experience."
 ];
-
-const getBookId = () => {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("book");
-};
 
 const getSynopsisPath = (book) => {
   if (typeof book.manifest === "string" && book.manifest.includes("/")) {
@@ -47,83 +44,70 @@ const parseSynopsis = (text) => {
     .filter(Boolean);
 };
 
-const renderSummary = (paragraphs) => {
-  const summary = Array.isArray(paragraphs) && paragraphs.length
-    ? paragraphs
-    : placeholderSummary;
-
-  previewSummaryEl.innerHTML = "";
-  summary.forEach((paragraph) => {
-    const text = document.createElement("p");
-    text.textContent = paragraph;
-    previewSummaryEl.appendChild(text);
-  });
+const createParagraph = (content) => {
+  const paragraph = document.createElement("p");
+  paragraph.textContent = content;
+  return paragraph;
 };
 
-const loadSynopsis = (book) =>
-  fetch(getSynopsisPath(book))
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Unable to load synopsis");
-      }
+const renderSummary = (paragraphs) => {
+  const summary =
+    Array.isArray(paragraphs) && paragraphs.length
+      ? paragraphs
+      : placeholderSummary;
 
-      return response.text();
-    })
-    .then((text) => parseSynopsis(text))
-    .catch(() => placeholderSummary);
+  previewSummaryEl.replaceChildren(...summary.map(createParagraph));
+};
 
-const showPreview = (book) => {
+const loadSynopsis = async (book) => {
+  try {
+    const text = await loadText(getSynopsisPath(book), "Unable to load synopsis");
+    return parseSynopsis(text);
+  } catch {
+    return placeholderSummary;
+  }
+};
+
+const showPreview = async (book) => {
   const viewerHref = `viewer.html?book=${encodeURIComponent(book.id)}`;
   document.title = `${book.title} Preview`;
   previewTitleEl.textContent = book.title;
   previewLinkEl.href = viewerHref;
+  previewLinkEl.removeAttribute("aria-disabled");
+  previewLinkEl.removeAttribute("tabindex");
   previewCoverEl.src = book.cover;
   previewCoverEl.alt = `${book.title} cover`;
   renderSummary(placeholderSummary);
 
-  loadSynopsis(book).then((paragraphs) => {
-    renderSummary(paragraphs);
-  });
+  renderSummary(await loadSynopsis(book));
 };
 
-const showError = (message) => {
-  previewTitleEl.textContent = message;
+const showError = (
+  title,
+  body = "The selected book preview is unavailable right now."
+) => {
+  document.title = title;
+  previewTitleEl.textContent = title;
   previewLinkEl.setAttribute("aria-disabled", "true");
   previewLinkEl.removeAttribute("href");
+  previewLinkEl.tabIndex = -1;
   previewCoverEl.removeAttribute("src");
   previewCoverEl.alt = "";
-  previewSummaryEl.innerHTML = "";
-
-  const text = document.createElement("p");
-  text.textContent = "The selected book preview is unavailable right now.";
-  previewSummaryEl.appendChild(text);
+  previewSummaryEl.replaceChildren(createParagraph(body));
 };
 
-const bookId = getBookId();
+const init = async () => {
+  const bookId = getBookId();
+  if (!bookId) {
+    showError("Book not found", "Choose a book from the library to see its preview.");
+    return;
+  }
 
-if (!bookId) {
-  showError("Book not found");
-} else {
-  fetch("data/books.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Unable to load library");
-      }
+  try {
+    await showPreview(await loadBook(bookId));
+  } catch {
+    showError("Book unavailable");
+  }
+};
 
-      return response.json();
-    })
-    .then((books) => {
-      const book = Array.isArray(books)
-        ? books.find((item) => item.id === bookId)
-        : null;
-
-      if (!book) {
-        throw new Error("Book not found");
-      }
-
-      showPreview(book);
-    })
-    .catch(() => {
-      showError("Book unavailable");
-    });
-}
+init();

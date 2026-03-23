@@ -1,11 +1,9 @@
 :root {
   color-scheme: light;
   --bg: linear-gradient(160deg, #000714, #592f6f);
-  --panel: #ffffff;
   --text: white;
   --muted: #a4a4a4;
   --accent: #3e4c59;
-  --border: #e3dfda;
 }
 
 * {
@@ -32,7 +30,7 @@ body {
 }
 
 .site-brand,
-.viewer-title {
+.page-title {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -45,7 +43,7 @@ body {
   width: 100%;
 }
 
-.viewer-title {
+.page-title {
   align-items: center;
   text-align: center;
 }
@@ -120,8 +118,8 @@ body {
 
 .loading {
   color: var(--muted);
-  justify-content: center;
   display: flex;
+  justify-content: center;
   width: 100%;
 }
 
@@ -250,6 +248,12 @@ body {
   object-fit: contain;
 }
 
+.page-status {
+  align-self: center;
+  max-width: 28rem;
+  text-align: center;
+}
+
 .page-nav-hit-area {
   position: absolute;
   top: 0;
@@ -289,6 +293,11 @@ body {
   color: var(--muted);
   text-decoration: none;
   font-size: 0.95rem;
+}
+
+.preview-book-link[aria-disabled="true"] {
+  cursor: default;
+  pointer-events: none;
 }
 
 .page-indicator {

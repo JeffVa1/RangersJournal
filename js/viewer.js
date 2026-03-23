@@ -1,26 +1,23 @@
+import { getBookId, loadBook, loadManifest } from "./book-data.js";
+
 const titleEl = document.getElementById("book-title");
 const indicatorEl = document.getElementById("page-indicator");
 const pageContainer = document.getElementById("page-container");
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 
-let pages = [];
-let currentIndex = 0;
-
-const getBookId = () => {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("book");
+const state = {
+  currentIndex: 0,
+  pages: []
 };
 
-const clampIndex = (index) => Math.max(0, Math.min(index, pages.length - 1));
+const clampIndex = (index) =>
+  Math.max(0, Math.min(index, state.pages.length - 1));
 
 const updateIndicator = () => {
-  if (!pages.length) {
-    indicatorEl.textContent = "";
-    return;
-  }
-
-  indicatorEl.textContent = `Page ${currentIndex + 1} of ${pages.length}`;
+  indicatorEl.textContent = state.pages.length
+    ? `Page ${state.currentIndex + 1} of ${state.pages.length}`
+    : "";
 };
 
 const createPageImage = (src, alt) => {
@@ -39,111 +36,119 @@ const createPageFrame = (src, alt) => {
   return frame;
 };
 
+const createStatusMessage = (message) => {
+  const status = document.createElement("p");
+  status.className = "loading page-status";
+  status.textContent = message;
+  return status;
+};
+
 const updateButtons = () => {
-  prevButton.disabled = currentIndex <= 0;
-  nextButton.disabled = currentIndex >= pages.length - 1;
+  const hasPages = state.pages.length > 0;
+  prevButton.disabled = !hasPages || state.currentIndex === 0;
+  nextButton.disabled =
+    !hasPages || state.currentIndex === state.pages.length - 1;
 };
 
 const preloadImage = (index) => {
-  if (index < 0 || index >= pages.length) {
+  if (index < 0 || index >= state.pages.length) {
     return;
   }
 
   const img = new Image();
-  img.src = pages[index];
+  img.src = state.pages[index];
 };
 
 const preloadAdjacent = () => {
-  if (!pages.length) {
+  if (!state.pages.length) {
     return;
   }
 
-  preloadImage(currentIndex - 1);
-  preloadImage(currentIndex + 1);
+  preloadImage(state.currentIndex - 1);
+  preloadImage(state.currentIndex + 1);
 };
 
-const renderPages = () => {
-  pageContainer.innerHTML = "";
-  pageContainer.className = "page-container";
-
-  if (!pages.length) {
+const renderPage = () => {
+  if (!state.pages.length) {
+    pageContainer.replaceChildren(
+      createStatusMessage("No pages are available for this book yet.")
+    );
+    updateIndicator();
+    updateButtons();
     return;
   }
 
-  const src = pages[currentIndex];
-  pageContainer.appendChild(createPageFrame(src, `Page ${currentIndex + 1}`));
-
+  const src = state.pages[state.currentIndex];
+  const alt = `${titleEl.textContent} page ${state.currentIndex + 1}`;
+  pageContainer.replaceChildren(createPageFrame(src, alt));
   updateIndicator();
   updateButtons();
   preloadAdjacent();
 };
 
-const goNext = () => {
-  currentIndex = clampIndex(currentIndex + 1);
-  renderPages();
-};
-
-const goPrev = () => {
-  currentIndex = clampIndex(currentIndex - 1);
-  renderPages();
-};
-
-const handleKey = (event) => {
-  if (event.key === "ArrowRight") {
-    goNext();
-  } else if (event.key === "ArrowLeft") {
-    goPrev();
-  }
-};
-
-const loadManifest = (manifestPath) =>
-  fetch(manifestPath)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Unable to load manifest");
-      }
-
-      return response.json();
-    })
-    .then((manifest) => {
-      titleEl.textContent = manifest.title || "Untitled";
-      pages = Array.isArray(manifest.pages) ? manifest.pages : [];
-      currentIndex = 0;
-      renderPages();
-    });
-
-const loadBook = () => {
-  const bookId = getBookId();
-  if (!bookId) {
-    titleEl.textContent = "Book not found";
+const navigateTo = (nextIndex) => {
+  if (!state.pages.length) {
     return;
   }
 
-  fetch("data/books.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Unable to load library");
-      }
+  const clampedIndex = clampIndex(nextIndex);
+  if (clampedIndex === state.currentIndex) {
+    return;
+  }
 
-      return response.json();
-    })
-    .then((books) => {
-      const book = books.find((item) => item.id === bookId);
-      if (!book) {
-        throw new Error("Book not found");
-      }
-
-      return loadManifest(book.manifest);
-    })
-    .catch(() => {
-      titleEl.textContent = "Book unavailable";
-      indicatorEl.textContent = "";
-      pageContainer.innerHTML = "";
-    });
+  state.currentIndex = clampedIndex;
+  renderPage();
 };
 
-prevButton.addEventListener("click", goPrev);
-nextButton.addEventListener("click", goNext);
+const handleKey = (event) => {
+  if (
+    event.defaultPrevented ||
+    event.altKey ||
+    event.ctrlKey ||
+    event.metaKey
+  ) {
+    return;
+  }
+
+  if (event.key === "ArrowRight") {
+    navigateTo(state.currentIndex + 1);
+  } else if (event.key === "ArrowLeft") {
+    navigateTo(state.currentIndex - 1);
+  }
+};
+
+const showError = (title, message) => {
+  document.title = title;
+  titleEl.textContent = title;
+  state.pages = [];
+  state.currentIndex = 0;
+  pageContainer.replaceChildren(createStatusMessage(message));
+  updateIndicator();
+  updateButtons();
+};
+
+const init = async () => {
+  const bookId = getBookId();
+  if (!bookId) {
+    showError("Book not found", "Choose a book from the library to start reading.");
+    return;
+  }
+
+  try {
+    const book = await loadBook(bookId);
+    const manifest = await loadManifest(book.manifest);
+    document.title = manifest.title;
+    titleEl.textContent = manifest.title;
+    state.pages = manifest.pages;
+    state.currentIndex = 0;
+    renderPage();
+  } catch {
+    showError("Book unavailable", "The selected book could not be loaded.");
+  }
+};
+
+prevButton.addEventListener("click", () => navigateTo(state.currentIndex - 1));
+nextButton.addEventListener("click", () => navigateTo(state.currentIndex + 1));
 window.addEventListener("keydown", handleKey);
 
-loadBook();
+init();
