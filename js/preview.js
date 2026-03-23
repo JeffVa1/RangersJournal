@@ -14,9 +14,42 @@ const getBookId = () => {
   return params.get("book");
 };
 
-const renderSummary = (book) => {
-  const summary = Array.isArray(book.summary) && book.summary.length
-    ? book.summary
+const getSynopsisPath = (book) => {
+  if (typeof book.manifest === "string" && book.manifest.includes("/")) {
+    return book.manifest.replace(/[^/]+$/, "synopsis.txt");
+  }
+
+  if (typeof book.cover === "string") {
+    return book.cover.replace(/\/pages\/[^/]+$/, "/synopsis.txt");
+  }
+
+  return `assets/books/${book.id}/synopsis.txt`;
+};
+
+const parseSynopsis = (text) => {
+  const normalized = text.trim();
+  if (!normalized) {
+    return [];
+  }
+
+  const paragraphs = normalized
+    .split(/\r?\n\s*\r?\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+
+  if (paragraphs.length > 1) {
+    return paragraphs;
+  }
+
+  return normalized
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+};
+
+const renderSummary = (paragraphs) => {
+  const summary = Array.isArray(paragraphs) && paragraphs.length
+    ? paragraphs
     : placeholderSummary;
 
   previewSummaryEl.innerHTML = "";
@@ -27,6 +60,18 @@ const renderSummary = (book) => {
   });
 };
 
+const loadSynopsis = (book) =>
+  fetch(getSynopsisPath(book))
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Unable to load synopsis");
+      }
+
+      return response.text();
+    })
+    .then((text) => parseSynopsis(text))
+    .catch(() => placeholderSummary);
+
 const showPreview = (book) => {
   const viewerHref = `viewer.html?book=${encodeURIComponent(book.id)}`;
   document.title = `${book.title} Preview`;
@@ -34,7 +79,11 @@ const showPreview = (book) => {
   previewLinkEl.href = viewerHref;
   previewCoverEl.src = book.cover;
   previewCoverEl.alt = `${book.title} cover`;
-  renderSummary(book);
+  renderSummary(placeholderSummary);
+
+  loadSynopsis(book).then((paragraphs) => {
+    renderSummary(paragraphs);
+  });
 };
 
 const showError = (message) => {
@@ -44,6 +93,7 @@ const showError = (message) => {
   previewCoverEl.removeAttribute("src");
   previewCoverEl.alt = "";
   previewSummaryEl.innerHTML = "";
+
   const text = document.createElement("p");
   text.textContent = "The selected book preview is unavailable right now.";
   previewSummaryEl.appendChild(text);
