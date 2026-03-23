@@ -100,7 +100,7 @@
   mix-blend-mode: screen;
   filter: drop-shadow(0 0 0.5rem var(--magical-glow-color)) blur(0.22rem);
   transform: translateX(-28%) rotate(-11deg) scale(0.92);
-  animation: magicalGlowSweep 2.2s linear infinite paused;
+  animation: magicalGlowSweep 2.8s ease-in-out infinite alternate paused;
 }
 
 .magical-hover-glow:is(:hover, :focus-visible) .magical-hover-glow__layer {
@@ -123,15 +123,11 @@
 
 @keyframes magicalGlowSweep {
   0% {
-    transform: translateX(-32%) rotate(-12deg) scale(0.9);
-  }
-
-  50% {
-    transform: translateX(10%) rotate(-3deg) scale(1);
+    transform: translateX(-30%) rotate(-11deg) scale(0.92);
   }
 
   100% {
-    transform: translateX(38%) rotate(8deg) scale(0.94);
+    transform: translateX(30%) rotate(7deg) scale(0.98);
   }
 }
 
