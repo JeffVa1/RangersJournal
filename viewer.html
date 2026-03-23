@@ -28,13 +28,22 @@
   </header>
 
   <main class="viewer" id="viewer">
-    <div class="page-container" id="page-container" aria-live="polite"></div>
+    <div class="viewer-stage">
+      <button
+        id="prev-button"
+        class="page-nav-hit-area page-nav-hit-area-prev"
+        type="button"
+        aria-label="Previous page"
+      ></button>
+      <div class="page-container" id="page-container" aria-live="polite"></div>
+      <button
+        id="next-button"
+        class="page-nav-hit-area page-nav-hit-area-next"
+        type="button"
+        aria-label="Next page"
+      ></button>
+    </div>
   </main>
-
-  <footer class="viewer-nav">
-    <button id="prev-button" class="control-button" type="button">Previous</button>
-    <button id="next-button" class="control-button" type="button">Next</button>
-  </footer>
 
   <script src="js/viewer.js"></script>
 </body>
