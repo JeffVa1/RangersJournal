@@ -2,20 +2,15 @@ const libraryContainer = document.getElementById("library");
 
 const createBookCard = (book) => {
   const card = document.createElement("a");
-  card.className = "book-card";
+  card.className = "book";
   card.href = `viewer.html?book=${encodeURIComponent(book.id)}`;
 
   const img = document.createElement("img");
-  img.className = "book-cover";
   img.src = book.cover;
   img.alt = `${book.title} cover`;
   img.loading = "lazy";
 
-  const title = document.createElement("div");
-  title.className = "book-title";
-  title.textContent = book.title;
-
-  card.append(img, title);
+  card.append(img);
   return card;
 };
 
