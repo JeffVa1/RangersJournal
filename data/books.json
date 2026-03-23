@@ -8,7 +8,7 @@
   {
     "id": "book2",
     "title": "The Shattered Crown - Part 2: The Pit",
-    "cover": "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN COVERArtboard Cover.jpg",
+    "cover": "assets/books/book2/pages/cover.png",
     "manifest": "assets/books/book2/manifest.json"
   }
 ]

@@ -1,6 +1,7 @@
 {
-  "title": "The Shattered Crown - Part 2: The Five Flames",
+  "title": "The Shattered Crown - Part 2: The Pit",
   "pages": [
+    "assets/books/book2/pages/cover.png",
     "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN ACT 2Artboard 1.jpg",
     "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN ACT 2Artboard 2.jpg",
     "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN ACT 2Artboard 3.jpg",
@@ -40,7 +41,6 @@
     "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN ACT 2Artboard 37.jpg",
     "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN ACT 2Artboard 38.jpg",
     "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN ACT 2Artboard 39.jpg",
-    "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN COVER ENDArtboard Cover.jpg",
-    "assets/books/book2/pages/BOOK.OF.THE.SHATTERED.CROWN COVERArtboard Cover.jpg"
+    "assets/books/book2/pages/endcover.png"
   ]
 }
