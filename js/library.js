@@ -3,7 +3,7 @@ const libraryContainer = document.getElementById("library");
 const createBookCard = (book) => {
   const card = document.createElement("a");
   card.className = "book";
-  card.href = `viewer.html?book=${encodeURIComponent(book.id)}`;
+  card.href = `preview.html?book=${encodeURIComponent(book.id)}`;
 
   const img = document.createElement("img");
   img.src = book.cover;
