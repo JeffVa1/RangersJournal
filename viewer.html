@@ -7,31 +7,33 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body class="viewer-page">
-  <header class="viewer-header">
-    <a class="back-link" href="index.html">&larr; Library</a>
-    <div class="page-title">
-      <img class="site-title-image" src="assets/title.png" alt="The Shattered Crown" />
-      <p id="book-title" class="book-heading">Loading...</p>
-      <p id="page-indicator" class="page-indicator"></p>
-    </div>
-  </header>
+  <main class="viewer-main">
+    <section class="page-intro">
+      <a class="back-link" href="index.html">&larr; Library</a>
+      <div class="page-title">
+        <img class="site-title-image" src="assets/title.png" alt="The Shattered Crown" />
+        <p id="book-title" class="book-heading">Loading...</p>
+        <p id="page-indicator" class="page-indicator"></p>
+      </div>
+    </section>
 
-  <main class="viewer" id="viewer">
-    <div class="viewer-stage">
-      <button
-        id="prev-button"
-        class="page-nav-hit-area page-nav-hit-area-prev"
-        type="button"
-        aria-label="Previous page"
-      ></button>
-      <div class="page-container" id="page-container" aria-live="polite"></div>
-      <button
-        id="next-button"
-        class="page-nav-hit-area page-nav-hit-area-next"
-        type="button"
-        aria-label="Next page"
-      ></button>
-    </div>
+    <section class="viewer" id="viewer">
+      <div class="viewer-stage">
+        <button
+          id="prev-button"
+          class="page-nav-hit-area page-nav-hit-area-prev"
+          type="button"
+          aria-label="Previous page"
+        ></button>
+        <div class="page-container" id="page-container" aria-live="polite"></div>
+        <button
+          id="next-button"
+          class="page-nav-hit-area page-nav-hit-area-next"
+          type="button"
+          aria-label="Next page"
+        ></button>
+      </div>
+    </section>
   </main>
 
   <script type="module" src="js/viewer.js"></script>

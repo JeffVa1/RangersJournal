@@ -8,15 +8,17 @@
   <link rel="stylesheet" href="css/book-hover-glow.css" />
 </head>
 <body class="library-page">
-  <header class="site-header">
-    <div class="site-brand">
-      <img class="site-title-image" src="assets/title.png" alt="The Shattered Crown" />
-      <p class="subtitle">Select a book to start reading.</p>
-    </div>
-  </header>
+  <main class="library-main">
+    <section class="site-intro">
+      <div class="site-brand">
+        <img class="site-title-image" src="assets/title.png" alt="The Shattered Crown" />
+        <p class="subtitle">Select a book to start reading.</p>
+      </div>
+    </section>
 
-  <main class="library" id="library" aria-live="polite">
-    <div class="loading">Loading books...</div>
+    <section class="library" id="library" aria-live="polite">
+      <div class="loading">Loading books...</div>
+    </section>
   </main>
 
   <script type="module" src="js/library.js"></script>

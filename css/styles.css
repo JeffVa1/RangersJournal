@@ -37,9 +37,17 @@ textarea {
   font-family: inherit;
 }
 
-.site-header,
-.viewer-header,
-.preview-header {
+.library-main,
+.viewer-main,
+.preview-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-intro,
+.page-intro {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -55,8 +63,7 @@ textarea {
   gap: 0.35rem;
 }
 
-.viewer-header,
-.preview-header {
+.page-intro {
   position: relative;
   justify-content: center;
   width: 100%;
@@ -339,9 +346,8 @@ textarea {
     overflow: visible;
   }
 
-  .site-header,
-  .viewer-header,
-  .preview-header {
+  .site-intro,
+  .page-intro {
     padding: 1.5rem 6vw 1rem;
     flex-direction: column;
     align-items: flex-start;
@@ -366,9 +372,10 @@ textarea {
     max-width: min(82vw, 320px);
   }
 
-  .viewer-header {
+  .page-intro {
     justify-content: center;
     gap: 1rem;
+    align-items: center;
   }
 
   .viewer {
@@ -394,14 +401,5 @@ textarea {
   .preview-summary-panel {
     height: min(58vh, 32rem);
   }
-
-  .viewer-header {
-    align-items: center;
-  }
-
-  .preview-header {
-    align-items: center;
-  }
-
 
 }
