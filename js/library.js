@@ -1,8 +1,9 @@
 import { loadBooks } from "./book-data.js";
+import { attachMagicalHoverGlow } from "./book-hover-glow.js";
 
 const libraryContainer = document.getElementById("library");
 
-const createBookCard = ({ id, title, cover }) => {
+const createBookCard = ({ id, title, cover, color }) => {
   const card = document.createElement("a");
   card.className = "book";
   card.href = `preview.html?book=${encodeURIComponent(id)}`;
@@ -13,6 +14,7 @@ const createBookCard = ({ id, title, cover }) => {
   img.loading = "lazy";
 
   card.append(img);
+  attachMagicalHoverGlow(card, { color });
   return card;
 };
 
