@@ -1,9 +1,18 @@
+@font-face {
+  font-family: "Ringbearer";
+  src: url("../assets/fonts/ringbearer.medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   --bg: linear-gradient(160deg, #000714, #592f6f);
   --text: white;
   --muted: #a4a4a4;
   --accent: #3e4c59;
+  --font-site: "Ringbearer", "Times New Roman", serif;
 }
 
 * {
@@ -12,10 +21,18 @@
 
 body {
   margin: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-site);
   color: var(--text);
   background: var(--bg);
   min-height: 100vh;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 .site-header,
