@@ -4,13 +4,15 @@
     "title": "The Shattered Crown - Part 1: The Spark",
     "cover": "assets/books/book1/pages/cover.png",
     "spine": "assets/books/book1/pages/spine.png",
-    "manifest": "assets/books/book1/manifest.json"
+    "manifest": "assets/books/book1/manifest.json",
+    "color": "#d8a856"
   },
   {
     "id": "book2",
     "title": "The Shattered Crown - Part 2: The Pit",
     "cover": "assets/books/book2/pages/cover.png",
     "spine": "assets/books/book2/pages/spine.png",
-    "manifest": "assets/books/book2/manifest.json"
+    "manifest": "assets/books/book2/manifest.json",
+    "color": "#7c8cff"
   }
 ]
