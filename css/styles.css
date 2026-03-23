@@ -1,8 +1,8 @@
 @font-face {
   font-family: "Ringbearer";
   src: 
-    url("./RangersJournal/assets/fonts/ringbearer.woff2") format("woff2"),
-    url("./RangersJournal/assets/fonts/ringbearer.woff") format("woff");
+    url("../assets/fonts/ringbearer.woff2") format("woff2"),
+    url("../assets/fonts/ringbearer.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -87,11 +87,13 @@ textarea {
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   font-weight: 600;
   color: var(--accent);
+  font-family: var(--font-site);
 }
 
 .subtitle {
   margin: 0.35rem 0 0;
   color: var(--muted);
+  font-family: var(--font-site);
 }
 
 .library {
@@ -210,18 +212,21 @@ textarea {
 .preview-summary-heading {
   margin: 0 0 1rem;
   font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-family: var(--font-site);
 }
 
 .preview-summary-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  font-family: var(--font-site);
 }
 
 .preview-summary-content p {
   margin: 0;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-site);
 }
 
 .viewer-stage {
@@ -322,6 +327,7 @@ textarea {
 .page-indicator {
   margin: 0.4rem 0 0;
   color: var(--muted);
+  font-family: var(--font-site);
 }
 
 @media (max-width: 720px) {
@@ -399,5 +405,6 @@ textarea {
   .back-link {
     top: 1.5rem;
     left: 6vw;
+    font-family: var(--font-site);
   }
 }
