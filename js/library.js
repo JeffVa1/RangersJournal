@@ -1,8 +1,9 @@
 import { loadBooks } from "./book-data.js";
+import { createElectricBorderFrame } from "./components/electric-border.js";
 
 const libraryContainer = document.getElementById("library");
 
-const createBookCard = ({ id, title, cover }) => {
+const createBookCard = ({ color, cover, id, title }) => {
   const card = document.createElement("a");
   card.className = "book";
   card.href = `preview.html?book=${encodeURIComponent(id)}`;
@@ -12,7 +13,14 @@ const createBookCard = ({ id, title, cover }) => {
   img.alt = `${title} cover`;
   img.loading = "lazy";
 
-  card.append(img);
+  card.append(
+    createElectricBorderFrame(img, {
+      className: "book-cover-frame",
+      color,
+      host: card,
+      radius: "18px"
+    })
+  );
   return card;
 };
 

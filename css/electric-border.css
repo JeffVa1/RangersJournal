@@ -1,0 +1,91 @@
+.electric-border-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.electric-border-host {
+  position: relative;
+  z-index: 0;
+}
+
+.electric-border-host:is(:hover, :focus-visible) {
+  z-index: 4;
+}
+
+.electric-border-shell {
+  --electric-border-color: #dd8448;
+  --electric-border-radius: 24px;
+  --electric-border-filter: url("#electric-border-displace");
+  position: relative;
+  display: inline-block;
+  border-radius: var(--electric-border-radius);
+  isolation: isolate;
+}
+
+.electric-border-content {
+  position: relative;
+  display: block;
+  z-index: 1;
+}
+
+.electric-border-effect {
+  position: absolute;
+  inset: -6px;
+  border-radius: calc(var(--electric-border-radius) + 6px);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 180ms ease, transform 220ms ease;
+  pointer-events: none;
+}
+
+.electric-border-stroke,
+.electric-border-ambient {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.electric-border-stroke {
+  border: 2px solid var(--electric-border-color);
+  filter: var(--electric-border-filter);
+}
+
+.electric-border-stroke-soft {
+  filter: var(--electric-border-filter) blur(1.5px);
+  opacity: 0.7;
+}
+
+.electric-border-stroke-glow {
+  filter: var(--electric-border-filter) blur(5px);
+  opacity: 0.45;
+}
+
+.electric-border-ambient {
+  inset: -12px;
+  border-radius: calc(var(--electric-border-radius) + 12px);
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--electric-border-color) 0%,
+    transparent 68%
+  );
+  filter: blur(24px);
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 220ms ease, transform 280ms ease;
+}
+
+.electric-border-shell:is(:hover, :focus-within) .electric-border-effect,
+.electric-border-host:is(:hover, :focus-visible) .electric-border-effect {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.electric-border-shell:is(:hover, :focus-within) .electric-border-ambient,
+.electric-border-host:is(:hover, :focus-visible) .electric-border-ambient {
+  opacity: 0.26;
+  transform: scale(1);
+}
