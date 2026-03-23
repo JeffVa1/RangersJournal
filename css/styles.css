@@ -1,9 +1,9 @@
 :root {
   color-scheme: light;
-  --bg: #f5f2ee;
+  --bg: linear-gradient(160deg, #000714, #592f6f);
   --panel: #ffffff;
-  --text: #2d2a26;
-  --muted: #6a655f;
+  --text: white;
+  --muted: #a4a4a4;
   --accent: #3e4c59;
   --border: #e3dfda;
 }
@@ -30,6 +30,13 @@ body {
   flex-wrap: wrap;
 }
 
+.site-brand,
+.viewer-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
 .library-page,
 .viewer-page {
   height: 100vh;
@@ -38,11 +45,17 @@ body {
   flex-direction: column;
 }
 
-.site-header h1,
-.viewer-header h1 {
+.site-title-image {
+  display: block;
+  width: min(100%, 420px);
+  height: auto;
+}
+
+.book-heading {
   margin: 0;
-  font-size: clamp(1.6rem, 2.2vw, 2.4rem);
-  letter-spacing: 0.02em;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 600;
+  color: var(--accent);
 }
 
 .subtitle {
@@ -253,6 +266,10 @@ body {
     padding: 1.5rem 6vw 1rem;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .site-title-image {
+    width: min(100%, 320px);
   }
 
   .library {
