@@ -48,6 +48,11 @@ textarea {
 
 .library-main {
   --library-hover-safe-space: clamp(1.75rem, 4vw, 2.75rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  min-height: 100vh;
+  padding: clamp(2rem, 4vw, 4rem);
 }
 
 .site-intro,
@@ -65,6 +70,21 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+}
+
+.site-brand {
+  align-items: center;
+  text-align: center;
+}
+
+.site-intro {
+  grid-column: 1 / 3;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  width: min(100%, 42rem);
+  padding: 0;
+  min-height: 0;
 }
 
 .page-intro {
@@ -87,9 +107,14 @@ textarea {
   flex-direction: column;
 }
 
+.library-page {
+  background: url("../assets/LandingPage.png") center center / cover no-repeat;
+  background-attachment: fixed;
+}
+
 .site-title-image {
   display: block;
-  width: min(100%, 420px);
+  width: min(100%, 480px);
   height: auto;
 }
 
@@ -105,20 +130,37 @@ textarea {
   margin: 0.35rem 0 0;
   color: var(--muted);
   font-family: var(--font-site);
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  min-height: 1.8em;
+}
+
+.subtitle-text {
+  display: inline-block;
+  transition: opacity 220ms ease, transform 220ms ease, filter 220ms ease;
+  will-change: opacity, transform, filter;
+}
+
+.subtitle-text.is-transitioning {
+  opacity: 0;
+  transform: translateY(0.35rem);
+  filter: blur(2px);
 }
 
 .library {
-  padding: calc(1rem + var(--library-hover-safe-space, 0rem)) 4vw 2rem;
+  grid-column: 3 / 4;
+  justify-self: center;
+  align-self: center;
+  width: min(100%, 24rem);
+  padding: calc(1rem + var(--library-hover-safe-space, 0rem)) 0;
   margin-top: calc(-1 * var(--library-hover-safe-space, 0rem));
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
-  align-content: flex-start;
+  align-items: center;
+  align-content: center;
   gap: 2.25rem 1.75rem;
-  overflow: auto;
+  overflow: visible;
   min-height: 0;
-  flex: 1;
 }
 
 .book {
@@ -351,11 +393,29 @@ textarea {
     overflow: visible;
   }
 
+  .library-main {
+    display: flex;
+    min-height: auto;
+    padding: 1.5rem 0 0;
+  }
+
   .site-intro,
   .page-intro {
     padding: 1.5rem 6vw 1rem;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .site-intro {
+    width: 100%;
+    justify-self: stretch;
+    align-self: stretch;
+    justify-content: flex-start;
+  }
+
+  .site-brand {
+    align-items: flex-start;
+    text-align: left;
   }
 
   .site-title-image {
@@ -366,6 +426,8 @@ textarea {
     padding: calc(0.5rem + var(--library-hover-safe-space, 0rem)) 6vw 2rem;
     justify-content: center;
     gap: 1.5rem;
+    width: 100%;
+    overflow: visible;
   }
 
   .book {
