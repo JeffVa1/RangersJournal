@@ -1,4 +1,12 @@
-@import url("./ringbearer-font.css");
+@font-face {
+  font-family: "Ringbearer";
+  src: 
+    url("../assets/fonts/ringbearer.woff") format("woff"),
+    url("../assets/fonts/ringbearer.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   color-scheme: light;
@@ -6,7 +14,7 @@
   --text: white;
   --muted: #a4a4a4;
   --accent: #3e4c59;
-  --font-site: "Ringbearer", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-site: "Ringbearer", "Times New Roman", serif;
 }
 
 * {
