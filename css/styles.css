@@ -1,8 +1,8 @@
 @font-face {
   font-family: "Ringbearer";
   src: 
-    url("./assets/fonts/ringbearer.woff2") format("woff2"),
-    url("./assets/fonts/ringbearer.woff") format("woff");
+    url("./RangersJournal/assets/fonts/ringbearer.woff2") format("woff2"),
+    url("./RangersJournal/assets/fonts/ringbearer.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
