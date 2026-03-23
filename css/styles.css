@@ -37,6 +37,17 @@ body {
   gap: 0.35rem;
 }
 
+.viewer-header {
+  position: relative;
+  justify-content: center;
+  width: 100%;
+}
+
+.viewer-title {
+  align-items: center;
+  text-align: center;
+}
+
 .library-page,
 .viewer-page {
   height: 100vh;
@@ -93,10 +104,9 @@ body {
 
 .book-cover {
   width: 100%;
-  aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: 8px;
-  background: #ebe6df;
+  width: 110px;
+  flex-shrink: 0;
 }
 
 .book-title {
@@ -110,7 +120,6 @@ body {
 
 .viewer {
   padding: 1rem 4vw;
-  display: flex;
   justify-content: center;
   flex: 1;
   min-height: 0;
@@ -122,7 +131,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(940px, 100%);
   height: 100%;
   max-height: 100%;
   max-width: 100%;
@@ -194,6 +202,9 @@ body {
 }
 
 .back-link {
+  position: absolute;
+  top: 2rem;
+  left: 4vw;
   color: var(--muted);
   text-decoration: none;
   font-size: 0.95rem;
@@ -235,12 +246,8 @@ body {
     gap: 1rem;
   }
 
-  .book-cover {
-    width: 110px;
-    flex-shrink: 0;
-  }
-
   .viewer-header {
+    justify-content: center;
     gap: 1rem;
   }
 
@@ -248,17 +255,12 @@ body {
     padding: 0.5rem 6vw 1rem;
   }
 
-  .viewer-stage {
-    width: 100%;
-  }
-
-  .page-container {
-    width: 100%;
-  }
-
-
-
   .viewer-header {
-    align-items: flex-start;
+    align-items: center;
+  }
+
+  .back-link {
+    top: 1.5rem;
+    left: 6vw;
   }
 }
