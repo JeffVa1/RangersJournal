@@ -317,6 +317,7 @@ textarea {
   color: var(--muted);
   text-decoration: none;
   font-size: 0.95rem;
+  font-family: var(--font-site);
 }
 
 .preview-book-link[aria-disabled="true"] {
@@ -402,9 +403,5 @@ textarea {
     align-items: center;
   }
 
-  .back-link {
-    top: 1.5rem;
-    left: 6vw;
-    font-family: var(--font-site);
-  }
+
 }
