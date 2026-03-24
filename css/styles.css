@@ -218,13 +218,14 @@ textarea {
 }
 
 .library {
-  width: 100%;
+  width: 50%;
   padding: calc(1rem + var(--library-hover-safe-space, 0rem)) 0;
   margin-top: calc(-1 * var(--library-hover-safe-space, 0rem));
   margin-right: 0;
+  margin-left: auto;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-end;
   align-content: flex-end;
   gap: 0.75rem;
@@ -239,6 +240,7 @@ textarea {
   justify-self: end;
   align-self: center;
   width: min(100%, 42rem);
+  padding-right: 30px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -270,7 +272,7 @@ textarea {
 
 .library-synopsis {
   position: absolute;
-  inset: 0;
+  inset: 0 30px 0 0;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -339,8 +341,8 @@ textarea {
 .book img {
   display: block;
   width: auto;
-  height: clamp(260px, 42vw, 460px);
-  max-width: min(18vw, 90px);
+  height: calc(clamp(260px, 42vw, 460px) * 1.15);
+  max-width: calc(min(18vw, 90px) * 1.15);
   object-fit: contain;
   flex-shrink: 0;
   transition: filter 180ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -640,15 +642,16 @@ textarea {
   .library-stage {
     width: 100%;
     min-height: clamp(300px, 64vh, 34rem);
-    padding: 0 6vw 2rem;
+    padding: 0 30px 2rem 6vw;
   }
 
   .library {
-    padding: calc(0.5rem + var(--library-hover-safe-space, 0rem)) 0 0;
-    margin-right: 0;
-    justify-content: flex-end;
-    gap: 0.75rem;
     width: 100%;
+    padding: calc(0.5rem + var(--library-hover-safe-space, 0rem)) 0 0;
+    margin-left: 0;
+    margin-right: 0;
+    justify-content: center;
+    gap: 0.75rem;
     overflow: visible;
     flex-wrap: nowrap;
     align-items: flex-end;
@@ -659,8 +662,8 @@ textarea {
   }
 
   .book img {
-    height: clamp(220px, 56vw, 320px);
-    max-width: min(20vw, 72px);
+    height: calc(clamp(220px, 56vw, 320px) * 1.15);
+    max-width: calc(min(20vw, 72px) * 1.15);
   }
 
   .subtitle {
