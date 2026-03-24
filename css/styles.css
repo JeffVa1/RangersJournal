@@ -81,14 +81,15 @@ textarea {
 }
 
 .site-intro {
-  grid-column: 1 / 3;
+  grid-column: 1 / 2;
   justify-content: center;
-  justify-self: center;
+  justify-self: start;
   align-self: center;
   width: auto;
-  margin-left: 0;
+  margin-left: 25vw;
   padding: 0;
   min-height: 0;
+  transform: translateX(-50%);
 }
 
 .page-intro {
@@ -120,7 +121,7 @@ textarea {
   margin: 0;
   color: var(--text);
   font-family: var(--font-site);
-  font-size: 40pt;
+  font-size: 50pt;
   font-weight: 500;
   letter-spacing: 5px;
   line-height: 1;
@@ -453,6 +454,7 @@ textarea {
     justify-self: stretch;
     align-self: stretch;
     justify-content: flex-start;
+    transform: none;
   }
 
   .site-brand {
