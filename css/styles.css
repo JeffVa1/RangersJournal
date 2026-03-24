@@ -60,7 +60,7 @@ textarea {
     clamp(2rem, 4vw, 4rem)
     clamp(2rem, 4vw, 4rem);
   padding-right: 0;
-  margin-right: clamp(1rem, 2vw, 2rem);
+  margin-right: 0;
 }
 
 .site-intro,
@@ -236,12 +236,12 @@ textarea {
 
 .library-stage {
   grid-column: 3 / 4;
-  justify-self: stretch;
+  justify-self: end;
   align-self: center;
   width: min(100%, 42rem);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   min-height: clamp(360px, 72vh, 44rem);
   overflow: visible;
   position: relative;
