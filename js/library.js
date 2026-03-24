@@ -277,7 +277,7 @@ const handleDocumentPointerDown = (event) => {
     return;
   }
 
-  if (synopsisSurface.contains(target)) {
+  if (synopsisSurface.contains(target) || openBookLink?.contains(target)) {
     return;
   }
 

@@ -214,9 +214,10 @@ textarea {
   width: 100%;
   padding: calc(1rem + var(--library-hover-safe-space, 0rem)) 0;
   margin-top: calc(-1 * var(--library-hover-safe-space, 0rem));
+  margin-right: 0;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: flex-end;
   align-content: flex-end;
   gap: 0.75rem;
@@ -246,6 +247,8 @@ textarea {
 }
 
 .library-bookshelf {
+  display: flex;
+  justify-content: flex-end;
   position: relative;
   z-index: 1;
   transition: opacity 320ms ease, transform 420ms ease;
@@ -633,7 +636,8 @@ textarea {
 
   .library {
     padding: calc(0.5rem + var(--library-hover-safe-space, 0rem)) 0 0;
-    justify-content: center;
+    margin-right: 0;
+    justify-content: flex-end;
     gap: 0.75rem;
     width: 100%;
     overflow: visible;
