@@ -1,14 +1,17 @@
 import { getBookId, loadBook, loadManifest } from "./book-data.js";
 
-const titleEl = document.getElementById("book-title");
 const indicatorEl = document.getElementById("page-indicator");
 const pageContainer = document.getElementById("page-container");
 const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
+const modeToggleButton = document.getElementById("mode-toggle");
+const viewerContent = document.getElementById("viewer-content");
 
 const state = {
   currentIndex: 0,
-  pages: []
+  pages: [],
+  title: "Book Viewer",
+  isMapMode: false
 };
 
 const clampIndex = (index) =>
@@ -45,9 +48,31 @@ const createStatusMessage = (message) => {
 
 const updateButtons = () => {
   const hasPages = state.pages.length > 0;
-  prevButton.disabled = !hasPages || state.currentIndex === 0;
+  prevButton.disabled =
+    state.isMapMode || !hasPages || state.currentIndex === 0;
   nextButton.disabled =
-    !hasPages || state.currentIndex === state.pages.length - 1;
+    state.isMapMode || !hasPages || state.currentIndex === state.pages.length - 1;
+};
+
+const syncModeUi = () => {
+  document.body.classList.toggle("viewer-map-mode", state.isMapMode);
+  if (state.isMapMode) {
+    viewerContent?.setAttribute("aria-hidden", "true");
+  } else {
+    viewerContent?.removeAttribute("aria-hidden");
+  }
+  modeToggleButton.textContent = state.isMapMode ? "Book ->" : "Map ->";
+  modeToggleButton.setAttribute("aria-pressed", String(state.isMapMode));
+  updateButtons();
+};
+
+const setMapMode = (isMapMode) => {
+  if (state.isMapMode === isMapMode) {
+    return;
+  }
+
+  state.isMapMode = isMapMode;
+  syncModeUi();
 };
 
 const preloadImage = (index) => {
@@ -79,7 +104,7 @@ const renderPage = () => {
   }
 
   const src = state.pages[state.currentIndex];
-  const alt = `${titleEl.textContent} page ${state.currentIndex + 1}`;
+  const alt = `${state.title} page ${state.currentIndex + 1}`;
   pageContainer.replaceChildren(createPageFrame(src, alt));
   updateIndicator();
   updateButtons();
@@ -103,6 +128,7 @@ const navigateTo = (nextIndex) => {
 const handleKey = (event) => {
   if (
     event.defaultPrevented ||
+    state.isMapMode ||
     event.altKey ||
     event.ctrlKey ||
     event.metaKey
@@ -119,7 +145,7 @@ const handleKey = (event) => {
 
 const showError = (title, message) => {
   document.title = title;
-  titleEl.textContent = title;
+  state.title = title;
   state.pages = [];
   state.currentIndex = 0;
   pageContainer.replaceChildren(createStatusMessage(message));
@@ -137,8 +163,8 @@ const init = async () => {
   try {
     const book = await loadBook(bookId);
     const manifest = await loadManifest(book.manifest);
+    state.title = manifest.title;
     document.title = manifest.title;
-    titleEl.textContent = manifest.title;
     state.pages = manifest.pages;
     state.currentIndex = 0;
     renderPage();
@@ -149,6 +175,8 @@ const init = async () => {
 
 prevButton.addEventListener("click", () => navigateTo(state.currentIndex - 1));
 nextButton.addEventListener("click", () => navigateTo(state.currentIndex + 1));
+modeToggleButton.addEventListener("click", () => setMapMode(!state.isMapMode));
 window.addEventListener("keydown", handleKey);
 
+syncModeUi();
 init();

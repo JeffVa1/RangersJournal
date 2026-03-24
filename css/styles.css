@@ -98,6 +98,11 @@ textarea {
   width: 100%;
 }
 
+.viewer-page .page-intro {
+  min-height: 5rem;
+  padding: 2rem 4vw 0.75rem;
+}
+
 .page-title {
   align-items: center;
   text-align: center;
@@ -115,6 +120,56 @@ textarea {
 .library-page {
   background: url("../assets/LandingPage.png") center center / cover no-repeat;
   background-attachment: fixed;
+}
+
+.viewer-page {
+  position: relative;
+  background: #1f1408;
+}
+
+.viewer-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.viewer-background-layer {
+  position: absolute;
+  inset: 0;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: opacity 420ms ease, transform 420ms ease;
+  will-change: opacity, transform;
+}
+
+.viewer-background-layer-map {
+  background-image: url("../assets/BookPage.png");
+  opacity: 0;
+  transform: scale(1.01);
+}
+
+.viewer-background-layer-book {
+  background-image: url("../assets/BookPage_BLUR.png");
+  opacity: 1;
+  transform: scale(1);
+}
+
+.viewer-page.viewer-map-mode .viewer-background-layer-map {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.viewer-page.viewer-map-mode .viewer-background-layer-book {
+  opacity: 0;
+  transform: scale(1.01);
+}
+
+.viewer-main {
+  position: relative;
+  z-index: 1;
 }
 
 .site-title-text {
@@ -244,8 +299,30 @@ textarea {
   padding: 1rem 4vw;
   justify-content: center;
   flex: 1;
+  width: 100%;
   min-height: 0;
   overflow: hidden;
+}
+
+.viewer-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 320ms ease, transform 420ms ease;
+  will-change: opacity, transform;
+}
+
+.viewer-page.viewer-map-mode .viewer-content {
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.985);
+  pointer-events: none;
+}
+
+.viewer-page.viewer-map-mode .page-nav-hit-area {
+  pointer-events: none;
 }
 
 .preview-layout {
@@ -406,14 +483,33 @@ textarea {
   cursor: default;
 }
 
-.back-link {
+.back-link,
+.mode-toggle {
   position: absolute;
   top: 2rem;
-  left: 4vw;
   color: var(--muted);
-  text-decoration: none;
   font-size: 0.95rem;
   font-family: var(--font-site);
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.back-link {
+  left: 4vw;
+  text-decoration: none;
+}
+
+.mode-toggle {
+  right: 4vw;
+  cursor: pointer;
+}
+
+.back-link:hover,
+.back-link:focus-visible,
+.mode-toggle:hover,
+.mode-toggle:focus-visible {
+  color: var(--text);
 }
 
 .preview-book-link[aria-disabled="true"] {
@@ -425,6 +521,12 @@ textarea {
   margin: 0.4rem 0 0;
   color: var(--muted);
   font-family: var(--font-site);
+}
+
+.viewer-page-indicator {
+  margin: 0;
+  padding: 0 4vw 1.5rem;
+  text-align: center;
 }
 
 @media (max-width: 720px) {
@@ -498,8 +600,30 @@ textarea {
     align-items: center;
   }
 
+  .viewer-page .page-intro {
+    min-height: 4rem;
+    padding: 1.5rem 6vw 0.5rem;
+  }
+
   .viewer {
     padding: 0.5rem 6vw 1rem;
+  }
+
+  .back-link,
+  .mode-toggle {
+    top: 1.5rem;
+  }
+
+  .back-link {
+    left: 6vw;
+  }
+
+  .mode-toggle {
+    right: 6vw;
+  }
+
+  .viewer-page-indicator {
+    padding: 0 6vw 1rem;
   }
 
   .preview-layout {
