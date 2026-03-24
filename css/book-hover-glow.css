@@ -28,16 +28,35 @@
   display: none;
 }
 
+.book-spine.magical-hover-glow {
+  --magical-glow-sparkle-strong: color-mix(
+    in srgb,
+    var(--magical-glow-color) 78%,
+    white
+  );
+  --magical-glow-sparkle-mid: color-mix(
+    in srgb,
+    var(--magical-glow-color) 66%,
+    white
+  );
+  --magical-glow-sparkle-soft: color-mix(
+    in srgb,
+    var(--magical-glow-color) 52%,
+    white
+  );
+  contain: paint;
+}
+
 .book-spine.magical-hover-glow::before,
 .book-spine.magical-hover-glow::after {
   content: "";
   position: absolute;
   pointer-events: none;
   opacity: 0;
+  will-change: transform, opacity;
   transition:
-    opacity 140ms ease-out,
-    transform 180ms ease-out,
-    filter 180ms ease-out;
+    opacity 160ms ease-out,
+    transform 200ms ease-out;
 }
 
 .book-spine.magical-hover-glow::before {
@@ -45,38 +64,37 @@
   background:
     radial-gradient(
       circle at 18% 18%,
-      rgba(255, 255, 255, 0.92) 0 0.09rem,
+      var(--magical-glow-sparkle-strong) 0 0.09rem,
       transparent 0.24rem
     ),
     radial-gradient(
       circle at 78% 14%,
-      rgba(255, 255, 255, 0.84) 0 0.08rem,
+      var(--magical-glow-sparkle-mid) 0 0.08rem,
       transparent 0.22rem
     ),
     radial-gradient(
       circle at 52% 10%,
-      rgba(255, 255, 255, 0.76) 0 0.07rem,
+      var(--magical-glow-sparkle-soft) 0 0.07rem,
       transparent 0.2rem
     ),
     radial-gradient(
       circle at 24% 74%,
-      rgba(255, 255, 255, 0.8) 0 0.07rem,
+      var(--magical-glow-sparkle-mid) 0 0.07rem,
       transparent 0.2rem
     ),
     radial-gradient(
       circle at 82% 82%,
-      rgba(255, 255, 255, 0.72) 0 0.08rem,
+      var(--magical-glow-sparkle-soft) 0 0.08rem,
       transparent 0.22rem
     ),
     radial-gradient(
       circle at 58% 88%,
-      rgba(255, 255, 255, 0.68) 0 0.06rem,
+      var(--magical-glow-sparkle-soft) 0 0.06rem,
       transparent 0.18rem
     );
   mix-blend-mode: screen;
   filter: blur(0.08rem) drop-shadow(0 0 0.65rem color-mix(in srgb, var(--magical-glow-color) 30%, transparent));
   transform: scale(0.92);
-  animation: spineSparkleTwinkle 1.7s ease-in-out infinite alternate paused;
 }
 
 .book-spine.magical-hover-glow::after {
@@ -84,39 +102,38 @@
   background:
     radial-gradient(
       circle at 10% 42%,
-      rgba(255, 255, 255, 0.7) 0 0.07rem,
+      var(--magical-glow-sparkle-soft) 0 0.07rem,
       transparent 0.2rem
     ),
     radial-gradient(
       circle at 32% 88%,
-      rgba(255, 255, 255, 0.86) 0 0.08rem,
+      var(--magical-glow-sparkle-strong) 0 0.08rem,
       transparent 0.22rem
     ),
     radial-gradient(
       circle at 68% 26%,
-      rgba(255, 255, 255, 0.78) 0 0.07rem,
+      var(--magical-glow-sparkle-mid) 0 0.07rem,
       transparent 0.2rem
     ),
     radial-gradient(
       circle at 92% 58%,
-      rgba(255, 255, 255, 0.72) 0 0.08rem,
+      var(--magical-glow-sparkle-soft) 0 0.08rem,
       transparent 0.22rem
     ),
     radial-gradient(
       circle at 48% 54%,
-      rgba(255, 255, 255, 0.62) 0 0.06rem,
+      var(--magical-glow-sparkle-soft) 0 0.06rem,
       transparent 0.18rem
     ),
     radial-gradient(
       circle at 74% 94%,
-      rgba(255, 255, 255, 0.66) 0 0.06rem,
+      var(--magical-glow-sparkle-mid) 0 0.06rem,
       transparent 0.18rem
     );
   mix-blend-mode: screen;
   filter: blur(0.12rem)
     drop-shadow(0 0 0.8rem color-mix(in srgb, var(--magical-glow-color) 26%, transparent));
   transform: scale(0.9) translateY(0.04rem);
-  animation: spineSparkleDrift 2.1s ease-in-out infinite alternate paused;
 }
 
 .book-spine.magical-hover-glow > img {
@@ -138,7 +155,7 @@
 .book-spine.magical-hover-glow:is(:hover, :focus-visible)::before {
   opacity: 0.62;
   transform: scale(1);
-  animation-play-state: running;
+  animation: spineSparkleTwinkle 1.7s ease-in-out infinite alternate;
 }
 
 .book:is(:hover, :focus-visible) .book-spine.magical-hover-glow::after,
@@ -146,7 +163,7 @@
 .book-spine.magical-hover-glow:is(:hover, :focus-visible)::after {
   opacity: 0.46;
   transform: scale(1.03) translateY(-0.03rem);
-  animation-play-state: running;
+  animation: spineSparkleDrift 2.1s ease-in-out infinite alternate;
 }
 
 .magical-hover-glow__layer {
@@ -286,29 +303,21 @@
 
 @keyframes spineSparkleTwinkle {
   0% {
-    transform: scale(0.95) translateY(0);
-    filter: blur(0.08rem)
-      drop-shadow(0 0 0.35rem color-mix(in srgb, var(--magical-glow-color) 22%, transparent));
+    transform: scale(0.96) translateY(0.02rem) translateX(-0.02rem);
   }
 
   100% {
-    transform: scale(1.02) translateY(-0.06rem);
-    filter: blur(0.12rem)
-      drop-shadow(0 0 0.6rem color-mix(in srgb, var(--magical-glow-color) 26%, transparent));
+    transform: scale(1.02) translateY(-0.05rem) translateX(0.03rem);
   }
 }
 
 @keyframes spineSparkleDrift {
   0% {
-    transform: scale(0.94) translateY(0.05rem) translateX(-0.06rem);
-    filter: blur(0.1rem)
-      drop-shadow(0 0 0.65rem color-mix(in srgb, var(--magical-glow-color) 22%, transparent));
+    transform: scale(0.95) translateY(0.04rem) translateX(-0.05rem);
   }
 
   100% {
-    transform: scale(1.05) translateY(-0.08rem) translateX(0.05rem);
-    filter: blur(0.14rem)
-      drop-shadow(0 0 1rem color-mix(in srgb, var(--magical-glow-color) 28%, transparent));
+    transform: scale(1.04) translateY(-0.07rem) translateX(0.05rem);
   }
 }
 

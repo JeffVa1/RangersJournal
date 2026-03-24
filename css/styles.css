@@ -230,8 +230,7 @@ textarea {
   max-width: min(18vw, 90px);
   object-fit: contain;
   flex-shrink: 0;
-  will-change: filter;
-  transition: filter 160ms ease-out;
+  transition: filter 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .loading {
