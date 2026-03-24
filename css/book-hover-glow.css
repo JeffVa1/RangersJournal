@@ -28,6 +28,65 @@
   display: none;
 }
 
+.book-spine.magical-hover-glow::before,
+.book-spine.magical-hover-glow::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 140ms ease-out,
+    transform 180ms ease-out,
+    filter 180ms ease-out;
+}
+
+.book-spine.magical-hover-glow::before {
+  inset: -0.85rem -0.65rem;
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255, 255, 255, 0.92) 0 0.09rem,
+      transparent 0.24rem
+    ),
+    radial-gradient(
+      circle at 78% 14%,
+      rgba(255, 255, 255, 0.84) 0 0.08rem,
+      transparent 0.22rem
+    ),
+    radial-gradient(
+      circle at 24% 74%,
+      rgba(255, 255, 255, 0.8) 0 0.07rem,
+      transparent 0.2rem
+    ),
+    radial-gradient(
+      circle at 82% 82%,
+      rgba(255, 255, 255, 0.72) 0 0.08rem,
+      transparent 0.22rem
+    );
+  mix-blend-mode: screen;
+  filter: blur(0.08rem) drop-shadow(0 0 0.45rem color-mix(in srgb, var(--magical-glow-color) 28%, transparent));
+  transform: scale(0.92);
+  animation: spineSparkleTwinkle 1.7s ease-in-out infinite alternate paused;
+}
+
+.book-spine.magical-hover-glow::after {
+  inset: -1.15rem -0.9rem;
+  background:
+    linear-gradient(
+      118deg,
+      transparent 18%,
+      rgba(255, 255, 255, 0.1) 34%,
+      rgba(255, 255, 255, 0.34) 50%,
+      rgba(255, 255, 255, 0.08) 64%,
+      transparent 82%
+    );
+  mix-blend-mode: screen;
+  filter: blur(0.45rem)
+    drop-shadow(0 0 1.25rem color-mix(in srgb, var(--magical-glow-color) 18%, transparent));
+  transform: translateX(-26%) scale(0.94);
+  animation: spineSparkleSweep 1.9s ease-in-out infinite alternate paused;
+}
+
 .book-spine.magical-hover-glow > img {
   filter: none;
 }
@@ -36,9 +95,26 @@
 .book.is-active-book .book-spine.magical-hover-glow > img,
 .book-spine.magical-hover-glow:is(:hover, :focus-visible) > img {
   filter:
-    drop-shadow(0 0 0.1rem color-mix(in srgb, var(--magical-glow-color) 55%, transparent))
-    drop-shadow(0 0 0.25rem color-mix(in srgb, var(--magical-glow-color) 50%, transparent))
-    drop-shadow(0 0 0.48rem color-mix(in srgb, var(--magical-glow-color) 45%, transparent));
+    drop-shadow(0 0 0.12rem color-mix(in srgb, var(--magical-glow-color) 24%, transparent))
+    drop-shadow(0 0 0.38rem color-mix(in srgb, var(--magical-glow-color) 20%, transparent))
+    drop-shadow(0 0 0.95rem color-mix(in srgb, var(--magical-glow-color) 17%, transparent))
+    drop-shadow(0 0 1.7rem color-mix(in srgb, var(--magical-glow-color) 13%, transparent));
+}
+
+.book:is(:hover, :focus-visible) .book-spine.magical-hover-glow::before,
+.book.is-active-book .book-spine.magical-hover-glow::before,
+.book-spine.magical-hover-glow:is(:hover, :focus-visible)::before {
+  opacity: 0.52;
+  transform: scale(1);
+  animation-play-state: running;
+}
+
+.book:is(:hover, :focus-visible) .book-spine.magical-hover-glow::after,
+.book.is-active-book .book-spine.magical-hover-glow::after,
+.book-spine.magical-hover-glow:is(:hover, :focus-visible)::after {
+  opacity: 0.34;
+  transform: translateX(0) scale(1.02);
+  animation-play-state: running;
 }
 
 .magical-hover-glow__layer {
@@ -176,6 +252,30 @@
   }
 }
 
+@keyframes spineSparkleTwinkle {
+  0% {
+    transform: scale(0.95) translateY(0);
+    filter: blur(0.08rem)
+      drop-shadow(0 0 0.35rem color-mix(in srgb, var(--magical-glow-color) 22%, transparent));
+  }
+
+  100% {
+    transform: scale(1.02) translateY(-0.06rem);
+    filter: blur(0.12rem)
+      drop-shadow(0 0 0.6rem color-mix(in srgb, var(--magical-glow-color) 26%, transparent));
+  }
+}
+
+@keyframes spineSparkleSweep {
+  0% {
+    transform: translateX(-24%) scale(0.96);
+  }
+
+  100% {
+    transform: translateX(18%) scale(1.04);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .magical-hover-glow__layer,
   .magical-hover-glow__layer::before,
@@ -205,6 +305,21 @@
   .book:is(:hover, :focus-visible)
     .magical-hover-glow
     .magical-hover-glow__layer::after {
+    transform: none;
+  }
+
+  .book-spine.magical-hover-glow::before,
+  .book-spine.magical-hover-glow::after {
+    animation: none;
+    transition-duration: 0.01ms;
+  }
+
+  .book:is(:hover, :focus-visible) .book-spine.magical-hover-glow::before,
+  .book.is-active-book .book-spine.magical-hover-glow::before,
+  .book-spine.magical-hover-glow:is(:hover, :focus-visible)::before,
+  .book:is(:hover, :focus-visible) .book-spine.magical-hover-glow::after,
+  .book.is-active-book .book-spine.magical-hover-glow::after,
+  .book-spine.magical-hover-glow:is(:hover, :focus-visible)::after {
     transform: none;
   }
 }
