@@ -54,7 +54,12 @@ textarea {
     minmax(32rem, 1.45fr);
   align-items: center;
   min-height: 100vh;
-  padding: clamp(2rem, 4vw, 4rem);
+  padding:
+    clamp(2rem, 4vw, 4rem)
+    0
+    clamp(2rem, 4vw, 4rem)
+    clamp(2rem, 4vw, 4rem);
+  margin-right: clamp(1rem, 2vw, 2rem);
 }
 
 .site-intro,
@@ -405,7 +410,9 @@ textarea {
   z-index: 1;
   height: 100%;
   overflow: auto;
-  padding: clamp(1.5rem, 3vw, 2.75rem);
+  padding:
+    clamp(1.5rem, 3vw, 2.75rem)
+    clamp(0.75rem, 1.5vw, 1.375rem);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -441,7 +448,7 @@ textarea {
   align-items: center;
   justify-content: center;
   align-self: flex-start;
-  margin-left: clamp(1.5rem, 3vw, 2.75rem);
+  margin-left: clamp(0.75rem, 1.5vw, 1.375rem);
   padding: 0.7rem 1.2rem;
   border: 1px solid rgba(255, 255, 255, 0.34);
   background: rgba(8, 6, 14, 0.58);
