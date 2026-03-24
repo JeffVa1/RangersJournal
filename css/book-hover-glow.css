@@ -20,6 +20,10 @@
   z-index: 6;
 }
 
+.book.is-active-book .magical-hover-glow {
+  z-index: 6;
+}
+
 .book-spine.magical-hover-glow .magical-hover-glow__layer {
   display: none;
 }
@@ -29,11 +33,12 @@
 }
 
 .book:is(:hover, :focus-visible) .book-spine.magical-hover-glow > img,
+.book.is-active-book .book-spine.magical-hover-glow > img,
 .book-spine.magical-hover-glow:is(:hover, :focus-visible) > img {
   filter:
-    drop-shadow(0 0 0.3rem var(--magical-glow-color))
-    drop-shadow(0 0 0.75rem var(--magical-glow-color))
-    drop-shadow(0 0 1.35rem var(--magical-glow-color));
+    drop-shadow(0 0 0.2rem var(--magical-glow-color))
+    drop-shadow(0 0 0.5rem var(--magical-glow-color))
+    drop-shadow(0 0 0.95rem var(--magical-glow-color));
 }
 
 .magical-hover-glow__layer {
