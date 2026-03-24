@@ -44,7 +44,7 @@
     var(--magical-glow-color) 52%,
     white
   );
-  contain: paint;
+  overflow: visible;
 }
 
 .book-spine.magical-hover-glow::before,
