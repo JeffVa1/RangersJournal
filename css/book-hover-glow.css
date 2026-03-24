@@ -16,6 +16,10 @@
   z-index: 6;
 }
 
+.book:is(:hover, :focus-visible) .magical-hover-glow {
+  z-index: 6;
+}
+
 .magical-hover-glow__layer {
   position: absolute;
   inset: calc(var(--magical-glow-inset) * -1.35);
@@ -109,13 +113,33 @@
   filter: blur(1.25rem) saturate(125%);
 }
 
+.book:is(:hover, :focus-visible) .magical-hover-glow .magical-hover-glow__layer {
+  opacity: 0.32;
+  transform: scale(1.06);
+  filter: blur(1.25rem) saturate(125%);
+}
+
 .magical-hover-glow:is(:hover, :focus-visible)
   .magical-hover-glow__layer::before {
   opacity: 0.95;
   transform: scale(1.02);
 }
 
+.book:is(:hover, :focus-visible)
+  .magical-hover-glow
+  .magical-hover-glow__layer::before {
+  opacity: 0.95;
+  transform: scale(1.02);
+}
+
 .magical-hover-glow:is(:hover, :focus-visible)
+  .magical-hover-glow__layer::after {
+  opacity: 0.78;
+  animation-play-state: running;
+}
+
+.book:is(:hover, :focus-visible)
+  .magical-hover-glow
   .magical-hover-glow__layer::after {
   opacity: 0.78;
   animation-play-state: running;
@@ -143,9 +167,22 @@
     transform: scale(1);
   }
 
+  .book:is(:hover, :focus-visible) .magical-hover-glow .magical-hover-glow__layer {
+    transform: scale(1);
+  }
+
   .magical-hover-glow:is(:hover, :focus-visible)
     .magical-hover-glow__layer::before,
   .magical-hover-glow:is(:hover, :focus-visible)
+    .magical-hover-glow__layer::after {
+    transform: none;
+  }
+
+  .book:is(:hover, :focus-visible)
+    .magical-hover-glow
+    .magical-hover-glow__layer::before,
+  .book:is(:hover, :focus-visible)
+    .magical-hover-glow
     .magical-hover-glow__layer::after {
     transform: none;
   }

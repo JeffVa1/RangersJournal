@@ -36,13 +36,17 @@ const createBookCard = ({ id, title, spine, color }) => {
   card.className = "book";
   card.href = `preview.html?book=${encodeURIComponent(id)}`;
 
+  const spineFrame = document.createElement("span");
+  spineFrame.className = "book-spine";
+
   const img = document.createElement("img");
   img.src = spine;
   img.alt = `${title} spine`;
   img.loading = "lazy";
 
-  card.append(img);
-  attachMagicalHoverGlow(card, { color });
+  spineFrame.append(img);
+  card.append(spineFrame);
+  attachMagicalHoverGlow(spineFrame, { color, inset: "0.35rem" });
   card.addEventListener("pointerenter", () => setSubtitle(title));
   card.addEventListener("pointerleave", () => setSubtitle(defaultSubtitle));
   card.addEventListener("focus", () => setSubtitle(title));
