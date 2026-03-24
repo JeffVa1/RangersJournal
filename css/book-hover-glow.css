@@ -20,6 +20,22 @@
   z-index: 6;
 }
 
+.book-spine.magical-hover-glow .magical-hover-glow__layer {
+  display: none;
+}
+
+.book-spine.magical-hover-glow > img {
+  filter: none;
+}
+
+.book:is(:hover, :focus-visible) .book-spine.magical-hover-glow > img,
+.book-spine.magical-hover-glow:is(:hover, :focus-visible) > img {
+  filter:
+    drop-shadow(0 0 0.3rem var(--magical-glow-color))
+    drop-shadow(0 0 0.75rem var(--magical-glow-color))
+    drop-shadow(0 0 1.35rem var(--magical-glow-color));
+}
+
 .magical-hover-glow__layer {
   position: absolute;
   inset: calc(var(--magical-glow-inset) * -1.35);
