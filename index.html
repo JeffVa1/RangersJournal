@@ -18,8 +18,37 @@
       </div>
     </section>
 
-    <section class="library" id="library" aria-live="polite">
-      <div class="loading">Loading books...</div>
+    <section class="library-stage" id="library-stage" aria-live="polite">
+      <div class="library-bookshelf">
+        <section class="library" id="library">
+          <div class="loading">Loading books...</div>
+        </section>
+      </div>
+
+      <section class="library-synopsis" id="library-synopsis" aria-hidden="true">
+        <div
+          class="library-synopsis-panel"
+          id="library-synopsis-panel"
+          aria-labelledby="library-synopsis-heading"
+        >
+          <div class="library-synopsis-scroll">
+            <h2 id="library-synopsis-heading" class="library-synopsis-heading">
+              Synopsis
+            </h2>
+            <div id="library-synopsis-content" class="library-synopsis-content">
+              <p>Select a book to read its synopsis.</p>
+            </div>
+            <a
+              id="library-open-book"
+              class="library-open-book"
+              href="viewer.html"
+              tabindex="-1"
+            >
+              Open Book
+            </a>
+          </div>
+        </div>
+      </section>
     </section>
   </main>
 

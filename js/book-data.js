@@ -1,4 +1,8 @@
 const BOOKS_PATH = new URL("../data/books.json", import.meta.url);
+const SYNOPSIS_PLACEHOLDER = [
+  "A full story summary will live here soon. For now, this synopsis gives readers a moment to pause before opening the book itself, with room for richer themes, notes, and story context.",
+  "This area is intentionally long enough to preserve the scrolling treatment and panel spacing from the original synopsis page while your real book copy continues to grow."
+];
 
 const request = async (resource, parse, errorMessage) => {
   const response = await fetch(resource);
@@ -61,3 +65,46 @@ export const loadManifest = async (manifestPath) => {
 
 export const loadText = (path, errorMessage = "Unable to load text") =>
   request(toUrl(path), (response) => response.text(), errorMessage);
+
+const getSynopsisPath = (book) => {
+  if (typeof book?.manifest === "string" && book.manifest.includes("/")) {
+    return book.manifest.replace(/[^/]+$/, "synopsis.txt");
+  }
+
+  if (typeof book?.cover === "string") {
+    return book.cover.replace(/\/pages\/[^/]+$/, "/synopsis.txt");
+  }
+
+  return `assets/books/${book?.id ?? "book"}/synopsis.txt`;
+};
+
+const parseSynopsis = (text) => {
+  const normalized = text.trim();
+  if (!normalized) {
+    return [];
+  }
+
+  const paragraphs = normalized
+    .split(/\r?\n\s*\r?\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+
+  if (paragraphs.length > 1) {
+    return paragraphs;
+  }
+
+  return normalized
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+};
+
+export const loadSynopsisParagraphs = async (book) => {
+  try {
+    const text = await loadText(getSynopsisPath(book), "Unable to load synopsis");
+    const paragraphs = parseSynopsis(text);
+    return paragraphs.length ? paragraphs : SYNOPSIS_PLACEHOLDER;
+  } catch {
+    return SYNOPSIS_PLACEHOLDER;
+  }
+};

@@ -38,8 +38,7 @@ textarea {
 }
 
 .library-main,
-.viewer-main,
-.preview-main {
+.viewer-main {
   flex: 1;
   min-height: 0;
   display: flex;
@@ -109,8 +108,7 @@ textarea {
 }
 
 .library-page,
-.viewer-page,
-.preview-page {
+.viewer-page {
   height: 100vh;
   overflow: hidden;
   display: flex;
@@ -184,14 +182,6 @@ textarea {
   overflow: visible;
 }
 
-.book-heading {
-  margin: 0;
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  font-weight: 600;
-  color: var(--accent);
-  font-family: var(--font-site);
-}
-
 .subtitle {
   margin: 0.35rem 0 0;
   color: var(--text);
@@ -218,10 +208,7 @@ textarea {
 }
 
 .library {
-  grid-column: 3 / 4;
-  justify-self: center;
-  align-self: center;
-  width: min(100%, 28rem);
+  width: 100%;
   padding: calc(1rem + var(--library-hover-safe-space, 0rem)) 0;
   margin-top: calc(-1 * var(--library-hover-safe-space, 0rem));
   display: flex;
@@ -236,8 +223,59 @@ textarea {
   isolation: isolate;
 }
 
+.library-stage {
+  grid-column: 3 / 4;
+  justify-self: center;
+  align-self: center;
+  width: min(100%, 28rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(360px, 72vh, 44rem);
+  overflow: visible;
+  position: relative;
+  isolation: isolate;
+}
+
+.library-bookshelf,
+.library-synopsis {
+  width: 100%;
+}
+
+.library-bookshelf {
+  position: relative;
+  z-index: 1;
+  transition: opacity 320ms ease, transform 420ms ease;
+  will-change: opacity, transform;
+}
+
+.library-stage-has-synopsis .library-bookshelf {
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.985);
+  pointer-events: none;
+}
+
+.library-synopsis {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.985);
+  pointer-events: none;
+  transition: opacity 320ms ease, transform 420ms ease;
+  will-change: opacity, transform;
+}
+
+.library-stage-has-synopsis .library-synopsis {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
 .book {
-  text-decoration: none;
   color: inherit;
   position: relative;
   z-index: 1;
@@ -249,6 +287,11 @@ textarea {
   gap: 0;
   width: max-content;
   max-width: none;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
   transform-origin: bottom center;
   opacity: 1;
   transition: transform 0.2s ease, opacity 0.2s ease;
@@ -325,42 +368,17 @@ textarea {
   pointer-events: none;
 }
 
-.preview-layout {
-  padding: 1rem 4vw 2rem;
-  display: grid;
-  grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 4rem);
-  align-items: center;
-  flex: 1;
-  min-height: 0;
-}
-
-.preview-book-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  text-decoration: none;
-}
-
-.preview-book-cover {
-  display: block;
-  width: min(100%, 360px);
-  height: auto;
-  max-height: 72vh;
-  object-fit: contain;
-}
-
-.preview-summary-panel {
+.library-synopsis-panel {
   position: relative;
-  min-height: 0;
+  width: 100%;
+  min-height: 22rem;
   height: min(72vh, 100%);
   border-left: 1px solid rgba(255, 255, 255, 0.32);
   border-right: 1px solid rgba(255, 255, 255, 0.32);
   overflow: hidden;
 }
 
-.preview-summary-panel::before {
+.library-synopsis-panel::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -374,7 +392,7 @@ textarea {
   pointer-events: none;
 }
 
-.preview-summary-scroll {
+.library-synopsis-scroll {
   position: relative;
   z-index: 1;
   height: 100%;
@@ -382,24 +400,52 @@ textarea {
   padding: clamp(1.5rem, 3vw, 2.75rem);
 }
 
-.preview-summary-heading {
+.library-synopsis-heading {
   margin: 0 0 1rem;
   font-size: clamp(1.25rem, 2vw, 1.75rem);
   font-family: var(--font-site);
 }
 
-.preview-summary-content {
+.library-synopsis-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   font-family: var(--font-site);
 }
 
-.preview-summary-content p {
+.library-synopsis-content p {
   margin: 0;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.92);
   font-family: var(--font-site);
+}
+
+.library-open-book {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(8, 6, 14, 0.58);
+  color: var(--text);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.library-open-book:hover,
+.library-open-book:focus-visible {
+  background: rgba(22, 16, 34, 0.78);
+  border-color: rgba(255, 255, 255, 0.58);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .viewer-stage {
@@ -512,11 +558,6 @@ textarea {
   color: var(--text);
 }
 
-.preview-book-link[aria-disabled="true"] {
-  cursor: default;
-  pointer-events: none;
-}
-
 .page-indicator {
   margin: 0.4rem 0 0;
   color: var(--muted);
@@ -570,8 +611,14 @@ textarea {
     font-size: clamp(2.5rem, 10vw, 60pt);
   }
 
+  .library-stage {
+    width: 100%;
+    min-height: clamp(300px, 64vh, 34rem);
+    padding: 0 6vw 2rem;
+  }
+
   .library {
-    padding: calc(0.5rem + var(--library-hover-safe-space, 0rem)) 6vw 2rem;
+    padding: calc(0.5rem + var(--library-hover-safe-space, 0rem)) 0 0;
     justify-content: center;
     gap: 0.75rem;
     width: 100%;
@@ -626,24 +673,9 @@ textarea {
     padding: 0 6vw 1rem;
   }
 
-  .preview-layout {
-    padding: 0.5rem 6vw 2rem;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: start;
-  }
-
-  .preview-book-link {
-    justify-content: center;
-  }
-
-  .preview-book-cover {
-    width: min(82vw, 320px);
-    max-height: none;
-  }
-
-  .preview-summary-panel {
+  .library-synopsis-panel {
     height: min(58vh, 32rem);
+    min-height: 20rem;
   }
 
 }
