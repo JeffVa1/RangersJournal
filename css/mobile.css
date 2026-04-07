@@ -86,7 +86,27 @@ body.is-mobile-site.viewer-page {
 }
 
 body.is-mobile-site.library-page {
+  position: relative;
   background-attachment: scroll;
+  isolation: isolate;
+}
+
+body.is-mobile-site.library-page::before,
+body.is-mobile-site.library-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body.is-mobile-site.library-page::before {
+  z-index: -2;
+  background: linear-gradient(90deg, #6f6f6f 0%, #060606 100%);
+}
+
+body.is-mobile-site.library-page::after {
+  z-index: -1;
+  background: url("../assets/LandingPage.png") center center / cover no-repeat;
 }
 
 @media (pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-height: 500px) {
@@ -298,6 +318,7 @@ body.is-mobile-site.library-page {
   body.is-mobile-site.is-mobile-landscape.viewer-page .mode-toggle {
     top: calc(var(--mobile-safe-top) + 0.95rem);
     font-size: 0.82rem;
+    z-index: 4;
   }
 
   body.is-mobile-site.is-mobile-landscape.viewer-page .back-link {
@@ -357,7 +378,11 @@ body.is-mobile-site.library-page {
   }
 
   body.is-mobile-site.is-mobile-landscape.viewer-page .page-nav-hit-area {
-    width: var(--mobile-nav-gutter);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 50vw;
+    z-index: 2;
   }
 
   body.is-mobile-site.is-mobile-landscape.viewer-page .viewer-page-indicator {
