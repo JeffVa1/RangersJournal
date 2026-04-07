@@ -6,8 +6,23 @@
   <title>Rangers Journal Library</title>
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/book-hover-glow.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
 </head>
 <body class="library-page">
+  <div
+    id="mobile-rotate-overlay"
+    class="mobile-rotate-overlay"
+    hidden
+    aria-hidden="true"
+  >
+    <div class="mobile-rotate-overlay__content">
+      <p class="mobile-rotate-overlay__eyebrow">Shattered Crown</p>
+      <h2 class="mobile-rotate-overlay__title">Please rotate your device to landscape</h2>
+      <p class="mobile-rotate-overlay__text">
+        Rangers Journal is easier to read in landscape on mobile.
+      </p>
+    </div>
+  </div>
   <main class="library-main">
     <section class="site-intro">
       <div class="site-brand">
@@ -31,6 +46,14 @@
           id="library-synopsis-panel"
           aria-labelledby="library-synopsis-heading"
         >
+          <button
+            id="library-close-synopsis"
+            class="library-close-synopsis"
+            type="button"
+            aria-label="Close synopsis"
+          >
+            Close
+          </button>
           <div class="library-synopsis-scroll">
             <h2 id="library-synopsis-heading" class="library-synopsis-heading">
               Synopsis

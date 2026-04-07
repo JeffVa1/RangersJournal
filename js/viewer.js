@@ -1,4 +1,5 @@
 import { getBookId, loadBook, loadManifest } from "./book-data.js";
+import { initMobileExperience } from "./mobile-experience.js";
 
 const indicatorEl = document.getElementById("page-indicator");
 const pageContainer = document.getElementById("page-container");
@@ -178,5 +179,6 @@ nextButton.addEventListener("click", () => navigateTo(state.currentIndex + 1));
 modeToggleButton.addEventListener("click", () => setMapMode(!state.isMapMode));
 window.addEventListener("keydown", handleKey);
 
+initMobileExperience();
 syncModeUi();
 init();
