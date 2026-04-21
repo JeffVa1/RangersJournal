@@ -1,5 +1,6 @@
 import { loadBooks, loadSynopsisParagraphs } from "./book-data.js";
 import { attachMagicalHoverGlow } from "./book-hover-glow.js";
+import { initMobileExperience } from "./mobile-experience.js";
 
 const libraryContainer = document.getElementById("library");
 const libraryStage = document.getElementById("library-stage");
@@ -9,7 +10,9 @@ const synopsisPanel = document.getElementById("library-synopsis");
 const synopsisSurface = document.getElementById("library-synopsis-panel");
 const synopsisContent = document.getElementById("library-synopsis-content");
 const openBookLink = document.getElementById("library-open-book");
+const closeSynopsisButton = document.getElementById("library-close-synopsis");
 const defaultSubtitle = subtitle?.dataset.default ?? "";
+const hoverMedia = window.matchMedia("(hover: hover) and (pointer: fine)");
 
 let subtitleTransitionId = 0;
 let activeBookCard = null;
@@ -23,6 +26,7 @@ const getBookCard = (target) =>
   target instanceof Element ? target.closest(".book") : null;
 
 const isSynopsisOpen = () => Boolean(openBookId);
+const canUseHover = () => hoverMedia.matches;
 
 const setSubtitle = (text) => {
   if (!subtitleText) {
@@ -189,7 +193,7 @@ const createBookCard = (book) => {
   attachMagicalHoverGlow(spineFrame, { color, inset: "0.35rem" });
 
   card.addEventListener("pointerenter", () => {
-    if (isSynopsisOpen()) {
+    if (isSynopsisOpen() || !canUseHover()) {
       return;
     }
 
@@ -198,7 +202,7 @@ const createBookCard = (book) => {
   });
 
   card.addEventListener("pointerleave", (event) => {
-    if (isSynopsisOpen()) {
+    if (isSynopsisOpen() || !canUseHover()) {
       return;
     }
 
@@ -245,6 +249,11 @@ const createBookCard = (book) => {
   });
 
   card.addEventListener("click", () => {
+    if (openBookId === book.id) {
+      closeSynopsis();
+      return;
+    }
+
     openSynopsis(book, card);
   });
 
@@ -302,6 +311,8 @@ const init = async () => {
 
 document.addEventListener("pointerdown", handleDocumentPointerDown);
 window.addEventListener("keydown", handleEscape);
+closeSynopsisButton?.addEventListener("click", closeSynopsis);
 
+initMobileExperience();
 setSynopsisState(false);
 init();

@@ -5,8 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Book Viewer</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
 </head>
 <body class="viewer-page">
+  <div
+    id="mobile-rotate-overlay"
+    class="mobile-rotate-overlay"
+    hidden
+    aria-hidden="true"
+  >
+    <div class="mobile-rotate-overlay__content">
+      <p class="mobile-rotate-overlay__eyebrow">Shattered Crown</p>
+      <h2 class="mobile-rotate-overlay__title">Please rotate your device to landscape</h2>
+      <p class="mobile-rotate-overlay__text">
+        Rangers Journal is easier to read in landscape on mobile.
+      </p>
+    </div>
+  </div>
   <div class="viewer-background" aria-hidden="true">
     <div class="viewer-background-layer viewer-background-layer-map"></div>
     <div class="viewer-background-layer viewer-background-layer-book"></div>
