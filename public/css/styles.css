@@ -44,6 +44,7 @@ body {
   background: rgba(0, 0, 0, 0.54);
   box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(12px);
+  font-family: var(--font-site);
   transform: translateY(-50%);
   transition:
     width 180ms ease,
