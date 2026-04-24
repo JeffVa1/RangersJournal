@@ -1,0 +1,45 @@
+<main class="library-main">
+  <section class="site-intro">
+    <div class="site-brand">
+      <h1 class="site-title-text">Shattered Crown</h1>
+      <p class="subtitle" id="library-subtitle" data-default="">
+        <span class="subtitle-text"></span>
+      </p>
+    </div>
+  </section>
+
+  <section class="library-stage" id="library-stage" aria-live="polite">
+    <div class="library-bookshelf">
+      <section class="library" id="library">
+        <div class="loading">Loading books...</div>
+      </section>
+    </div>
+
+    <section class="library-synopsis" id="library-synopsis" aria-hidden="true">
+      <div
+        class="library-synopsis-panel"
+        id="library-synopsis-panel"
+        aria-labelledby="library-synopsis-heading"
+      >
+        <div class="library-synopsis-scroll">
+          <h2 id="library-synopsis-heading" class="library-synopsis-heading">
+            Synopsis
+          </h2>
+          <div id="library-synopsis-content" class="library-synopsis-content">
+            <p>Select a book to read its synopsis.</p>
+          </div>
+        </div>
+      </div>
+      <a
+        id="library-open-book"
+        class="library-open-book"
+        href="/viewer"
+        tabindex="-1"
+      >
+        Open Book
+      </a>
+    </section>
+  </section>
+</main>
+
+<script type="module" src="/js/library.js"></script>

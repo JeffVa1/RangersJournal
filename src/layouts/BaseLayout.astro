@@ -1,0 +1,26 @@
+---
+import Sidebar from "../components/Sidebar.astro";
+
+interface Props {
+  title?: string;
+  bodyClass?: string;
+}
+
+const { title = "Rangers Journal", bodyClass = "" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/book-hover-glow.css" />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <Sidebar currentPath={Astro.url.pathname} />
+    <slot />
+  </body>
+</html>

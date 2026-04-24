@@ -1,4 +1,4 @@
 @echo off
-cd /d "C:\Users\crook\Repos\RangersJournal"
+cd /d "%~dp0"
 powershell -ExecutionPolicy Bypass -File "%~dp0start-server.ps1"
 pause

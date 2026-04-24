@@ -1,0 +1,22 @@
+{
+  "name": "rangers-journal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^8.2.8",
+    "astro": "^5.15.5"
+  },
+  "devDependencies": {
+    "vercel": "^48.6.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

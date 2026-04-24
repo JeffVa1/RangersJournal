@@ -148,7 +148,7 @@ const openSynopsis = async (book, card) => {
   renderSynopsis(["Loading synopsis..."]);
 
   if (openBookLink) {
-    openBookLink.href = `viewer.html?book=${encodeURIComponent(book.id)}`;
+    openBookLink.href = `/viewer?book=${encodeURIComponent(book.id)}`;
   }
 
   setSynopsisState(true);

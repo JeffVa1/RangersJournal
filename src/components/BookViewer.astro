@@ -1,0 +1,35 @@
+<div class="viewer-background" aria-hidden="true">
+  <div class="viewer-background-layer viewer-background-layer-map"></div>
+  <div class="viewer-background-layer viewer-background-layer-book"></div>
+</div>
+<main class="viewer-main">
+  <section class="page-intro">
+    <a class="back-link" href="/">&larr; Library</a>
+    <button id="mode-toggle" class="mode-toggle" type="button" aria-pressed="false">
+      Map -&gt;
+    </button>
+  </section>
+
+  <div id="viewer-content" class="viewer-content">
+    <section class="viewer" id="viewer">
+      <div class="viewer-stage">
+        <button
+          id="prev-button"
+          class="page-nav-hit-area page-nav-hit-area-prev"
+          type="button"
+          aria-label="Previous page"
+        ></button>
+        <div class="page-container" id="page-container" aria-live="polite"></div>
+        <button
+          id="next-button"
+          class="page-nav-hit-area page-nav-hit-area-next"
+          type="button"
+          aria-label="Next page"
+        ></button>
+      </div>
+    </section>
+    <p id="page-indicator" class="page-indicator viewer-page-indicator"></p>
+  </div>
+</main>
+
+<script type="module" src="/js/viewer.js"></script>
