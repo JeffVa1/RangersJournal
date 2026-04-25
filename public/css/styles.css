@@ -1355,7 +1355,7 @@ img {
 }
 
 @media (max-width: 920px) and (orientation: portrait) {
-  body::before {
+  body:not(.character-profiles-page)::before {
     content: "Rotate to landscape";
     position: fixed;
     inset: 0;
@@ -1373,7 +1373,7 @@ img {
     letter-spacing: 0.08em;
   }
 
-  body::after {
+  body:not(.character-profiles-page)::after {
     content: "";
     position: fixed;
     inset: 1rem;

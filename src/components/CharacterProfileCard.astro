@@ -1,0 +1,277 @@
+---
+import CharacterSheetSection from "./CharacterSheetSection.astro";
+import type { CharacterMetric, CharacterProfile } from "../lib/characterProfiles";
+
+interface Props {
+  character: CharacterProfile;
+  index: number;
+}
+
+const { character, index } = Astro.props;
+const isReversed = index % 2 === 1;
+const classLine = character.subclass
+  ? `${character.className} - ${character.subclass}`
+  : character.className;
+const overview = [
+  { label: "Race", value: character.species },
+  { label: "Age", value: character.age },
+  { label: "Class", value: classLine },
+  { label: "Level", value: character.levelLabel }
+];
+const identity = [
+  { label: "Race / Species", value: character.species },
+  { label: "Class", value: classLine },
+  { label: "Level", value: character.levelLabel },
+  { label: "Background", value: character.background },
+  { label: "Alignment", value: character.alignment },
+  { label: "Age", value: character.age }
+].filter((item) => item.value);
+const spellMetrics: CharacterMetric[] = character.spellcasting
+  ? [
+      { label: "Ability", value: character.spellcasting.ability ?? "" },
+      { label: "Save DC", value: character.spellcasting.saveDc ?? "" },
+      { label: "Attack Bonus", value: character.spellcasting.attackBonus ?? "" }
+    ].filter((item) => item.value)
+  : [];
+---
+
+<details
+  class:list={[
+    "character-profile-card",
+    isReversed && "character-profile-card-reversed"
+  ]}
+  data-character-profile-card
+>
+  <summary class="character-profile-summary" data-character-profile-summary>
+    <span class="character-preview-media">
+      <img src={character.portraitSrc} alt={character.portraitAlt} loading="lazy" />
+    </span>
+    <span class="character-preview-content">
+      <span class="character-preview-name">{character.name}</span>
+      {character.summary && <span class="character-preview-summary">{character.summary}</span>}
+      <span class="character-preview-stats">
+        {
+          overview.map((item) => (
+            <span class="character-preview-stat">
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </span>
+          ))
+        }
+      </span>
+    </span>
+    <span class="character-profile-toggle" aria-hidden="true">Expand</span>
+  </summary>
+
+  <div class="character-profile-body" data-character-profile-body>
+    <div class="character-profile-grid">
+      {
+        character.backstory && (
+          <CharacterSheetSection title="Backstory" class="character-sheet-section-wide">
+            <p class="character-backstory">{character.backstory}</p>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.personality.length > 0 && (
+          <CharacterSheetSection title="Personality">
+            <div class="group-list">
+              {character.personality.map((group) => (
+                <article>
+                  <h4>{group.label}</h4>
+                  <p>{group.items.join(" ")}</p>
+                </article>
+              ))}
+            </div>
+          </CharacterSheetSection>
+        )
+      }
+
+      <CharacterSheetSection title="Identity">
+        <dl class="character-detail-list">
+          {
+            identity.map((item) => (
+              <div>
+                <dt>{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </CharacterSheetSection>
+
+      <CharacterSheetSection title="Ability Scores" class="character-sheet-section-wide">
+        <div class="ability-grid">
+          {
+            character.abilities.map((ability) => (
+              <div class="ability-card">
+                <span>{ability.label}</span>
+                <strong>{ability.score}</strong>
+                <em>{ability.modifier}</em>
+              </div>
+            ))
+          }
+        </div>
+      </CharacterSheetSection>
+
+      {
+        character.combatStats.length > 0 && (
+          <CharacterSheetSection title="Combat">
+            <dl class="character-metric-grid">
+              {character.combatStats.map((item) => (
+                <div>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.passives.length > 0 && (
+          <CharacterSheetSection title="Passive Scores">
+            <dl class="character-metric-grid">
+              {character.passives.map((item) => (
+                <div>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.savingThrows.length > 0 && (
+          <CharacterSheetSection title="Saving Throws">
+            <ul class="character-check-list">
+              {character.savingThrows.map((save) => (
+                <li>
+                  <span>{save.name}</span>
+                  <strong>{save.value}</strong>
+                  {save.proficient && <em>Proficient</em>}
+                </li>
+              ))}
+            </ul>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.skills.length > 0 && (
+          <CharacterSheetSection title="Skills">
+            <ul class="character-check-list character-check-list-dense">
+              {character.skills.map((skill) => (
+                <li>
+                  <span>{skill.name}</span>
+                  <strong>{skill.value}</strong>
+                  {skill.proficient && <em>Proficient</em>}
+                </li>
+              ))}
+            </ul>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.attacks.length > 0 && (
+          <CharacterSheetSection title="Attacks And Spellcasting">
+            <div class="attack-list">
+              {character.attacks.map((attack) => (
+                <article class="attack-card">
+                  <h4>{attack.name}</h4>
+                  <p>
+                    {[attack.bonus, attack.damage, attack.notes].filter(Boolean).join(" | ")}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.spellcasting && (
+          <CharacterSheetSection title="Spell Slots">
+            {spellMetrics.length > 0 && (
+              <dl class="character-metric-grid">
+                {spellMetrics.map((item) => (
+                  <div>
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {character.spellcasting.slots.length > 0 && (
+              <dl class="spell-slot-list">
+                {character.spellcasting.slots.map((slot) => (
+                  <div>
+                    <dt>{slot.label}</dt>
+                    <dd>{slot.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {character.spellcasting.spells.length > 0 && (
+              <ul class="tag-list">
+                {character.spellcasting.spells.map((spell) => (
+                  <li>{spell}</li>
+                ))}
+              </ul>
+            )}
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.features.length > 0 && (
+          <CharacterSheetSection title="Features And Traits">
+            <ul class="text-list">
+              {character.features.map((feature) => (
+                <li>{feature}</li>
+              ))}
+            </ul>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.proficiencies.length > 0 && (
+          <CharacterSheetSection title="Proficiencies And Languages">
+            <div class="group-list">
+              {character.proficiencies.map((group) => (
+                <article>
+                  <h4>{group.label}</h4>
+                  <p>{group.items.join(", ")}</p>
+                </article>
+              ))}
+            </div>
+          </CharacterSheetSection>
+        )
+      }
+
+      {
+        character.specialEquipment.length > 0 && (
+          <CharacterSheetSection title="Special Equipment" class="character-sheet-section-wide">
+            <div class="special-equipment-list">
+              {character.specialEquipment.map((item) => (
+                <article class="special-equipment-card">
+                  {item.imageSrc && <img src={item.imageSrc} alt={`${item.name} equipment artwork`} loading="lazy" />}
+                  <div>
+                    <h4>{item.name}</h4>
+                    {item.description && <p>{item.description}</p>}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CharacterSheetSection>
+        )
+      }
+    </div>
+  </div>
+</details>

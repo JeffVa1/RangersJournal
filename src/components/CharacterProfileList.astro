@@ -1,0 +1,126 @@
+---
+import CharacterProfileCard from "./CharacterProfileCard.astro";
+import type { CharacterProfile } from "../lib/characterProfiles";
+
+interface Props {
+  characters: CharacterProfile[];
+}
+
+const { characters } = Astro.props;
+---
+
+<section class="character-profile-list" aria-label="Character profile list">
+  {
+    characters.length > 0 ? (
+      characters.map((character, index) => (
+        <CharacterProfileCard character={character} index={index} />
+      ))
+    ) : (
+      <div class="character-empty-state">
+        <h2>No character profiles found</h2>
+        <p>
+          Add a folder under src/content/character-profiles with a profile.json
+          file to create the first profile.
+        </p>
+      </div>
+    )
+  }
+</section>
+
+<script>
+  const animationDuration = 240;
+  const animationEase = "cubic-bezier(0.22, 1, 0.36, 1)";
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const activeAnimations = new WeakMap();
+
+  const clearBodyStyles = (body) => {
+    body.style.blockSize = "";
+    body.style.opacity = "";
+    body.style.overflow = "";
+  };
+
+  const finishAnimation = (card, body, shouldOpen) => {
+    card.open = shouldOpen;
+    card.classList.remove("is-profile-animating");
+    activeAnimations.delete(card);
+    clearBodyStyles(body);
+  };
+
+  const animateProfile = (card, shouldOpen) => {
+    const body = card.querySelector("[data-character-profile-body]");
+    if (!(body instanceof HTMLElement)) {
+      card.open = shouldOpen;
+      return;
+    }
+
+    activeAnimations.get(card)?.cancel();
+
+    if (reduceMotion.matches) {
+      finishAnimation(card, body, shouldOpen);
+      return;
+    }
+
+    card.classList.add("is-profile-animating");
+    body.style.overflow = "hidden";
+
+    if (shouldOpen) {
+      card.open = true;
+      body.style.blockSize = "0px";
+      body.style.opacity = "0";
+
+      requestAnimationFrame(() => {
+        const animation = body.animate(
+          [
+            { blockSize: "0px", opacity: 0 },
+            { blockSize: `${body.scrollHeight}px`, opacity: 1 }
+          ],
+          {
+            duration: animationDuration,
+            easing: animationEase
+          }
+        );
+
+        activeAnimations.set(card, animation);
+        animation.onfinish = () => finishAnimation(card, body, true);
+        animation.oncancel = () => clearBodyStyles(body);
+      });
+
+      return;
+    }
+
+    const startHeight = body.offsetHeight;
+    body.style.blockSize = `${startHeight}px`;
+    body.style.opacity = "1";
+
+    requestAnimationFrame(() => {
+      const animation = body.animate(
+        [
+          { blockSize: `${startHeight}px`, opacity: 1 },
+          { blockSize: "0px", opacity: 0 }
+        ],
+        {
+          duration: animationDuration,
+          easing: animationEase
+        }
+      );
+
+      activeAnimations.set(card, animation);
+      animation.onfinish = () => finishAnimation(card, body, false);
+      animation.oncancel = () => clearBodyStyles(body);
+    });
+  };
+
+  document
+    .querySelectorAll("[data-character-profile-card]")
+    .forEach((card) => {
+      if (!(card instanceof HTMLDetailsElement)) {
+        return;
+      }
+
+      const summary = card.querySelector("[data-character-profile-summary]");
+      summary?.addEventListener("click", (event) => {
+        event.preventDefault();
+        animateProfile(card, !card.open);
+      });
+    });
+</script>
