@@ -1,7 +1,28 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CharacterProfileList from "../components/CharacterProfileList.astro";
+import { getCharacterProfiles } from "../lib/characterProfiles";
+
+const characters = await getCharacterProfiles();
 ---
 
-<BaseLayout title="Character Profiles | Rangers Journal" bodyClass="empty-page">
-  <main class="empty-main" aria-label="Character Profiles"></main>
+<BaseLayout
+  title="Character Profiles | Rangers Journal"
+  bodyClass="character-profiles-page"
+>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/css/character-profiles.css" />
+  </Fragment>
+
+  <main class="character-profiles-main" aria-label="Character Profiles">
+    <section class="character-profiles-hero">
+      <p>The Shattered Crown</p>
+      <h1>Character Profiles</h1>
+      <span>
+        Companions, rivals, and marked names from the Shattered Crown campaign.
+      </span>
+    </section>
+
+    <CharacterProfileList characters={characters} />
+  </main>
 </BaseLayout>

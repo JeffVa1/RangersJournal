@@ -1,0 +1,169 @@
+{
+  "order": 1,
+  "name": "Kaelen Thornwatch",
+  "species": "Half-Elf",
+  "className": "Ranger",
+  "subclass": "Gloom Stalker",
+  "level": 7,
+  "levelLabel": "Level 7",
+  "background": "Outlander",
+  "alignment": "Neutral Good",
+  "age": "84",
+  "portrait": "portrait.png",
+  "summary": "A watchful trail-warden sworn to the broken crown.",
+  "abilities": {
+    "strength": 12,
+    "dexterity": 18,
+    "constitution": 14,
+    "intelligence": 11,
+    "wisdom": 16,
+    "charisma": 10
+  },
+  "combat": {
+    "proficiencyBonus": 3,
+    "armorClass": 16,
+    "initiative": 4,
+    "speed": "35 ft.",
+    "hitPoints": {
+      "current": 58,
+      "maximum": 58
+    },
+    "hitDice": "7d10"
+  },
+  "savingThrows": [
+    {
+      "name": "Strength",
+      "value": 4,
+      "proficient": true
+    },
+    {
+      "name": "Dexterity",
+      "value": 7,
+      "proficient": true
+    }
+  ],
+  "skills": [
+    {
+      "name": "Perception",
+      "value": 9,
+      "proficient": true
+    },
+    {
+      "name": "Stealth",
+      "value": 10,
+      "proficient": true
+    },
+    {
+      "name": "Survival",
+      "value": 6,
+      "proficient": true
+    },
+    {
+      "name": "Investigation",
+      "value": 3,
+      "proficient": false
+    }
+  ],
+  "passives": {
+    "perception": 19,
+    "investigation": 13,
+    "insight": 13
+  },
+  "attacks": [
+    {
+      "name": "Longbow",
+      "bonus": "+7",
+      "damage": "1d8+4 piercing",
+      "notes": "150/600 ft."
+    },
+    {
+      "name": "Shortsword",
+      "bonus": "+7",
+      "damage": "1d6+4 piercing",
+      "notes": "Light, finesse"
+    }
+  ],
+  "spellcasting": {
+    "ability": "Wisdom",
+    "saveDc": 14,
+    "attackBonus": "+6",
+    "slots": [
+      {
+        "level": 1,
+        "total": 4
+      },
+      {
+        "level": 2,
+        "total": 3
+      }
+    ],
+    "spells": [
+      "Hunter's Mark",
+      "Pass without Trace",
+      "Disguise Self",
+      "Rope Trick"
+    ]
+  },
+  "features": [
+    "Darkvision",
+    "Favored Foe",
+    "Dread Ambusher",
+    "Umbral Sight",
+    "Primeval Awareness"
+  ],
+  "proficiencies": {
+    "armor": [
+      "Light armor",
+      "Medium armor",
+      "Shields"
+    ],
+    "weapons": [
+      "Simple weapons",
+      "Martial weapons"
+    ],
+    "tools": [
+      "Cartographer's tools"
+    ],
+    "languages": [
+      "Common",
+      "Elvish",
+      "Sylvan"
+    ]
+  },
+  "equipment": [
+    "Explorer's pack",
+    "Longbow",
+    "Two shortswords",
+    "Dark green traveler's cloak",
+    "A weathered map case sealed in black wax"
+  ],
+  "currency": {
+    "cp": 0,
+    "sp": 8,
+    "ep": 0,
+    "gp": 42,
+    "pp": 0
+  },
+  "specialEquipment": [
+    {
+      "name": "Moonlit Compass",
+      "image": "moonlit-compass.png",
+      "description": "Always points toward the last place moonlight touched the bearer."
+    }
+  ],
+  "personality": {
+    "traits": [
+      "Speaks rarely, watches everything."
+    ],
+    "ideals": [
+      "The wild remembers every oath."
+    ],
+    "bonds": [
+      "Protects the last heirs of the Shattered Crown."
+    ],
+    "flaws": [
+      "Trusts signs and omens more than people."
+    ]
+  },
+  "backstory": "Kaelen keeps the old border paths and carries maps no court still admits exist. He learned to follow the broken roads by moonlight, listening for the old ranger bells hidden in hollow trees. Since the crown fell, his patrols have become quieter and more dangerous, but he still marks safe passage for those who travel under honest need."
+}
