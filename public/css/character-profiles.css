@@ -22,7 +22,7 @@
 
 .character-profiles-hero p,
 .character-sheet-section h3,
-.character-profile-toggle {
+.character-profile-close {
   font-family: var(--font-site);
 }
 
@@ -140,7 +140,7 @@
   position: relative;
   z-index: 3;
   display: grid;
-  grid-template-columns: minmax(13rem, 26%) 1fr auto;
+  grid-template-columns: minmax(13rem, 26%) 1fr;
   gap: clamp(1.25rem, 3vw, 2.5rem);
   align-items: stretch;
   min-height: clamp(17rem, 28vw, 22rem);
@@ -151,7 +151,7 @@
 }
 
 .character-profile-card-reversed .character-profile-summary {
-  grid-template-columns: 1fr minmax(13rem, 26%) auto;
+  grid-template-columns: 1fr minmax(13rem, 26%);
 }
 
 .character-profile-summary::-webkit-details-marker {
@@ -164,10 +164,6 @@
 
 .character-profile-card-reversed .character-preview-content {
   order: 1;
-}
-
-.character-profile-card-reversed .character-profile-toggle {
-  order: 3;
 }
 
 .character-preview-media {
@@ -259,37 +255,34 @@
   line-height: 1.2;
 }
 
-.character-profile-toggle {
-  align-self: center;
-  writing-mode: vertical-rl;
-  color: rgba(255, 248, 230, 0.68);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.character-profile-card[open] .character-profile-toggle {
-  color: #d8be76;
-}
-
-.character-profile-card[open] .character-profile-toggle::before {
-  content: "Close";
-}
-
-.character-profile-card[open] .character-profile-toggle {
-  font-size: 0;
-}
-
-.character-profile-card[open] .character-profile-toggle::before {
-  font-size: 0.78rem;
-}
-
 .character-profile-body {
   position: relative;
   z-index: 3;
   padding: 0 clamp(0.85rem, 1.7vw, 1.25rem) clamp(0.85rem, 1.7vw, 1.25rem);
   transform-origin: top;
   will-change: block-size, opacity;
+}
+
+.character-profile-close {
+  display: block;
+  width: max-content;
+  margin: clamp(0.9rem, 2vw, 1.25rem) auto 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 248, 230, 0.7);
+  cursor: pointer;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.character-profile-close:hover,
+.character-profile-close:focus-visible {
+  color: #d8be76;
+  outline: none;
+  transform: translateY(-1px);
 }
 
 .character-profile-grid {
@@ -532,18 +525,12 @@
   }
 
   .character-profile-card-reversed .character-preview-media,
-  .character-profile-card-reversed .character-preview-content,
-  .character-profile-card-reversed .character-profile-toggle {
+  .character-profile-card-reversed .character-preview-content {
     order: initial;
   }
 
   .character-preview-media {
     min-height: 20rem;
-  }
-
-  .character-profile-toggle {
-    writing-mode: horizontal-tb;
-    justify-self: start;
   }
 
   .character-preview-stats,

@@ -122,5 +122,10 @@ const { characters } = Astro.props;
         event.preventDefault();
         animateProfile(card, !card.open);
       });
+
+      const closeButton = card.querySelector("[data-character-profile-close]");
+      closeButton?.addEventListener("click", () => {
+        animateProfile(card, false);
+      });
     });
 </script>
