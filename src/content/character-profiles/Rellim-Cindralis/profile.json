@@ -6,51 +6,51 @@
   "subclass": "Gloom Stalker",
   "level": 5,
   "levelLabel": "Level 5",
-  "background": "",
-  "alignment": "",
-  "age": "",
+  "background": "Criminal",
+  "alignment": "Chaotic Good",
+  "age": "24",
   "portrait": "portrait.png",
-  "summary": "",
+  "summary": "Child born of ashes.",
   "abilities": {
     "strength": 10,
-    "dexterity": 10,
+    "dexterity": 18,
     "constitution": 10,
-    "intelligence": 10,
-    "wisdom": 10,
-    "charisma": 10
+    "intelligence": 14,
+    "wisdom": 16,
+    "charisma": 13
   },
   "combat": {
-    "proficiencyBonus": 0,
-    "armorClass": 0,
-    "initiative": 0,
+    "proficiencyBonus": 3,
+    "armorClass": 17,
+    "initiative": 10,
     "speed": "30 ft.",
     "hitPoints": {
-      "current": 0,
-      "maximum": 0
+      "current": 37,
+      "maximum": 37
     },
-    "hitDice": "7d10"
+    "hitDice": "5d10"
   },
   "savingThrows": [
     {
-      "name": "Strength",
-      "value": 4,
+      "name": "Dexterity",
+      "value": 7,
       "proficient": true
     },
     {
-      "name": "Dexterity",
-      "value": 7,
+      "name": "Strength",
+      "value": 0,
       "proficient": true
     }
   ],
   "skills": [
     {
-      "name": "Perception",
-      "value": 9,
+      "name": "Stealth",
+      "value": 7,
       "proficient": true
     },
     {
-      "name": "Stealth",
-      "value": 10,
+      "name": "Sleight of Hand",
+      "value": 7,
       "proficient": true
     },
     {
@@ -59,28 +59,52 @@
       "proficient": true
     },
     {
+      "name": "Perception",
+      "value": 6,
+      "proficient": true
+    }
+    ,
+    {
+      "name": "Insight",
+      "value": 6,
+      "proficient": true
+    }
+    ,
+    {
+      "name": "History",
+      "value": 5,
+      "proficient": true
+    }
+    ,
+    {
       "name": "Investigation",
-      "value": 3,
-      "proficient": false
+      "value": 5,
+      "proficient": true
     }
   ],
   "passives": {
-    "perception": 19,
-    "investigation": 13,
-    "insight": 13
+    "perception": 16,
+    "investigation": 15,
+    "insight": 16
   },
   "attacks": [
     {
-      "name": "Longbow",
-      "bonus": "+7",
-      "damage": "1d8+4 piercing",
+      "name": "Windwalker (Longbow) +1",
+      "bonus": "+10",
+      "damage": "1d8+5 piercing",
       "notes": "150/600 ft."
     },
     {
-      "name": "Shortsword",
-      "bonus": "+7",
-      "damage": "1d6+4 piercing",
-      "notes": "Light, finesse"
+      "name": "Poison Arrow",
+      "bonus": "+0",
+      "damage": "1d4 poison",
+      "notes": "Arrows coated with a basic poison"
+    },
+    {
+      "name": "Fire Arrow",
+      "bonus": "+0",
+      "damage": "1d4 fire",
+      "notes": "Arrows wrapped in cloth soaked with oil, ignited on fire"
     }
   ],
   "spellcasting": {
@@ -94,22 +118,31 @@
       },
       {
         "level": 2,
-        "total": 3
+        "total": 2
       }
     ],
     "spells": [
       "Hunter's Mark",
-      "Pass without Trace",
       "Disguise Self",
-      "Rope Trick"
+      "Alarm",
+      "Ensnaring Strike",
+      "Cure Wounds",
+      "Rope Trick",
+      "Pass without Trace",
+      "Spike Growth"
     ]
   },
   "features": [
-    "Darkvision",
-    "Favored Foe",
+    "Alert",
+    "Fey Ancestry",
+    "Archery Fighting Style",
+    "Primeval Awareness",
+    "Favored Enemy",
+    "Natural Explorer",
+    "Sharpshooter",
+    "Gloom Stalker Magic",
     "Dread Ambusher",
-    "Umbral Sight",
-    "Primeval Awareness"
+    "Umbral Sight"
   ],
   "proficiencies": {
     "armor": [
@@ -122,34 +155,36 @@
       "Martial weapons"
     ],
     "tools": [
-      "Cartographer's tools"
+      "Thieves' tools"
     ],
     "languages": [
       "Common",
+      "Common Sign Language",
       "Elvish",
-      "Sylvan"
+      "Abyssal",
+      "Draconic"
     ]
   },
   "specialEquipment": [
     {
-      "name": "Moonlit Compass",
+      "name": "Windwalker +1",
       "image": "moonlit-compass.png",
-      "description": "Always points toward the last place moonlight touched the bearer."
+      "description": "An Elven longbow found in the hidden Crypt of Irillis."
     }
   ],
   "personality": {
     "traits": [
-      "Speaks rarely, watches everything."
+      "Slow to trust, but would die for a friend"
     ],
     "ideals": [
-      "The wild remembers every oath."
+      "Family. Blood runs thicker than water."
     ],
     "bonds": [
-      "Protects the last heirs of the Shattered Crown."
+      "My loyalty to my Ancestry is unwavering."
     ],
     "flaws": [
-      "Trusts signs and omens more than people."
+      "I hide a secret that could ruin my family ancestry forever."
     ]
   },
-  "backstory": "Kaelen keeps the old border paths and carries maps no court still admits exist. He learned to follow the broken roads by moonlight, listening for the old ranger bells hidden in hollow trees. Since the crown fell, his patrols have become quieter and more dangerous, but he still marks safe passage for those who travel under honest need."
+  "backstory": "The Shadow of Irillis\nLong before the people of Aurelion whispered the name Ranger, he was Rellim Cindralis, a child of the high hills overlooking the skeletal ruins of Irillis. Among moss-slicked stone and shattered spires, his father taught him that survival was a language. He learned to read the land like a script, to move as a secret, and to wield knowledge with the same lethal precision as a blade. Through flickering firelight, Rellim discovered that Irillis was not merely a graveyard of stone, but a fallen sanctuary of scholars whose secrets predated the God King himself.\nTheir life was one of nomadic silence, until the silence broke.\nThe God King’s Marshals of Elandros descended like a fever in the night. From beneath the floorboards of their cabin, Rellim watched his world turn to ash. He saw his father fight with the grace of a storm, only to be bound by unnatural sorcery and executed by a figure in gold-masked armor. When the Marshals vanished, they took the body and left Rellim with nothing but a bloodstained floor and an ancient signet ring, the sole inheritance of a dead city.\nAt dawn, Rellim emerged not as a boy, but as a ghost. He abandoned the comfort of walls, trusting the wilderness over kings and shadows over men. He became a creature of the forest’s edge, haunted by the memory of a golden mask and guided by a legacy he was not yet ready to claim.\nThe Scholar’s Assistant\nSeeking the only bridge to his past, Rellim traveled south to Thalmyre to find Durlin Nidavellir, a dwarven academic who wore the God King’s approval like a well-tailored coat. To the public, Durlin was a meticulous lecturer of approved history; in private, he was a guardian of the forbidden.\nFor seven years, Rellim lived in the heart of the enemy’s culture. He served as Durlin’s shadow, copying manuscripts, organizing archives, and sitting in the back of lecture halls. But in the quiet of sealed vaults, he studied the truth of Irillis, piecing together a history the God King had tried to burn from the world’s memory.\nThe Turning Point\nThe peace of the archives ended with a single slip of a page. Caught with a text he was never meant to touch, Rellim saw the weight of seven years vanish in an instant. With the Marshals closing in, Durlin urged him into the night, severing his last tie to safety.\nRellim fled north, aiming for the familiar cold of his homeland. But at an unremarkable crossroads on the King’s Road, fate pulled at his cloak. He chose the path to the right, turning away from the Dragon’s Breath Inn and stepping instead toward a destiny that would change the map of Aurelion forever."
 }
