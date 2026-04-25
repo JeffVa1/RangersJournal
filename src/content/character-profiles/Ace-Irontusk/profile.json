@@ -6,75 +6,65 @@
   "subclass": "Wild Magic",
   "level": 5,
   "levelLabel": "Level 5",
-  "background": "",
-  "alignment": "",
-  "age": "",
+  "background": "Soldier",
+  "alignment": "Chaotic Good",
+  "age": "99",
   "portrait": "portrait.png",
-  "summary": "",
+  "summary": "Cool guy",
   "abilities": {
-    "strength": 10,
+    "strength": 18,
     "dexterity": 10,
-    "constitution": 10,
-    "intelligence": 10,
-    "wisdom": 10,
-    "charisma": 10
+    "constitution": 18,
+    "intelligence": 8,
+    "wisdom": 8,
+    "charisma": 14
   },
   "combat": {
-    "proficiencyBonus": 0,
-    "armorClass": 0,
+    "proficiencyBonus": 3,
+    "armorClass": 16,
     "initiative": 0,
-    "speed": "30 ft.",
+    "speed": "40 ft.",
     "hitPoints": {
-      "current": 0,
-      "maximum": 0
+      "current": 66,
+      "maximum": 66
     },
-    "hitDice": "7d10"
+    "hitDice": "5d12"
   },
   "savingThrows": [
     {
       "name": "Strength",
-      "value": 4,
+      "value": 7,
       "proficient": true
     },
     {
-      "name": "Dexterity",
+      "name": "Constitution",
       "value": 7,
       "proficient": true
     }
   ],
   "skills": [
     {
-      "name": "Perception",
-      "value": 9,
+      "name": "Athletics",
+      "value": 7,
       "proficient": true
     },
     {
-      "name": "Stealth",
-      "value": 10,
+      "name": "Intimidation",
+      "value": 8,
       "proficient": true
-    },
-    {
-      "name": "Survival",
-      "value": 6,
-      "proficient": true
-    },
-    {
-      "name": "Investigation",
-      "value": 3,
-      "proficient": false
     }
   ],
   "passives": {
-    "perception": 19,
-    "investigation": 13,
-    "insight": 13
+    "perception": 9,
+    "investigation": 9,
+    "insight": 9
   },
   "attacks": [
     {
-      "name": "Longbow",
+      "name": "Nullite Forge Hammer",
       "bonus": "+7",
-      "damage": "1d8+4 piercing",
-      "notes": "150/600 ft."
+      "damage": "1d8 Bludgeoning + 1d4 Null + 7",
+      "notes": "Versatile, Forged from Nullite"
     },
     {
       "name": "Shortsword",
@@ -83,38 +73,19 @@
       "notes": "Light, finesse"
     }
   ],
-  "spellcasting": {
-    "ability": "Wisdom",
-    "saveDc": 14,
-    "attackBonus": "+6",
-    "slots": [
-      {
-        "level": 1,
-        "total": 4
-      },
-      {
-        "level": 2,
-        "total": 3
-      }
-    ],
-    "spells": [
-      "Hunter's Mark",
-      "Pass without Trace",
-      "Disguise Self",
-      "Rope Trick"
-    ]
-  },
   "features": [
     "Darkvision",
-    "Favored Foe",
-    "Dread Ambusher",
-    "Umbral Sight",
-    "Primeval Awareness"
+    "Rage",
+    "Wild Surge",
+    "Savage Attacker",
+    "Magic Awareness",
+    "Danger Sense",
+    "Reckless Attack",
+    "Unarmored Defense",
+    "Lucky"
   ],
   "proficiencies": {
     "armor": [
-      "Light armor",
-      "Medium armor",
       "Shields"
     ],
     "weapons": [
@@ -122,34 +93,34 @@
       "Martial weapons"
     ],
     "tools": [
-      "Cartographer's tools"
+      "Dice"
     ],
     "languages": [
       "Common",
-      "Elvish",
-      "Sylvan"
+      "Common Sign Language",
+      "Orc"
     ]
   },
   "specialEquipment": [
     {
-      "name": "Moonlit Compass",
-      "image": "moonlit-compass.png",
-      "description": "Always points toward the last place moonlight touched the bearer."
+      "name": "Nullite Forge Hammer",
+      "image": "nullite-forge-hammer.png",
+      "description": "A brutal, blackened hammer forged from Nullite—a void-metal that devours identity, essence, and magic. Light bends strangely around it, as if the hammer’s head drinks in color and sound. Even when still, it feels like it is subtracting something from the world."
     }
   ],
   "personality": {
     "traits": [
-      "Speaks rarely, watches everything."
+      ""
     ],
     "ideals": [
-      "The wild remembers every oath."
+      ""
     ],
     "bonds": [
-      "Protects the last heirs of the Shattered Crown."
+      ""
     ],
     "flaws": [
-      "Trusts signs and omens more than people."
+      ""
     ]
   },
-  "backstory": "Kaelen keeps the old border paths and carries maps no court still admits exist. He learned to follow the broken roads by moonlight, listening for the old ranger bells hidden in hollow trees. Since the crown fell, his patrols have become quieter and more dangerous, but he still marks safe passage for those who travel under honest need."
+  "backstory": "Coming soon."
 }
