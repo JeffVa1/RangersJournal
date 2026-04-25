@@ -170,6 +170,26 @@
       "name": "Windwalker +1",
       "image": "moonlit-compass.png",
       "description": "An Elven longbow found in the hidden Crypt of Irillis."
+    },
+    {
+      "name": "Adventurer's Ring",
+      "image": "x.png",
+      "description": "A small golden ring that when activated produces a small candle-sized flame."
+    },
+    {
+      "name": "Cindralis Signet Ring",
+      "image": "x.png",
+      "description": "A heavy silver ring engraved with the symbol of a shattered city. It is the only remaining heirloom of Rellim's lost family and serves as a constant reminder of his past and the legacy he carries."
+    },
+    {
+      "name": "Inquisitor's Mask",
+      "image": "x.png",
+      "description": "A golden mask once belonging to a slain inquisitor of the God King. It has been modified to fit Rellim."
+    },
+    {
+      "name": "Mask of Emotions",
+      "image": "x.png",
+      "description": "A basic white mask with a mouth and eye holes. When worn, the mask changes its appearance to reflect the wearer's current emotional state."
     }
   ],
   "personality": {
