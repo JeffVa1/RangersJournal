@@ -150,6 +150,10 @@
   min-width: 0;
 }
 
+.character-profile-card-reversed .character-profile-summary {
+  grid-template-columns: 1fr minmax(13rem, 26%) auto;
+}
+
 .character-profile-summary::-webkit-details-marker {
   display: none;
 }
