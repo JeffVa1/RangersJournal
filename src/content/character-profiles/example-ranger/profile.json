@@ -130,20 +130,6 @@
       "Sylvan"
     ]
   },
-  "equipment": [
-    "Explorer's pack",
-    "Longbow",
-    "Two shortswords",
-    "Dark green traveler's cloak",
-    "A weathered map case sealed in black wax"
-  ],
-  "currency": {
-    "cp": 0,
-    "sp": 8,
-    "ep": 0,
-    "gp": 42,
-    "pp": 0
-  },
   "specialEquipment": [
     {
       "name": "Moonlit Compass",
