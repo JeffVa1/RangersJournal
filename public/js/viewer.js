@@ -14,6 +14,8 @@ const state = {
   isMapMode: false
 };
 
+const preloadedPages = new Set();
+
 const clampIndex = (index) =>
   Math.max(0, Math.min(index, state.pages.length - 1));
 
@@ -28,7 +30,9 @@ const createPageImage = (src, alt) => {
   img.className = "page-image";
   img.src = src;
   img.alt = alt;
-  img.loading = "lazy";
+  img.decoding = "async";
+  img.loading = "eager";
+  img.fetchPriority = "high";
   return img;
 };
 
@@ -80,8 +84,15 @@ const preloadImage = (index) => {
     return;
   }
 
+  const src = state.pages[index];
+  if (preloadedPages.has(src)) {
+    return;
+  }
+
+  preloadedPages.add(src);
   const img = new Image();
-  img.src = state.pages[index];
+  img.decoding = "async";
+  img.src = src;
 };
 
 const preloadAdjacent = () => {
@@ -167,6 +178,7 @@ const init = async () => {
     document.title = manifest.title;
     state.pages = manifest.pages;
     state.currentIndex = 0;
+    preloadImage(0);
     renderPage();
   } catch {
     showError("Book unavailable", "The selected book could not be loaded.");

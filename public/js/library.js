@@ -10,7 +10,6 @@ const detailVolume = document.getElementById("library-detail-volume");
 const detailCover = document.getElementById("library-detail-cover");
 const synopsisContent = document.getElementById("library-synopsis-content");
 const activeBackground = document.querySelector("[data-active-background]");
-const expansionLayer = document.querySelector("[data-library-expansion]");
 const openReaderButton = document.querySelector("[data-open-reader]");
 const reader = document.getElementById("library-reader");
 const readerTitle = document.getElementById("library-reader-title");
@@ -29,7 +28,6 @@ const booksById = new Map();
 const synopsisCache = new Map();
 const manifestCache = new Map();
 const preloadCache = new Map();
-const detailPreloadCache = new Map();
 
 let activeBook = null;
 let activeView = "gallery";
@@ -41,12 +39,12 @@ let activeReaderPages = [];
 let activeReaderDisplayPages = [];
 let activeReaderInteriorPageCount = 0;
 let readerRenderId = 0;
-let expansionTimer = 0;
 let transitionTimer = 0;
 let resizeTimer = 0;
 let detailTransitionToken = 0;
 let turnBook = null;
 let readerIsTurning = false;
+let readerResizeObserver = null;
 
 const encodeAssetUrl = (path) =>
   typeof path === "string" && path.trim() ? encodeURI(path) : "";
@@ -73,7 +71,14 @@ const preloadImage = (src) =>
 
     const image = new Image();
     image.decoding = "async";
-    image.onload = () => resolve(src);
+    image.onload = async () => {
+      try {
+        await image.decode?.();
+      } catch {
+        // The image has loaded; decode support/failure should not block UI.
+      }
+      resolve(src);
+    };
     image.onerror = () => reject(new Error(`Unable to load ${src}`));
     image.src = encodeAssetUrl(src);
   });
@@ -113,6 +118,7 @@ const destroyTurnBook = () => {
 const resetReader = () => {
   readerRenderId += 1;
   destroyTurnBook();
+  window.clearTimeout(resizeTimer);
 
   readerFallback?.replaceChildren();
   if (readerShell) {
@@ -190,18 +196,8 @@ const applyView = ({ view, bookId }) => {
   }
 };
 
-const runViewTransition = (callback) => {
-  if (document.startViewTransition && !prefersReducedMotion.matches) {
-    const transition = document.startViewTransition(callback);
-    transition.ready?.catch(() => {});
-    transition.finished?.catch(() => {});
-  } else {
-    callback();
-  }
-};
-
 const syncFromLocation = () => {
-  runViewTransition(() => applyView(getHashState()));
+  applyView(getHashState());
 };
 
 const setHashState = (bookId, mode = "detail", replace = false) => {
@@ -232,33 +228,6 @@ const waitForReaderLayout = async () => {
   return false;
 };
 
-const animateBookExpansion = (book, card) => {
-  if (
-    !book?.background ||
-    !card ||
-    !expansionLayer ||
-    prefersReducedMotion.matches
-  ) {
-    return;
-  }
-
-  const rect = card.getBoundingClientRect();
-  expansionLayer.classList.remove("is-animating");
-  window.clearTimeout(expansionTimer);
-  expansionLayer.style.setProperty("--from-left", `${rect.left}px`);
-  expansionLayer.style.setProperty("--from-top", `${rect.top}px`);
-  expansionLayer.style.setProperty("--from-width", `${rect.width}px`);
-  expansionLayer.style.setProperty("--from-height", `${rect.height}px`);
-  expansionLayer.style.backgroundImage = `url("${encodeAssetUrl(book.background)}")`;
-  void expansionLayer.offsetWidth;
-  expansionLayer.classList.add("is-animating");
-
-  expansionTimer = window.setTimeout(() => {
-    expansionLayer.classList.remove("is-animating");
-    expansionLayer.style.backgroundImage = "";
-  }, 1260);
-};
-
 const markLibraryTransition = () => {
   if (!app || prefersReducedMotion.matches) {
     return;
@@ -268,7 +237,7 @@ const markLibraryTransition = () => {
   app.classList.add("is-transitioning-to-detail");
   transitionTimer = window.setTimeout(() => {
     app.classList.remove("is-transitioning-to-detail");
-  }, 1250);
+  }, 720);
 };
 
 const loadSynopsis = async (book) => {
@@ -288,21 +257,6 @@ const loadBookManifest = async (book) => {
 
   const promise = loadManifest(book.manifest);
   manifestCache.set(book.id, promise);
-  return promise;
-};
-
-const preloadDetailAssets = async (book) => {
-  if (detailPreloadCache.has(book.id)) {
-    return detailPreloadCache.get(book.id);
-  }
-
-  const promise = Promise.allSettled([
-    preloadImage(book.background),
-    preloadImage(book.cover),
-    loadSynopsis(book)
-  ]).then(() => loadSynopsis(book));
-
-  detailPreloadCache.set(book.id, promise);
   return promise;
 };
 
@@ -328,7 +282,18 @@ const prepareDetailContent = (book, paragraphs) => {
 
   if (Array.isArray(paragraphs)) {
     applySynopsisParagraphs(book, paragraphs);
+  } else if (synopsisContent?.dataset.bookId !== book.id) {
+    synopsisContent.dataset.bookId = "";
+    synopsisContent.replaceChildren(createParagraph("Loading synopsis..."));
   }
+};
+
+const warmDetailAssets = (book) => {
+  void Promise.allSettled([
+    preloadImage(book.background),
+    preloadImage(book.cover),
+    loadSynopsis(book)
+  ]);
 };
 
 const getReaderAssets = (book, manifest) => {
@@ -401,32 +366,16 @@ const getReaderAssets = (book, manifest) => {
   };
 };
 
-const preloadReaderAssets = async (book, assets) => {
-  const cacheKey = [
-    book.id,
-    assets.frame,
-    assets.frontCover,
-    assets.backCover,
-    assets.titlePage,
-    assets.endPage,
-    assets.interiorPageCount
-  ].join(":");
+const preloadSources = async (sources, cacheKey) => {
+  const normalizedSources = [...new Set(sources.filter(Boolean))];
+  const normalizedKey = cacheKey || normalizedSources.join("|");
 
-  if (preloadCache.has(cacheKey)) {
-    return preloadCache.get(cacheKey);
+  if (preloadCache.has(normalizedKey)) {
+    return preloadCache.get(normalizedKey);
   }
 
-  const sources = [
-    assets.frame,
-    assets.frontCover,
-    assets.backCover,
-    assets.titlePage,
-    assets.endPage,
-    ...assets.interiorPages
-  ].filter(Boolean);
-
-  const promise = Promise.all(sources.map(preloadImage));
-  preloadCache.set(cacheKey, promise);
+  const promise = Promise.all(normalizedSources.map(preloadImage));
+  preloadCache.set(normalizedKey, promise);
   return promise;
 };
 
@@ -538,6 +487,39 @@ const getDisplayEntry = (pageNumber) => activeReaderDisplayPages[pageNumber - 1]
 const getVisibleEntries = (view = normalizeTurnView()) =>
   view.map((pageNumber) => getDisplayEntry(pageNumber)).filter(Boolean);
 
+const getSpreadEntries = (turnPage) => {
+  const page = Math.max(1, Number(turnPage) || 1);
+  const leftPage = page % 2 === 0 ? page : page - 1;
+  return [leftPage, leftPage + 1]
+    .map((pageNumber) => getDisplayEntry(pageNumber))
+    .filter(Boolean);
+};
+
+const preloadTurnSpread = (turnPage) => {
+  const sources = [
+    activeReaderFrame,
+    ...getSpreadEntries(turnPage).map((entry) => entry.src)
+  ];
+  return preloadSources(sources, `${activeReaderTitle}:spread:${turnPage}`);
+};
+
+const warmNearbyReaderPages = (turnPage = getCurrentTurnPage()) => {
+  const warm = () => {
+    const sources = [
+      ...getSpreadEntries(turnPage - 2).map((entry) => entry.src),
+      ...getSpreadEntries(turnPage + 2).map((entry) => entry.src),
+      activeReaderBackCover
+    ];
+    void preloadSources(sources, `${activeReaderTitle}:nearby:${turnPage}`);
+  };
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(warm, { timeout: 900 });
+  } else {
+    window.setTimeout(warm, 120);
+  }
+};
+
 const isTitleView = (entries) =>
   entries.some((entry) => entry.type === "title");
 
@@ -635,7 +617,8 @@ const createTurnPage = (entry) => {
       ? `${activeReaderTitle} page ${entry.pageNumber}`
       : `${activeReaderTitle} ${entry.type} page`;
   image.draggable = false;
-  image.loading = "eager";
+  image.loading =
+    entry.type === "interior" && entry.pageNumber > 2 ? "lazy" : "eager";
 
   page.append(image);
   return page;
@@ -668,12 +651,21 @@ const resizeTurnBook = () => {
 };
 
 const scheduleTurnResize = () => {
-  resizeTurnBook();
-  window.requestAnimationFrame(() => {
-    resizeTurnBook();
+  window.clearTimeout(resizeTimer);
+  resizeTimer = window.setTimeout(() => {
     window.requestAnimationFrame(resizeTurnBook);
+  }, 80);
+};
+
+const ensureReaderResizeObserver = () => {
+  if (!readerShell || readerResizeObserver || !("ResizeObserver" in window)) {
+    return;
+  }
+
+  readerResizeObserver = new ResizeObserver(() => {
+    scheduleTurnResize();
   });
-  window.setTimeout(resizeTurnBook, 160);
+  readerResizeObserver.observe(readerShell);
 };
 
 const renderTurnBook = (startPage = getFirstReadableTurnPage()) => {
@@ -767,6 +759,7 @@ const renderTurnBook = (startPage = getFirstReadableTurnPage()) => {
           readerShell?.classList.remove("is-turning");
           setReaderSurface("spread");
           updateReaderControls(Array.isArray(view) ? view : normalizeTurnView());
+          warmNearbyReaderPages(Number(page) || getCurrentTurnPage());
         },
         end() {
           readerIsTurning = false;
@@ -778,6 +771,7 @@ const renderTurnBook = (startPage = getFirstReadableTurnPage()) => {
     setReaderSurface("spread");
     updateReaderControls();
     scheduleTurnResize();
+    warmNearbyReaderPages(targetPage);
     return true;
   } catch {
     destroyTurnBook();
@@ -796,6 +790,13 @@ const openReaderSpread = async (turnPage = getFirstReadableTurnPage()) => {
   readerIndicator.textContent = "Opening book...";
   readerBook.hidden = false;
   setReaderSurface("spread");
+
+  try {
+    await preloadTurnSpread(turnPage);
+  } catch {
+    showReaderFallback("The book pages could not be loaded.");
+    return;
+  }
 
   const hasLayout = await waitForReaderLayout();
   if (
@@ -824,6 +825,7 @@ const openReaderSpread = async (turnPage = getFirstReadableTurnPage()) => {
       updateReaderControls();
     }
     scheduleTurnResize();
+    warmNearbyReaderPages(target);
   }
 };
 
@@ -924,27 +926,6 @@ const renderReader = async (book) => {
     return;
   }
 
-  try {
-    await preloadReaderAssets(book, readerAssets);
-  } catch {
-    if (
-      renderId === readerRenderId &&
-      activeBook?.id === book.id &&
-      activeView === "reader"
-    ) {
-      showReaderFallback("The book pages could not be loaded.");
-    }
-    return;
-  }
-
-  if (
-    renderId !== readerRenderId ||
-    activeBook?.id !== book.id ||
-    activeView !== "reader"
-  ) {
-    return;
-  }
-
   activeReaderTitle = book.title;
   activeReaderFrame = readerAssets.frame;
   activeReaderFrontCover = readerAssets.frontCover;
@@ -958,28 +939,32 @@ const renderReader = async (book) => {
     readerFrame.alt = "";
   }
 
+  ensureReaderResizeObserver();
   setReaderSurface("front-cover");
   updateReaderControls();
+  void preloadSources(
+    [
+      activeReaderFrontCover,
+      activeReaderBackCover,
+      activeReaderFrame,
+      ...getSpreadEntries(getFirstReadableTurnPage()).map((entry) => entry.src)
+    ],
+    `${book.id}:reader-shell`
+  ).catch(() => {});
 };
 
-const openDetailView = async (book, card) => {
+const openDetailView = (book) => {
   const token = ++detailTransitionToken;
-  let paragraphs = null;
-
-  try {
-    paragraphs = await preloadDetailAssets(book);
-  } catch {
-    // If preloading fails, continue with navigation and let normal fallbacks render.
-  }
-
-  if (token !== detailTransitionToken) {
-    return;
-  }
-
-  prepareDetailContent(book, paragraphs);
-  animateBookExpansion(book, card);
+  prepareDetailContent(book);
+  warmDetailAssets(book);
   markLibraryTransition();
   setHashState(book.id);
+
+  loadSynopsis(book).then((paragraphs) => {
+    if (token === detailTransitionToken && activeBook?.id === book.id) {
+      applySynopsisParagraphs(book, paragraphs);
+    }
+  });
 };
 
 const createBookCard = (book) => {
@@ -1006,9 +991,7 @@ const createBookCard = (book) => {
 
   overlay.append(title, volume);
   card.append(image, overlay);
-  card.addEventListener("click", () => {
-    void openDetailView(book, card);
-  });
+  card.addEventListener("click", () => openDetailView(book));
   return card;
 };
 
@@ -1041,12 +1024,7 @@ openReaderButton?.addEventListener("click", () => {
 
 window.addEventListener("popstate", syncFromLocation);
 window.addEventListener("hashchange", syncFromLocation);
-window.addEventListener("resize", () => {
-  window.cancelAnimationFrame(resizeTimer);
-  resizeTimer = window.requestAnimationFrame(() => {
-    resizeTurnBook();
-  });
-});
+window.addEventListener("resize", scheduleTurnResize);
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     if (activeView === "reader" && activeBook) {
