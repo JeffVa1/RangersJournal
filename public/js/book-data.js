@@ -59,7 +59,31 @@ export const loadManifest = async (manifestPath) => {
       typeof manifest?.title === "string" && manifest.title.trim()
         ? manifest.title
         : "Untitled",
-    pages: Array.isArray(manifest?.pages) ? manifest.pages : []
+    frame:
+      typeof manifest?.frame === "string" && manifest.frame.trim()
+        ? manifest.frame
+        : "",
+    frontCover:
+      typeof manifest?.frontCover === "string" && manifest.frontCover.trim()
+        ? manifest.frontCover
+        : "",
+    backCover:
+      typeof manifest?.backCover === "string" && manifest.backCover.trim()
+        ? manifest.backCover
+        : "",
+    titlePage:
+      typeof manifest?.titlePage === "string" && manifest.titlePage.trim()
+        ? manifest.titlePage
+        : "",
+    endPage:
+      typeof manifest?.endPage === "string" && manifest.endPage.trim()
+        ? manifest.endPage
+        : "",
+    pages: Array.isArray(manifest?.pages)
+      ? manifest.pages.filter(
+          (page) => typeof page === "string" && page.trim().length > 0
+        )
+      : []
   };
 };
 
@@ -67,11 +91,19 @@ export const loadText = (path, errorMessage = "Unable to load text") =>
   request(toUrl(path), (response) => response.text(), errorMessage);
 
 const getSynopsisPath = (book) => {
+  if (typeof book?.synopsis === "string" && book.synopsis.trim()) {
+    return book.synopsis;
+  }
+
   if (typeof book?.manifest === "string" && book.manifest.includes("/")) {
     return book.manifest.replace(/[^/]+$/, "synopsis.txt");
   }
 
   if (typeof book?.cover === "string") {
+    if (book.cover.includes("/book_assets/")) {
+      return book.cover.replace(/\/book_assets\/[^/]+$/, "/synopsis.txt");
+    }
+
     return book.cover.replace(/\/pages\/[^/]+$/, "/synopsis.txt");
   }
 

@@ -2,17 +2,27 @@
   {
     "id": "book1",
     "title": "The Lost Scroll",
-    "cover": "assets/books/book1/pages/cover.png",
-    "spine": "assets/books/book1/pages/spine.png",
+    "volumeLabel": "Vol I",
+    "background": "assets/books/book1/background.png",
+    "cover": "assets/books/book1/book_assets/cover.png",
+    "frontCover": "assets/books/book1/book_assets/cover.png",
+    "backCover": "assets/books/book1/book_assets/end-cover.png",
+    "spine": "assets/books/book1/book_assets/spine.png",
     "manifest": "assets/books/book1/manifest.json",
+    "synopsis": "assets/books/book1/synopsis.txt",
     "color": "#d60000"
   },
   {
     "id": "book2",
     "title": "The Pit",
-    "cover": "assets/books/book2/pages/cover.png",
-    "spine": "assets/books/book2/pages/spine.png",
+    "volumeLabel": "Vol II",
+    "background": "assets/books/book2/background.png",
+    "cover": "assets/books/book2/book_assets/cover.png",
+    "frontCover": "assets/books/book2/book_assets/cover.png",
+    "backCover": "assets/books/book2/book_assets/endcover.png",
+    "spine": "assets/books/book2/book_assets/spine.png",
     "manifest": "assets/books/book2/manifest.json",
+    "synopsis": "assets/books/book2/synopsis.txt",
     "color": "#9900d1"
   }
 ]

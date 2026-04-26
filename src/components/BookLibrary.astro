@@ -1,45 +1,110 @@
-<main class="library-main">
-  <section class="site-intro">
-    <div class="site-brand">
-      <h1 class="site-title-text">Shattered Crown</h1>
-      <p class="subtitle" id="library-subtitle" data-default="">
-        <span class="subtitle-text"></span>
-      </p>
+<main class="library-main" data-library-app data-view="gallery">
+  <div class="library-backdrop" aria-hidden="true">
+    <div class="library-backdrop-image" data-active-background></div>
+    <div class="library-backdrop-vignette"></div>
+  </div>
+  <div class="library-expansion" data-library-expansion aria-hidden="true"></div>
+
+  <section class="library-gallery" aria-labelledby="library-heading">
+    <h1 id="library-heading" class="sr-only">Library</h1>
+    <div class="library-gallery-grid" id="library-gallery-grid">
+      <p class="loading">Loading books...</p>
     </div>
   </section>
 
-  <section class="library-stage" id="library-stage" aria-live="polite">
-    <div class="library-bookshelf">
-      <section class="library" id="library">
-        <div class="loading">Loading books...</div>
-      </section>
+  <section
+    class="library-detail"
+    id="library-detail"
+    aria-labelledby="library-detail-title"
+    aria-hidden="true"
+  >
+    <button
+      class="library-back-button library-icon-button"
+      type="button"
+      data-library-back
+      aria-label="Back to library"
+    >
+      <span aria-hidden="true">&larr;</span>
+    </button>
+
+    <div class="library-detail-copy">
+      <h2 id="library-detail-title" class="library-detail-title"></h2>
+      <p class="library-detail-volume" id="library-detail-volume"></p>
+      <div
+        class="library-synopsis-content"
+        id="library-synopsis-content"
+        aria-live="polite"
+      >
+        <p>Select a book to read its synopsis.</p>
+      </div>
     </div>
 
-    <section class="library-synopsis" id="library-synopsis" aria-hidden="true">
-      <div
-        class="library-synopsis-panel"
-        id="library-synopsis-panel"
-        aria-labelledby="library-synopsis-heading"
+    <button
+      class="library-cover-button"
+      type="button"
+      data-open-reader
+      aria-label="Open selected book"
+    >
+      <img id="library-detail-cover" alt="" />
+    </button>
+  </section>
+
+  <section
+    class="library-reader"
+    id="library-reader"
+    aria-labelledby="library-reader-title"
+    aria-hidden="true"
+  >
+    <div class="reader-toolbar">
+      <button
+        class="library-back-button library-icon-button"
+        type="button"
+        data-reader-back
+        aria-label="Back to synopsis"
       >
-        <div class="library-synopsis-scroll">
-          <h2 id="library-synopsis-heading" class="library-synopsis-heading">
-            Synopsis
-          </h2>
-          <div id="library-synopsis-content" class="library-synopsis-content">
-            <p>Select a book to read its synopsis.</p>
-          </div>
-        </div>
+        <span aria-hidden="true">&larr;</span>
+      </button>
+      <h2 id="library-reader-title" class="reader-title"></h2>
+    </div>
+
+    <div class="reader-stage">
+      <button
+        class="reader-nav reader-nav-prev"
+        type="button"
+        data-reader-prev
+        aria-label="Previous page"
+      ></button>
+      <div class="reader-book-shell">
+        <img
+          id="reader-book-frame"
+          class="reader-book-frame"
+          alt=""
+          aria-hidden="true"
+        />
+        <div id="reader-book" class="reader-book"></div>
+        <button
+          id="reader-cover-stage"
+          class="reader-cover-stage"
+          type="button"
+          aria-label="Open book"
+          aria-hidden="true"
+        >
+          <img id="reader-cover-image" class="reader-cover-image" alt="" />
+        </button>
+        <div id="reader-fallback" class="reader-fallback" hidden></div>
       </div>
-      <a
-        id="library-open-book"
-        class="library-open-book"
-        href="/viewer"
-        tabindex="-1"
-      >
-        Open Book
-      </a>
-    </section>
+      <button
+        class="reader-nav reader-nav-next"
+        type="button"
+        data-reader-next
+        aria-label="Next page"
+      ></button>
+    </div>
+
+    <p id="reader-page-indicator" class="page-indicator reader-page-indicator"></p>
   </section>
 </main>
 
+<script is:inline src="/vendor/jquery-1.12.4.min.js"></script>
+<script is:inline src="/vendor/turn.min.js"></script>
 <script type="module" src="/js/library.js"></script>
