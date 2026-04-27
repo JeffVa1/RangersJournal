@@ -631,8 +631,8 @@ const getTurnSize = () => {
   }
 
   return {
-    width: Math.max(320, Math.floor(rect.width)),
-    height: Math.max(420, Math.floor(rect.height))
+    width: Math.max(1, Math.floor(rect.width)),
+    height: Math.max(1, Math.floor(rect.height))
   };
 };
 
@@ -1025,6 +1025,7 @@ openReaderButton?.addEventListener("click", () => {
 window.addEventListener("popstate", syncFromLocation);
 window.addEventListener("hashchange", syncFromLocation);
 window.addEventListener("resize", scheduleTurnResize);
+window.addEventListener("orientationchange", scheduleTurnResize);
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     if (activeView === "reader" && activeBook) {
