@@ -46,6 +46,8 @@ let turnBook = null;
 let readerIsTurning = false;
 let readerResizeObserver = null;
 
+const SPREAD_ASPECT_RATIO = 3540 / 2580;
+
 const encodeAssetUrl = (path) =>
   typeof path === "string" && path.trim() ? encodeURI(path) : "";
 
@@ -630,9 +632,18 @@ const getTurnSize = () => {
     return { width: 0, height: 0 };
   }
 
+  const availableWidth = Math.max(1, rect.width);
+  const availableHeight = Math.max(1, rect.height);
+  const availableRatio = availableWidth / availableHeight;
+  const height =
+    availableRatio > SPREAD_ASPECT_RATIO
+      ? availableHeight
+      : availableWidth / SPREAD_ASPECT_RATIO;
+  const width = height * SPREAD_ASPECT_RATIO;
+
   return {
-    width: Math.max(1, Math.floor(rect.width)),
-    height: Math.max(1, Math.floor(rect.height))
+    width: Math.max(1, Math.floor(width)),
+    height: Math.max(1, Math.floor(height))
   };
 };
 
@@ -647,6 +658,7 @@ const resizeTurnBook = () => {
   }
 
   turnBook.turn("size", width, height);
+  turnBook.css({ width: `${width}px`, height: `${height}px` });
   updateReaderControls();
 };
 
@@ -712,6 +724,7 @@ const renderTurnBook = (startPage = getFirstReadableTurnPage()) => {
 
   try {
     turnBook = $(turnRoot);
+    turnBook.css({ width: `${width}px`, height: `${height}px` });
     turnBook.turn({
       width,
       height,
