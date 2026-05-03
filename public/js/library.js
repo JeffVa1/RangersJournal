@@ -28,6 +28,7 @@ const booksById = new Map();
 const synopsisCache = new Map();
 const manifestCache = new Map();
 const preloadCache = new Map();
+const resolvedImagePathCache = new Map();
 
 let activeBook = null;
 let activeView = "gallery";
@@ -51,6 +52,84 @@ const SPREAD_ASPECT_RATIO = 3540 / 2580;
 const encodeAssetUrl = (path) =>
   typeof path === "string" && path.trim() ? encodeURI(path) : "";
 
+const getAlternateImagePath = (path) => {
+  if (typeof path !== "string" || !path.trim()) {
+    return "";
+  }
+
+  const match = path.match(/^(.*)\.(png|jpe?g)([?#].*)?$/i);
+  if (!match) {
+    return "";
+  }
+
+  const [, basePath, extension, suffix = ""] = match;
+  const nextExtension = extension.toLowerCase() === "png" ? "jpg" : "png";
+  return `${basePath}.${nextExtension}${suffix}`;
+};
+
+const setImageSource = (image, src) => {
+  if (!image) {
+    return;
+  }
+
+  const fallbackSrc = getAlternateImagePath(src);
+  let usedFallback = false;
+  image.onerror = () => {
+    if (!fallbackSrc || usedFallback) {
+      return;
+    }
+
+    usedFallback = true;
+    image.src = encodeAssetUrl(fallbackSrc);
+  };
+  image.src = encodeAssetUrl(src);
+};
+
+const imagePathExists = async (src) => {
+  const response = await fetch(encodeAssetUrl(src), {
+    method: "HEAD",
+    cache: "no-store"
+  });
+
+  return response.ok;
+};
+
+const resolveImagePath = async (src) => {
+  if (!src) {
+    return "";
+  }
+
+  if (resolvedImagePathCache.has(src)) {
+    return resolvedImagePathCache.get(src);
+  }
+
+  const promise = (async () => {
+    try {
+      if (await imagePathExists(src)) {
+        return src;
+      }
+    } catch {
+      // Some static hosts do not support HEAD; image fallback still covers those.
+    }
+
+    const fallbackSrc = getAlternateImagePath(src);
+    if (fallbackSrc) {
+      try {
+        if (await imagePathExists(fallbackSrc)) {
+          return fallbackSrc;
+        }
+      } catch {
+        // Keep the original path and let image loading report the real failure.
+      }
+    }
+
+    return src;
+  })();
+
+  resolvedImagePathCache.set(src, promise);
+  return promise;
+};
+
 const createParagraph = (text) => {
   const paragraph = document.createElement("p");
   paragraph.textContent = text;
@@ -71,6 +150,8 @@ const preloadImage = (src) =>
       return;
     }
 
+    const fallbackSrc = getAlternateImagePath(src);
+    let usedFallback = false;
     const image = new Image();
     image.decoding = "async";
     image.onload = async () => {
@@ -81,7 +162,15 @@ const preloadImage = (src) =>
       }
       resolve(src);
     };
-    image.onerror = () => reject(new Error(`Unable to load ${src}`));
+    image.onerror = () => {
+      if (fallbackSrc && !usedFallback) {
+        usedFallback = true;
+        image.src = encodeAssetUrl(fallbackSrc);
+        return;
+      }
+
+      reject(new Error(`Unable to load ${src}`));
+    };
     image.src = encodeAssetUrl(src);
   });
 
@@ -368,6 +457,33 @@ const getReaderAssets = (book, manifest) => {
   };
 };
 
+const resolveReaderAssets = async (readerAssets) => {
+  const [titlePage, endPage] = await Promise.all([
+    resolveImagePath(readerAssets.titlePage),
+    resolveImagePath(readerAssets.endPage)
+  ]);
+
+  const resolveEntry = (entry) => {
+    if (entry.type === "title") {
+      return { ...entry, src: titlePage };
+    }
+
+    if (entry.type === "end") {
+      return { ...entry, src: endPage };
+    }
+
+    return entry;
+  };
+
+  return {
+    ...readerAssets,
+    titlePage,
+    endPage,
+    contentPages: readerAssets.contentPages.map(resolveEntry),
+    displayPages: readerAssets.displayPages.map(resolveEntry)
+  };
+};
+
 const preloadSources = async (sources, cacheKey) => {
   const normalizedSources = [...new Set(sources.filter(Boolean))];
   const normalizedKey = cacheKey || normalizedSources.join("|");
@@ -445,7 +561,8 @@ const setReaderSurface = (surface) => {
 
   if (readerCoverImage && (surface === "front-cover" || surface === "back-cover")) {
     const isFront = surface === "front-cover";
-    readerCoverImage.src = encodeAssetUrl(
+    setImageSource(
+      readerCoverImage,
       isFront ? activeReaderFrontCover : activeReaderBackCover
     );
     readerCoverImage.alt = isFront
@@ -613,7 +730,7 @@ const createTurnPage = (entry) => {
 
   const image = document.createElement("img");
   image.className = "reader-turn-page-image";
-  image.src = encodeAssetUrl(entry.src);
+  setImageSource(image, entry.src);
   image.alt =
     entry.type === "interior"
       ? `${activeReaderTitle} page ${entry.pageNumber}`
@@ -926,7 +1043,15 @@ const renderReader = async (book) => {
     return;
   }
 
-  const readerAssets = getReaderAssets(book, manifest);
+  const readerAssets = await resolveReaderAssets(getReaderAssets(book, manifest));
+  if (
+    renderId !== readerRenderId ||
+    activeBook?.id !== book.id ||
+    activeView !== "reader"
+  ) {
+    return;
+  }
+
   if (
     !readerAssets.frame ||
     !readerAssets.frontCover ||
