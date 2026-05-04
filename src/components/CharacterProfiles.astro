@@ -1,0 +1,565 @@
+---
+interface AbilityScores {
+  strength?: number;
+  dexterity?: number;
+  constitution?: number;
+  intelligence?: number;
+  wisdom?: number;
+  charisma?: number;
+}
+
+interface NamedValue {
+  name: string;
+  value?: number;
+  proficient?: boolean;
+}
+
+interface Attack {
+  name: string;
+  bonus?: string;
+  damage?: string;
+  notes?: string;
+}
+
+interface SpellSlot {
+  level: number;
+  total: number;
+}
+
+interface Spellcasting {
+  ability?: string;
+  saveDc?: number;
+  attackBonus?: string;
+  slots?: SpellSlot[];
+  spells?: string[];
+}
+
+interface SpecialEquipment {
+  name: string;
+  image?: string;
+  imageSrc?: string;
+  description?: string;
+}
+
+interface CharacterProfile {
+  order?: number;
+  name: string;
+  species?: string;
+  className?: string;
+  subclass?: string;
+  level?: number;
+  levelLabel?: string;
+  background?: string;
+  alignment?: string;
+  age?: string;
+  summary?: string;
+  abilities?: AbilityScores;
+  combat?: {
+    proficiencyBonus?: number;
+    armorClass?: number;
+    initiative?: number;
+    speed?: string;
+    hitPoints?: {
+      current?: number;
+      maximum?: number;
+    };
+    hitDice?: string;
+  };
+  savingThrows?: NamedValue[];
+  skills?: NamedValue[];
+  passives?: Record<string, number>;
+  attacks?: Attack[];
+  spellcasting?: Spellcasting;
+  features?: string[];
+  proficiencies?: Record<string, string[]>;
+  specialEquipment?: SpecialEquipment[];
+  personality?: Record<string, string[]>;
+  backstory?: string;
+}
+
+interface Character {
+  id: string;
+  folder: string;
+  profile: CharacterProfile;
+  fullImage: string;
+  soloImage: string;
+  compassImage: string;
+  slicePosition: string;
+  detailPosition: string;
+}
+
+const profileModules = import.meta.glob("../content/character-profiles/*/profile.json", {
+  eager: true
+});
+
+const imageModules = import.meta.glob<string>(
+  "../content/character-profiles/**/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+    query: "?url"
+  }
+);
+
+const slicePositions = ["35%", "20%", "20%", "20%", "22.5%"];
+const detailPositions = ["44%", "41%", "43%", "43%", "40%"];
+
+const getPathParts = (path: string) => path.replace(/\\/g, "/").split("/");
+
+const getFolderName = (path: string) => {
+  const parts = getPathParts(path);
+  return parts[parts.length - 2] ?? "";
+};
+
+const getFileName = (path: string) => {
+  const parts = getPathParts(path);
+  return parts[parts.length - 1] ?? "";
+};
+
+const slugify = (value: string) =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const toProfile = (module: unknown) => {
+  const wrapped = module as { default?: CharacterProfile } & CharacterProfile;
+  return wrapped.default ?? wrapped;
+};
+
+const imagesByFolder = new Map<string, Map<string, string>>();
+Object.entries(imageModules).forEach(([path, src]) => {
+  const folder = getFolderName(path);
+  const file = getFileName(path).toLowerCase();
+
+  if (!imagesByFolder.has(folder)) {
+    imagesByFolder.set(folder, new Map());
+  }
+
+  imagesByFolder.get(folder)?.set(file, src);
+});
+
+const resolveEquipmentImage = (
+  imageName: string | undefined,
+  imageMap: Map<string, string>,
+  compassImage: string
+) => {
+  if (!imageName) {
+    return compassImage;
+  }
+
+  return imageMap.get(imageName.toLowerCase()) ?? compassImage;
+};
+
+const characters = Object.entries(profileModules)
+  .map(([path, module]): Character | null => {
+    const folder = getFolderName(path);
+    const profile = toProfile(module);
+    const imageMap = imagesByFolder.get(folder);
+
+    if (!imageMap) {
+      return null;
+    }
+
+    const soloFile = [...imageMap.keys()].find((file) =>
+      /\.solo\.(png|jpe?g|webp)$/i.test(file)
+    );
+
+    if (!soloFile) {
+      return null;
+    }
+
+    const fullFile = soloFile.replace(/\.solo(\.[^.]+)$/i, "$1");
+    const fullImage = imageMap.get(fullFile);
+    const soloImage = imageMap.get(soloFile);
+    const compassImage = imageMap.get("moonlit-compass.png") ?? "";
+
+    if (!fullImage || !soloImage) {
+      return null;
+    }
+
+    const specialEquipment = (profile.specialEquipment ?? []).map((item) => ({
+      ...item,
+      imageSrc: resolveEquipmentImage(item.image, imageMap, compassImage)
+    }));
+
+    return {
+      id: slugify(folder),
+      folder,
+      profile: {
+        ...profile,
+        specialEquipment
+      },
+      fullImage,
+      soloImage,
+      compassImage,
+      slicePosition: "50%",
+      detailPosition: "42%"
+    };
+  })
+  .filter((character): character is Character => Boolean(character))
+  .sort((a, b) => (a.profile.order ?? 0) - (b.profile.order ?? 0))
+  .map((character, index) => ({
+    ...character,
+    slicePosition: slicePositions[index] ?? "50%",
+    detailPosition: detailPositions[index] ?? "42%"
+  }));
+
+const formatModifier = (value: number | undefined) => {
+  if (typeof value !== "number") {
+    return "-";
+  }
+
+  return value > 0 ? `+${value}` : String(value);
+};
+
+const formatLabel = (value: string) =>
+  value
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (first) => first.toUpperCase());
+
+const abilityEntries = [
+  ["STR", "strength"],
+  ["DEX", "dexterity"],
+  ["CON", "constitution"],
+  ["INT", "intelligence"],
+  ["WIS", "wisdom"],
+  ["CHA", "charisma"]
+] as const;
+
+const splitBackstory = (backstory: string | undefined) =>
+  (backstory ?? "")
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+---
+
+<main class="characters-main" data-character-app data-view="gallery">
+  <section class="characters-gallery" aria-labelledby="characters-heading">
+    <h1 id="characters-heading" class="sr-only">Character Profiles</h1>
+
+    <div class="characters-grid" style={`--character-count: ${characters.length};`}>
+      {
+        characters.map((character) => (
+          <button
+            class="character-slice"
+            type="button"
+            data-character-card
+            data-character-id={character.id}
+            data-full-image={character.fullImage}
+            data-solo-image={character.soloImage}
+            data-slice-position={character.slicePosition}
+            data-detail-position={character.detailPosition}
+            style={`--slice-position: ${character.slicePosition};`}
+            aria-label={`Open ${character.profile.name}`}
+          >
+            <span class="character-slice-image" aria-hidden="true">
+              <img
+                src={character.fullImage}
+                alt=""
+                loading="eager"
+                decoding="async"
+                draggable="false"
+              />
+            </span>
+          </button>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="characters-hover-scrim" aria-hidden="true"></div>
+  <div class="character-solo-stage" aria-hidden="true" data-character-solo-stage>
+    <img alt="" data-character-solo-image decoding="async" draggable="false" />
+  </div>
+
+  <section
+    class="characters-detail"
+    aria-label="Selected character profile"
+    aria-hidden="true"
+    data-character-detail
+  >
+    <div class="characters-detail-bg" aria-hidden="true">
+      <img alt="" data-character-detail-image decoding="async" draggable="false" />
+      <div class="characters-detail-vignette"></div>
+    </div>
+
+    <button
+      class="character-back-button"
+      type="button"
+      data-character-back
+      aria-label="Back to character profiles"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 12H5" />
+        <path d="m12 19-7-7 7-7" />
+      </svg>
+    </button>
+
+    <div class="characters-detail-layout">
+      <div class="character-profile-panel">
+        {
+          characters.map((character) => {
+            const profile = character.profile;
+            const combat = profile.combat;
+            const hitPoints = combat?.hitPoints;
+            const spellcasting = profile.spellcasting;
+            const backstoryLines = splitBackstory(profile.backstory);
+
+            return (
+              <article
+                class="character-profile"
+                data-character-profile={character.id}
+                aria-hidden="true"
+              >
+                <header class="character-profile-header">
+                  <h2>{profile.name}</h2>
+                  <p class="character-profile-subtitle">
+                    {[profile.levelLabel, profile.species, profile.className]
+                      .filter(Boolean)
+                      .join(" / ")}
+                  </p>
+                  {profile.summary && <p class="character-profile-summary">{profile.summary}</p>}
+                </header>
+
+                <section class="profile-section" aria-label={`${profile.name} identity`}>
+                  <dl class="profile-fact-grid">
+                    {profile.subclass && (
+                      <>
+                        <dt>Subclass</dt>
+                        <dd>{profile.subclass}</dd>
+                      </>
+                    )}
+                    {profile.background && (
+                      <>
+                        <dt>Background</dt>
+                        <dd>{profile.background}</dd>
+                      </>
+                    )}
+                    {profile.alignment && (
+                      <>
+                        <dt>Alignment</dt>
+                        <dd>{profile.alignment}</dd>
+                      </>
+                    )}
+                    {profile.age && (
+                      <>
+                        <dt>Age</dt>
+                        <dd>{profile.age}</dd>
+                      </>
+                    )}
+                  </dl>
+                </section>
+
+                {profile.abilities && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-abilities`}>
+                    <h3 id={`${character.id}-abilities`}>Abilities</h3>
+                    <div class="ability-grid">
+                      {abilityEntries.map(([label, key]) => (
+                        <div class="ability-score">
+                          <span>{label}</span>
+                          <strong>{profile.abilities?.[key] ?? "-"}</strong>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {combat && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-combat`}>
+                    <h3 id={`${character.id}-combat`}>Combat</h3>
+                    <dl class="profile-fact-grid profile-fact-grid-compact">
+                      <dt>AC</dt>
+                      <dd>{combat.armorClass ?? "-"}</dd>
+                      <dt>HP</dt>
+                      <dd>
+                        {typeof hitPoints?.current === "number" &&
+                        typeof hitPoints?.maximum === "number"
+                          ? `${hitPoints.current}/${hitPoints.maximum}`
+                          : "-"}
+                      </dd>
+                      <dt>Initiative</dt>
+                      <dd>{formatModifier(combat.initiative)}</dd>
+                      <dt>Speed</dt>
+                      <dd>{combat.speed ?? "-"}</dd>
+                      <dt>Prof.</dt>
+                      <dd>{formatModifier(combat.proficiencyBonus)}</dd>
+                      <dt>Hit Dice</dt>
+                      <dd>{combat.hitDice ?? "-"}</dd>
+                    </dl>
+                  </section>
+                )}
+
+                {Boolean(profile.savingThrows?.length) && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-saves`}>
+                    <h3 id={`${character.id}-saves`}>Saving Throws</h3>
+                    <ul class="profile-value-list">
+                      {profile.savingThrows?.map((save) => (
+                        <li>
+                          <span>{save.name}</span>
+                          <strong>{formatModifier(save.value)}</strong>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {Boolean(profile.skills?.length) && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-skills`}>
+                    <h3 id={`${character.id}-skills`}>Skills</h3>
+                    <ul class="profile-value-list profile-value-list-dense">
+                      {profile.skills?.map((skill) => (
+                        <li>
+                          <span>{skill.name}</span>
+                          <strong>{formatModifier(skill.value)}</strong>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {profile.passives && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-passives`}>
+                    <h3 id={`${character.id}-passives`}>Passives</h3>
+                    <dl class="profile-fact-grid profile-fact-grid-compact">
+                      {Object.entries(profile.passives).map(([label, value]) => (
+                        <>
+                          <dt>{formatLabel(label)}</dt>
+                          <dd>{value}</dd>
+                        </>
+                      ))}
+                    </dl>
+                  </section>
+                )}
+
+                {Boolean(profile.attacks?.length) && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-attacks`}>
+                    <h3 id={`${character.id}-attacks`}>Attacks</h3>
+                    <ul class="profile-entry-list">
+                      {profile.attacks?.map((attack) => (
+                        <li>
+                          <strong>{attack.name}</strong>
+                          <span>
+                            {[attack.bonus, attack.damage, attack.notes]
+                              .filter(Boolean)
+                              .join(" / ")}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {spellcasting && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-spells`}>
+                    <h3 id={`${character.id}-spells`}>Spellcasting</h3>
+                    <dl class="profile-fact-grid profile-fact-grid-compact">
+                      {spellcasting.ability && (
+                        <>
+                          <dt>Ability</dt>
+                          <dd>{spellcasting.ability}</dd>
+                        </>
+                      )}
+                      {typeof spellcasting.saveDc === "number" && (
+                        <>
+                          <dt>Save DC</dt>
+                          <dd>{spellcasting.saveDc}</dd>
+                        </>
+                      )}
+                      {spellcasting.attackBonus && (
+                        <>
+                          <dt>Attack</dt>
+                          <dd>{spellcasting.attackBonus}</dd>
+                        </>
+                      )}
+                    </dl>
+                    {Boolean(spellcasting.slots?.length) && (
+                      <p class="profile-inline-copy">
+                        Slots:{" "}
+                        {spellcasting.slots
+                          ?.map((slot) => `L${slot.level} x ${slot.total}`)
+                          .join(", ")}
+                      </p>
+                    )}
+                    {Boolean(spellcasting.spells?.length) && (
+                      <ul class="profile-chip-list">
+                        {spellcasting.spells?.map((spell) => <li>{spell}</li>)}
+                      </ul>
+                    )}
+                  </section>
+                )}
+
+                {Boolean(profile.features?.length) && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-features`}>
+                    <h3 id={`${character.id}-features`}>Features</h3>
+                    <ul class="profile-chip-list">
+                      {profile.features?.map((feature) => <li>{feature}</li>)}
+                    </ul>
+                  </section>
+                )}
+
+                {profile.proficiencies && (
+                  <section
+                    class="profile-section"
+                    aria-labelledby={`${character.id}-proficiencies`}
+                  >
+                    <h3 id={`${character.id}-proficiencies`}>Proficiencies</h3>
+                    <div class="profile-copy-groups">
+                      {Object.entries(profile.proficiencies).map(([label, values]) => (
+                        <p>
+                          <strong>{formatLabel(label)}:</strong> {values.join(", ")}
+                        </p>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {Boolean(profile.specialEquipment?.length) && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-equipment`}>
+                    <h3 id={`${character.id}-equipment`}>Special Equipment</h3>
+                    <ul class="equipment-list">
+                      {profile.specialEquipment?.map((item) => (
+                        <li>
+                          {item.imageSrc && <img src={item.imageSrc} alt="" loading="lazy" />}
+                          <span>
+                            <strong>{item.name}</strong>
+                            {item.description && <em>{item.description}</em>}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {profile.personality && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-personality`}>
+                    <h3 id={`${character.id}-personality`}>Personality</h3>
+                    <div class="profile-copy-groups">
+                      {Object.entries(profile.personality).map(([label, values]) => (
+                        <p>
+                          <strong>{formatLabel(label)}:</strong> {values.join(" ")}
+                        </p>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {Boolean(backstoryLines.length) && (
+                  <section class="profile-section" aria-labelledby={`${character.id}-backstory`}>
+                    <h3 id={`${character.id}-backstory`}>Backstory</h3>
+                    <div class="backstory-copy">
+                      {backstoryLines.map((line) => <p>{line}</p>)}
+                    </div>
+                  </section>
+                )}
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="/js/character-profiles.js"></script>

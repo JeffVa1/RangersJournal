@@ -1,0 +1,126 @@
+{
+  "order": 1,
+  "name": "Ace Irontusk",
+  "species": "Rock Gnome (Half-Orc)",
+  "className": "Barbarian",
+  "subclass": "Wild Magic",
+  "level": 5,
+  "levelLabel": "Level 5",
+  "background": "Soldier",
+  "alignment": "Chaotic Good",
+  "age": "99",
+  "portrait": "portrait.png",
+  "summary": "Cool guy",
+  "abilities": {
+    "strength": 18,
+    "dexterity": 10,
+    "constitution": 18,
+    "intelligence": 8,
+    "wisdom": 8,
+    "charisma": 14
+  },
+  "combat": {
+    "proficiencyBonus": 3,
+    "armorClass": 16,
+    "initiative": 0,
+    "speed": "40 ft.",
+    "hitPoints": {
+      "current": 66,
+      "maximum": 66
+    },
+    "hitDice": "5d12"
+  },
+  "savingThrows": [
+    {
+      "name": "Strength",
+      "value": 7,
+      "proficient": true
+    },
+    {
+      "name": "Constitution",
+      "value": 7,
+      "proficient": true
+    }
+  ],
+  "skills": [
+    {
+      "name": "Athletics",
+      "value": 7,
+      "proficient": true
+    },
+    {
+      "name": "Intimidation",
+      "value": 8,
+      "proficient": true
+    }
+  ],
+  "passives": {
+    "perception": 9,
+    "investigation": 9,
+    "insight": 9
+  },
+  "attacks": [
+    {
+      "name": "Nullite Forge Hammer",
+      "bonus": "+7",
+      "damage": "1d8 Bludgeoning + 1d4 Null + 7",
+      "notes": "Versatile, Forged from Nullite"
+    },
+    {
+      "name": "Shortsword",
+      "bonus": "+7",
+      "damage": "1d6+4 piercing",
+      "notes": "Light, finesse"
+    }
+  ],
+  "features": [
+    "Darkvision",
+    "Rage",
+    "Wild Surge",
+    "Savage Attacker",
+    "Magic Awareness",
+    "Danger Sense",
+    "Reckless Attack",
+    "Unarmored Defense",
+    "Lucky"
+  ],
+  "proficiencies": {
+    "armor": [
+      "Shields"
+    ],
+    "weapons": [
+      "Simple weapons",
+      "Martial weapons"
+    ],
+    "tools": [
+      "Dice"
+    ],
+    "languages": [
+      "Common",
+      "Common Sign Language",
+      "Orc"
+    ]
+  },
+  "specialEquipment": [
+    {
+      "name": "Nullite Forge Hammer",
+      "image": "x.png",
+      "description": "A brutal, blackened hammer forged from Nullite—a void-metal that devours identity, essence, and magic. Light bends strangely around it, as if the hammer’s head drinks in color and sound. Even when still, it feels like it is subtracting something from the world."
+    }
+  ],
+  "personality": {
+    "traits": [
+      ""
+    ],
+    "ideals": [
+      ""
+    ],
+    "bonds": [
+      ""
+    ],
+    "flaws": [
+      ""
+    ]
+  },
+  "backstory": "Coming soon."
+}

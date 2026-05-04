@@ -1,0 +1,155 @@
+{
+  "order": 3,
+  "name": "Evander",
+  "species": "Goliath",
+  "className": "Paladin",
+  "subclass": "Oath of Conquest",
+  "level": 5,
+  "levelLabel": "Level 5",
+  "background": "dude",
+  "alignment": "good",
+  "age": "99",
+  "portrait": "portrait.png",
+  "summary": "Cool guy",
+  "abilities": {
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+  },
+  "combat": {
+    "proficiencyBonus": 0,
+    "armorClass": 0,
+    "initiative": 0,
+    "speed": "30 ft.",
+    "hitPoints": {
+      "current": 0,
+      "maximum": 0
+    },
+    "hitDice": "7d10"
+  },
+  "savingThrows": [
+    {
+      "name": "Strength",
+      "value": 4,
+      "proficient": true
+    },
+    {
+      "name": "Dexterity",
+      "value": 7,
+      "proficient": true
+    }
+  ],
+  "skills": [
+    {
+      "name": "Perception",
+      "value": 9,
+      "proficient": true
+    },
+    {
+      "name": "Stealth",
+      "value": 10,
+      "proficient": true
+    },
+    {
+      "name": "Survival",
+      "value": 6,
+      "proficient": true
+    },
+    {
+      "name": "Investigation",
+      "value": 3,
+      "proficient": false
+    }
+  ],
+  "passives": {
+    "perception": 19,
+    "investigation": 13,
+    "insight": 13
+  },
+  "attacks": [
+    {
+      "name": "Longbow",
+      "bonus": "+7",
+      "damage": "1d8+4 piercing",
+      "notes": "150/600 ft."
+    },
+    {
+      "name": "Shortsword",
+      "bonus": "+7",
+      "damage": "1d6+4 piercing",
+      "notes": "Light, finesse"
+    }
+  ],
+  "spellcasting": {
+    "ability": "Wisdom",
+    "saveDc": 14,
+    "attackBonus": "+6",
+    "slots": [
+      {
+        "level": 1,
+        "total": 4
+      },
+      {
+        "level": 2,
+        "total": 3
+      }
+    ],
+    "spells": [
+      "Hunter's Mark",
+      "Pass without Trace",
+      "Disguise Self",
+      "Rope Trick"
+    ]
+  },
+  "features": [
+    "Darkvision",
+    "Favored Foe",
+    "Dread Ambusher",
+    "Umbral Sight",
+    "Primeval Awareness"
+  ],
+  "proficiencies": {
+    "armor": [
+      "Light armor",
+      "Medium armor",
+      "Shields"
+    ],
+    "weapons": [
+      "Simple weapons",
+      "Martial weapons"
+    ],
+    "tools": [
+      "Cartographer's tools"
+    ],
+    "languages": [
+      "Common",
+      "Elvish",
+      "Sylvan"
+    ]
+  },
+  "specialEquipment": [
+    {
+      "name": "Moonlit Compass",
+      "image": "moonlit-compass.png",
+      "description": "Always points toward the last place moonlight touched the bearer."
+    }
+  ],
+  "personality": {
+    "traits": [
+      "Speaks rarely, watches everything."
+    ],
+    "ideals": [
+      "The wild remembers every oath."
+    ],
+    "bonds": [
+      "Protects the last heirs of the Shattered Crown."
+    ],
+    "flaws": [
+      "Trusts signs and omens more than people."
+    ]
+  },
+  "backstory": "Kaelen keeps the old border paths and carries maps no court still admits exist. He learned to follow the broken roads by moonlight, listening for the old ranger bells hidden in hollow trees. Since the crown fell, his patrols have become quieter and more dangerous, but he still marks safe passage for those who travel under honest need."
+}
