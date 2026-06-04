@@ -22,18 +22,6 @@ const items = [
     active: activePath === "/library" || activePath === "/viewer"
   },
   {
-    href: "/map",
-    label: "Map",
-    icon: "map",
-    active: activePath === "/map"
-  },
-  {
-    href: "/calendar",
-    label: "Calendar",
-    icon: "calendar",
-    active: activePath === "/calendar"
-  },
-  {
     href: "/session-recaps",
     label: "Session Recaps",
     icon: "scroll",
@@ -46,6 +34,12 @@ const items = [
     label: "Character Profiles",
     icon: "users",
     active: activePath === "/character-profiles"
+  },
+  {
+    href: "/map",
+    label: "Map",
+    icon: "map",
+    active: activePath === "/map"
   }
 ];
 ---
@@ -95,14 +89,6 @@ const items = [
                   <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
                   <path d="M8 6h8" />
                   <path d="M8 10h8" />
-                </svg>
-              )}
-              {item.icon === "calendar" && (
-                <svg viewBox="0 0 24 24">
-                  <path d="M7 3v4" />
-                  <path d="M17 3v4" />
-                  <path d="M4 9h16" />
-                  <rect x="4" y="5" width="16" height="16" rx="2" />
                 </svg>
               )}
               {item.icon === "scroll" && (

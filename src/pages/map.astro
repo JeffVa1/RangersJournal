@@ -3,5 +3,41 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Map | Rangers Journal" bodyClass="map-page">
-  <main class="map-main" aria-label="Map"></main>
+  <main class="map-main" aria-label="Map">
+    <div class="map-stage" data-map-stage>
+      <img
+        class="map-image"
+        src="/assets/BookPage.png"
+        alt=""
+        aria-hidden="true"
+        draggable="false"
+        data-map-image
+      />
+
+      <button
+        class="map-magnifier-toggle"
+        type="button"
+        aria-label="Enable map magnifier"
+        aria-pressed="false"
+        data-map-magnifier-toggle
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m16.5 16.5 4 4" />
+        </svg>
+      </button>
+
+      <div class="map-magnifier-lens" aria-hidden="true" data-map-magnifier-lens>
+        <img
+          class="map-magnifier-image"
+          src="/assets/BookPage.png"
+          alt=""
+          draggable="false"
+          data-map-magnifier-image
+        />
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/js/map-magnifier.js"></script>
 </BaseLayout>
