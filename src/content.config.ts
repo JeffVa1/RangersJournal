@@ -1,4 +1,5 @@
 import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
 const characterProfiles = defineCollection({
   type: "data",
@@ -11,7 +12,7 @@ const characterProfiles = defineCollection({
 });
 
 const sessionRecaps = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/session-recaps" }),
   schema: z.object({}).passthrough()
 });
 

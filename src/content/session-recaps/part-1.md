@@ -1,4 +1,4 @@
-# The Shattered Crown - Part 1 Recaps
+# The Lost Scroll
 
 ## Session 1 - 8/27/25
 

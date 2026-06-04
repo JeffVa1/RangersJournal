@@ -1,4 +1,4 @@
-# The Shattered Crown - Part 2 Recaps
+# The Pit
 
 ## Session 7 - 11/12/25
 

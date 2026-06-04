@@ -18,7 +18,7 @@ const { arc } = Astro.props;
 const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
 ---
 
-<BaseLayout title={`${arc.shortTitle} Recaps | Rangers Journal`} bodyClass="session-recaps-page">
+<BaseLayout title={`${arc.title} Recaps | Rangers Journal`} bodyClass="session-recaps-page">
   <main
     class="recaps-main recaps-detail-main"
     style={`--arc-color: ${arc.color}; --arc-background: url("${arc.background}");`}

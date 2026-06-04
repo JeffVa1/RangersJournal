@@ -33,6 +33,7 @@ export interface RecapArc {
 
 interface RecapArcSource {
   slug: string;
+  title: string;
   shortTitle: string;
   volumeLabel: string;
   description: string;
@@ -57,6 +58,7 @@ interface DraftSession {
 const arcSources: RecapArcSource[] = [
   {
     slug: "part-1",
+    title: "The Lost Scroll",
     shortTitle: "Part I",
     volumeLabel: "Vol I",
     description:
@@ -69,6 +71,7 @@ const arcSources: RecapArcSource[] = [
   },
   {
     slug: "part-2",
+    title: "The Pit",
     shortTitle: "Part II",
     volumeLabel: "Vol II",
     description:
@@ -113,9 +116,6 @@ const getSessionRange = (sessions: RecapSession[]) => {
 
 const parseArc = (source: RecapArcSource): RecapArc => {
   const lines = source.markdown.replace(/\r\n?/g, "\n").split("\n");
-  const title =
-    lines.find((line) => line.startsWith("# "))?.replace(/^#\s+/, "").trim() ??
-    source.shortTitle;
   const sessions: RecapSession[] = [];
 
   let activeSession: DraftSession | null = null;
@@ -206,7 +206,7 @@ const parseArc = (source: RecapArcSource): RecapArc => {
   return {
     slug: source.slug,
     href: `/session-recaps/${source.slug}`,
-    title,
+    title: source.title,
     shortTitle: source.shortTitle,
     volumeLabel: source.volumeLabel,
     description: source.description,
