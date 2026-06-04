@@ -24,6 +24,8 @@ export interface RecapArc {
   volumeLabel: string;
   description: string;
   sourceFile: string;
+  bookId: string;
+  journalHref: string;
   cover: string;
   background: string;
   color: string;
@@ -38,6 +40,7 @@ interface RecapArcSource {
   volumeLabel: string;
   description: string;
   sourceFile: string;
+  bookId: string;
   cover: string;
   background: string;
   color: string;
@@ -64,6 +67,7 @@ const arcSources: RecapArcSource[] = [
     description:
       "The first road from Drakensport into the hidden legacy of Irillis.",
     sourceFile: "src/content/session-recaps/part-1.md",
+    bookId: "book1",
     cover: "/assets/books/book1/book_assets/cover.png",
     background: "/assets/books/book1/background.png",
     color: "#d60000",
@@ -77,6 +81,7 @@ const arcSources: RecapArcSource[] = [
     description:
       "The campaign descends from Brightmarch toward Ironwell and the depths beneath the Pit.",
     sourceFile: "src/content/session-recaps/part-2.md",
+    bookId: "book2",
     cover: "/assets/books/book2/book_assets/cover.png",
     background: "/assets/books/book2/background.png",
     color: "#9900d1",
@@ -211,6 +216,8 @@ const parseArc = (source: RecapArcSource): RecapArc => {
     volumeLabel: source.volumeLabel,
     description: source.description,
     sourceFile: source.sourceFile,
+    bookId: source.bookId,
+    journalHref: `/library#${source.bookId}/read`,
     cover: source.cover,
     background: source.background,
     color: source.color,

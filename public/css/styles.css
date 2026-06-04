@@ -1845,11 +1845,18 @@ img {
   margin-bottom: 1.7rem;
 }
 
+.recaps-detail-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
 .recaps-top-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  margin-bottom: 0.2rem;
 }
 
 .recaps-pill-link {
@@ -1878,6 +1885,21 @@ img {
   background: var(--surface-hover);
   border-color: var(--surface-border-hover);
   outline: none;
+}
+
+.recaps-journal-link {
+  flex: 0 0 auto;
+  color: #fff;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--arc-color) 28%, rgba(255, 255, 255, 0.08)),
+      rgba(0, 0, 0, 0.5)
+    );
+  border-color: color-mix(in srgb, var(--arc-color) 58%, rgba(255, 255, 255, 0.3));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--arc-color) 18%, transparent),
+    var(--surface-shadow);
 }
 
 .recaps-detail-layout {
@@ -2487,6 +2509,10 @@ img {
     width: 6.5rem;
   }
 
+  .recaps-detail-actions {
+    gap: 0.5rem;
+  }
+
   .recaps-top-actions {
     gap: 0.38rem;
     margin-bottom: 0;
@@ -3079,6 +3105,14 @@ img {
 
   .recaps-detail-header {
     margin-bottom: 0.95rem;
+  }
+
+  .recaps-detail-actions {
+    flex-wrap: wrap;
+  }
+
+  .recaps-journal-link {
+    margin-left: auto;
   }
 
   .recaps-top-actions {

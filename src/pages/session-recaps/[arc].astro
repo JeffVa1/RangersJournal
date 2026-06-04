@@ -31,16 +31,21 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
     </div>
 
     <header class="recaps-detail-header">
-      <nav class="recaps-top-actions" aria-label="Recap navigation">
-        <a class="recaps-pill-link" href="/session-recaps">All arcs</a>
-        {
-          otherArcs.map((otherArc) => (
-            <a class="recaps-pill-link" href={otherArc.href}>
-              {otherArc.shortTitle}
-            </a>
-          ))
-        }
-      </nav>
+      <div class="recaps-detail-actions">
+        <nav class="recaps-top-actions" aria-label="Recap navigation">
+          <a class="recaps-pill-link" href="/session-recaps">All arcs</a>
+          {
+            otherArcs.map((otherArc) => (
+              <a class="recaps-pill-link" href={otherArc.href}>
+                {otherArc.shortTitle}
+              </a>
+            ))
+          }
+        </nav>
+        <a class="recaps-pill-link recaps-journal-link" href={arc.journalHref}>
+          Open journal
+        </a>
+      </div>
       <p class="recaps-kicker">{arc.volumeLabel}</p>
       <h1 id="recap-arc-title">{arc.title}</h1>
       <p>{arc.description}</p>
