@@ -1848,7 +1848,7 @@ img {
 .recaps-detail-actions {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 0.8rem;
   margin-bottom: 0.2rem;
 }
@@ -1888,6 +1888,10 @@ img {
 }
 
 .recaps-journal-link {
+  position: absolute;
+  top: calc(2.6rem + var(--safe-top));
+  right: max(2.5rem, 5vw);
+  z-index: 3;
   flex: 0 0 auto;
   color: #fff;
   background:
@@ -2513,6 +2517,11 @@ img {
     gap: 0.5rem;
   }
 
+  .recaps-journal-link {
+    top: calc(0.9rem + var(--safe-top));
+    right: 2rem;
+  }
+
   .recaps-top-actions {
     gap: 0.38rem;
     margin-bottom: 0;
@@ -3112,6 +3121,7 @@ img {
   }
 
   .recaps-journal-link {
+    position: static;
     margin-left: auto;
   }
 
