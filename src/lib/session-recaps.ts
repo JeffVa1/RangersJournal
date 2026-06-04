@@ -1,5 +1,4 @@
 import part1Markdown from "../content/session-recaps/part-1.md?raw";
-import part2Markdown from "../content/session-recaps/part-2.md?raw";
 
 export interface RecapSection {
   id: string;
@@ -72,20 +71,6 @@ const arcSources: RecapArcSource[] = [
     background: "/assets/books/book1/background.png",
     color: "#d60000",
     markdown: part1Markdown
-  },
-  {
-    slug: "part-2",
-    title: "The Pit",
-    shortTitle: "Part II",
-    volumeLabel: "Vol II",
-    description:
-      "The campaign descends from Brightmarch toward Ironwell and the depths beneath the Pit.",
-    sourceFile: "src/content/session-recaps/part-2.md",
-    bookId: "book2",
-    cover: "/assets/books/book2/book_assets/cover.png",
-    background: "/assets/books/book2/background.png",
-    color: "#9900d1",
-    markdown: part2Markdown
   }
 ];
 
