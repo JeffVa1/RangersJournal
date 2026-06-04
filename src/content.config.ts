@@ -10,6 +10,12 @@ const characterProfiles = defineCollection({
     .passthrough()
 });
 
+const sessionRecaps = defineCollection({
+  type: "content",
+  schema: z.object({}).passthrough()
+});
+
 export const collections = {
-  "character-profiles": characterProfiles
+  "character-profiles": characterProfiles,
+  "session-recaps": sessionRecaps
 };

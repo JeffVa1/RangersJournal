@@ -1,0 +1,121 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { RecapArc } from "../../lib/session-recaps";
+import { recapArcs } from "../../lib/session-recaps";
+
+export function getStaticPaths() {
+  return recapArcs.map((arc) => ({
+    params: { arc: arc.slug },
+    props: { arc }
+  }));
+}
+
+interface Props {
+  arc: RecapArc;
+}
+
+const { arc } = Astro.props;
+const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
+---
+
+<BaseLayout title={`${arc.shortTitle} Recaps | Rangers Journal`} bodyClass="session-recaps-page">
+  <main
+    class="recaps-main recaps-detail-main"
+    style={`--arc-color: ${arc.color}; --arc-background: url("${arc.background}");`}
+    aria-labelledby="recap-arc-title"
+  >
+    <div class="recaps-backdrop" aria-hidden="true">
+      <div class="recaps-backdrop-image recaps-arc-backdrop"></div>
+      <div class="recaps-backdrop-vignette"></div>
+    </div>
+
+    <header class="recaps-detail-header">
+      <nav class="recaps-top-actions" aria-label="Recap navigation">
+        <a class="recaps-pill-link" href="/session-recaps">All arcs</a>
+        {
+          otherArcs.map((otherArc) => (
+            <a class="recaps-pill-link" href={otherArc.href}>
+              {otherArc.shortTitle}
+            </a>
+          ))
+        }
+      </nav>
+      <p class="recaps-kicker">{arc.volumeLabel}</p>
+      <h1 id="recap-arc-title">{arc.title}</h1>
+      <p>{arc.description}</p>
+    </header>
+
+    <div class="recaps-detail-layout">
+      <aside class="recaps-session-index" aria-label={`${arc.shortTitle} sessions`}>
+        <p>Sessions</p>
+        <ol>
+          {
+            arc.sessions.map((session) => (
+              <li>
+                <a href={`#${session.anchor}`}>
+                  <span>{session.title}</span>
+                  <small>{session.date}</small>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </aside>
+
+      <section class="recaps-reader" aria-label={`${arc.shortTitle} session recaps`}>
+        <nav class="recaps-mobile-session-nav" aria-label="Jump to session">
+          {
+            arc.sessions.map((session) => (
+              <a href={`#${session.anchor}`}>{session.number}</a>
+            ))
+          }
+        </nav>
+
+        {
+          arc.sessions.map((session, index) => {
+            const previousSession = arc.sessions[index - 1];
+            const nextSession = arc.sessions[index + 1];
+
+            return (
+              <article class="recap-session" id={session.anchor}>
+                <header class="recap-session-header">
+                  <p>{session.date}</p>
+                  <h2>{session.title}</h2>
+                  {session.summary && <p class="recap-session-summary">{session.summary}</p>}
+                </header>
+
+                <div class="recap-section-list">
+                  {session.sections.map((section) => (
+                    <section class="recap-story-section" aria-labelledby={section.id}>
+                      <h3 id={section.id}>{section.title}</h3>
+                      {section.paragraphs.map((paragraph) => (
+                        <p>{paragraph}</p>
+                      ))}
+                    </section>
+                  ))}
+                </div>
+
+                <footer class="recap-session-footer" aria-label={`${session.title} adjacent sessions`}>
+                  {previousSession ? (
+                    <a href={`#${previousSession.anchor}`}>
+                      <span>Previous</span>
+                      {previousSession.title}
+                    </a>
+                  ) : (
+                    <span></span>
+                  )}
+                  {nextSession && (
+                    <a href={`#${nextSession.anchor}`}>
+                      <span>Next</span>
+                      {nextSession.title}
+                    </a>
+                  )}
+                </footer>
+              </article>
+            );
+          })
+        }
+      </section>
+    </div>
+  </main>
+</BaseLayout>

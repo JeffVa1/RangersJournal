@@ -1616,6 +1616,462 @@ img {
   letter-spacing: 0;
 }
 
+.session-recaps-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  color: var(--text);
+  background: #05060a;
+  letter-spacing: 0;
+}
+
+.session-recaps-page h1,
+.session-recaps-page h2,
+.session-recaps-page h3,
+.session-recaps-page p,
+.session-recaps-page a,
+.session-recaps-page span,
+.session-recaps-page small {
+  letter-spacing: 0;
+}
+
+.recaps-main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  isolation: isolate;
+}
+
+.recaps-index-main {
+  display: grid;
+  align-content: center;
+  gap: 2.4rem;
+  padding: calc(4.2rem + var(--safe-top)) max(3rem, 6vw)
+    calc(4.2rem + var(--safe-bottom)) max(6.8rem, 8vw);
+}
+
+.recaps-detail-main {
+  padding: calc(2.6rem + var(--safe-top)) max(2.5rem, 5vw)
+    calc(4rem + var(--safe-bottom)) max(6.5rem, 7vw);
+}
+
+.recaps-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  background: #05060a;
+}
+
+.recaps-backdrop-image,
+.recaps-backdrop-vignette {
+  position: absolute;
+  inset: 0;
+}
+
+.recaps-backdrop-image {
+  background: url("../assets/LandingPage.png") center center / cover no-repeat;
+  opacity: 0.72;
+  filter: saturate(0.92) brightness(0.82);
+  transform: scale(1.03);
+}
+
+.recaps-arc-backdrop {
+  background-image: var(--arc-background);
+  opacity: 0.66;
+}
+
+.recaps-backdrop-vignette {
+  background:
+    radial-gradient(circle at 64% 24%, rgba(255, 255, 255, 0.08), transparent 34rem),
+    radial-gradient(circle at 50% 55%, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.68) 70%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.28) 48%, rgba(0, 0, 0, 0.72));
+}
+
+.recaps-hero,
+.recaps-detail-header {
+  width: min(58rem, 100%);
+  text-shadow: 0 0.18rem 0.7rem rgba(0, 0, 0, 0.58);
+}
+
+.recaps-hero {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.recaps-kicker {
+  margin: 0;
+  color: rgba(255, 250, 240, 0.68);
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.recaps-hero h1,
+.recaps-detail-header h1 {
+  margin: 0;
+  font-weight: 500;
+  line-height: 0.98;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.recaps-hero h1 {
+  font-size: 4.4rem;
+}
+
+.recaps-detail-header h1 {
+  font-size: 3.35rem;
+}
+
+.recaps-hero p:last-child,
+.recaps-detail-header > p:last-child {
+  margin: 0;
+  max-width: 44rem;
+  color: rgba(255, 250, 240, 0.78);
+  font-size: 1rem;
+  line-height: 1.48;
+}
+
+.recaps-arc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.35rem;
+  width: min(72rem, 100%);
+}
+
+.recaps-arc-card {
+  position: relative;
+  min-height: 26rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.52fr);
+  align-items: end;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--surface-radius);
+  color: inherit;
+  text-decoration: none;
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow-strong);
+  backdrop-filter: var(--surface-blur);
+  overflow: hidden;
+  transition:
+    transform var(--motion-med),
+    border-color var(--motion-fast),
+    background-color var(--motion-fast);
+}
+
+.recaps-arc-card:hover,
+.recaps-arc-card:focus-visible {
+  transform: translateY(-0.22rem);
+  border-color: var(--surface-border-hover);
+  background: var(--surface-bg-strong);
+  outline: none;
+}
+
+.recaps-arc-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--arc-background) center center / cover no-repeat;
+  opacity: 0.38;
+  filter: saturate(0.95) brightness(0.82);
+  transform: scale(1);
+  transition:
+    opacity var(--motion-med),
+    transform var(--motion-slow);
+}
+
+.recaps-arc-card:hover .recaps-arc-background,
+.recaps-arc-card:focus-visible .recaps-arc-background {
+  opacity: 0.5;
+  transform: scale(1.04);
+}
+
+.recaps-arc-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.82)),
+    radial-gradient(circle at 78% 22%, color-mix(in srgb, var(--arc-color) 38%, transparent), transparent 19rem);
+}
+
+.recaps-arc-copy {
+  display: grid;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.recaps-arc-title {
+  display: block;
+  font-size: 2rem;
+  line-height: 1.05;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.recaps-arc-description,
+.recaps-arc-meta {
+  display: block;
+  color: rgba(255, 250, 240, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.42;
+}
+
+.recaps-arc-meta {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.recaps-arc-cover {
+  align-self: center;
+  justify-self: center;
+  width: min(13rem, 100%);
+  filter: drop-shadow(0 1.5rem 1.8rem rgba(0, 0, 0, 0.46));
+}
+
+.recaps-arc-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.recaps-detail-header {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.7rem;
+}
+
+.recaps-top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 0.2rem;
+}
+
+.recaps-pill-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.3rem;
+  padding: 0.62rem 0.86rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.42);
+  box-shadow: var(--surface-shadow);
+  backdrop-filter: var(--surface-blur);
+  font-size: 0.78rem;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    color var(--motion-fast),
+    background-color var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.recaps-pill-link:hover,
+.recaps-pill-link:focus-visible {
+  color: #fff;
+  background: var(--surface-hover);
+  border-color: var(--surface-border-hover);
+  outline: none;
+}
+
+.recaps-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: start;
+}
+
+.recaps-session-index {
+  position: sticky;
+  top: calc(1.4rem + var(--safe-top));
+  max-height: calc(100vh - 2.8rem - var(--safe-top) - var(--safe-bottom));
+  max-height: calc(100dvh - 2.8rem - var(--safe-top) - var(--safe-bottom));
+  padding: 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--surface-radius);
+  background: var(--surface-bg);
+  box-shadow: var(--surface-shadow);
+  backdrop-filter: var(--surface-blur);
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.recaps-session-index p {
+  margin: 0 0 0.72rem;
+  color: rgba(255, 250, 240, 0.7);
+  font-size: 0.78rem;
+}
+
+.recaps-session-index ol {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recaps-session-index a {
+  display: grid;
+  gap: 0.18rem;
+  padding: 0.6rem 0.68rem;
+  border: 1px solid transparent;
+  border-radius: var(--surface-radius-small);
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition:
+    background-color var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.recaps-session-index a:hover,
+.recaps-session-index a:focus-visible {
+  background: var(--surface-hover);
+  border-color: var(--surface-border);
+  outline: none;
+}
+
+.recaps-session-index span {
+  font-size: 0.84rem;
+  line-height: 1.1;
+}
+
+.recaps-session-index small {
+  color: rgba(255, 250, 240, 0.58);
+  font-size: 0.66rem;
+  line-height: 1;
+}
+
+.recaps-reader {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.recaps-mobile-session-nav {
+  display: none;
+}
+
+.recap-session {
+  scroll-margin-top: 1.4rem;
+  padding: clamp(1.35rem, 3vw, 2.4rem);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--surface-radius);
+  background: var(--surface-bg-strong);
+  box-shadow: var(--surface-shadow-strong);
+  backdrop-filter: var(--surface-blur);
+}
+
+.recap-session-header {
+  display: grid;
+  gap: 0.55rem;
+  padding-bottom: 1.05rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.recap-session-header p {
+  margin: 0;
+}
+
+.recap-session-header > p:first-child {
+  color: rgba(255, 250, 240, 0.62);
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.recap-session h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.recap-session-summary {
+  max-width: 58rem;
+  color: rgba(255, 250, 240, 0.72);
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.recap-section-list {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.recap-story-section {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.recap-story-section h3 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.1;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.recap-story-section p {
+  margin: 0;
+  max-width: 68rem;
+  color: rgba(255, 250, 240, 0.84);
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 0.98rem;
+  line-height: 1.62;
+  overflow-wrap: anywhere;
+}
+
+.recap-session-footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1.55rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.recap-session-footer a {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 3.4rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--surface-radius-small);
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.055);
+  text-decoration: none;
+  transition:
+    background-color var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.recap-session-footer a:last-child {
+  text-align: right;
+}
+
+.recap-session-footer a:hover,
+.recap-session-footer a:focus-visible {
+  background: var(--surface-hover);
+  border-color: var(--surface-border-hover);
+  outline: none;
+}
+
+.recap-session-footer span {
+  color: rgba(255, 250, 240, 0.58);
+  font-size: 0.68rem;
+  line-height: 1;
+}
+
 .viewer-page {
   position: relative;
   background: #1f1408;
@@ -1808,6 +2264,72 @@ img {
 }
 
 @media (max-width: 1080px) {
+  .recaps-index-main,
+  .recaps-detail-main {
+    padding-right: 2rem;
+    padding-left: max(5.6rem, 7vw);
+  }
+
+  .recaps-arc-grid {
+    grid-template-columns: 1fr;
+    width: min(42rem, 100%);
+  }
+
+  .recaps-arc-card {
+    min-height: 20rem;
+  }
+
+  .recaps-detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .recaps-session-index {
+    display: none;
+  }
+
+  .recaps-mobile-session-nav {
+    position: sticky;
+    top: calc(0.75rem + var(--safe-top));
+    z-index: 4;
+    display: flex;
+    gap: 0.38rem;
+    max-width: calc(100vw - 7rem);
+    padding: 0.45rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.58);
+    box-shadow: var(--surface-shadow);
+    backdrop-filter: var(--surface-blur);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .recaps-mobile-session-nav::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .recaps-mobile-session-nav a {
+    width: 2.18rem;
+    height: 2.18rem;
+    flex: 0 0 2.18rem;
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 0.78rem;
+    line-height: 1;
+  }
+
+  .recaps-mobile-session-nav a:hover,
+  .recaps-mobile-session-nav a:focus-visible {
+    background: var(--surface-hover);
+    border-color: var(--surface-border);
+    outline: none;
+  }
+
   .library-gallery-grid {
     width: min(78rem, 82vw);
     gap: clamp(1.6rem, 4vw, 3rem);
@@ -1866,6 +2388,149 @@ img {
     max-width: calc(100vw - var(--mobile-left-rail) - 2rem);
     font-size: 3rem;
     line-height: 0.95;
+  }
+
+  .recaps-index-main,
+  .recaps-detail-main {
+    padding: calc(0.9rem + var(--safe-top)) var(--mobile-page-pad-x)
+      calc(1.1rem + var(--safe-bottom)) calc(var(--mobile-left-rail) + 0.75rem);
+  }
+
+  .recaps-index-main {
+    gap: 0.85rem;
+    align-content: start;
+  }
+
+  .recaps-hero,
+  .recaps-detail-header {
+    gap: 0.45rem;
+  }
+
+  .recaps-hero h1,
+  .recaps-detail-header h1 {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .recaps-hero p:last-child,
+  .recaps-detail-header > p:last-child {
+    font-size: 0.78rem;
+    line-height: 1.34;
+  }
+
+  .recaps-kicker {
+    font-size: 0.68rem;
+  }
+
+  .recaps-arc-grid {
+    gap: 0.75rem;
+    width: min(44rem, calc(100vw - var(--mobile-left-rail) - 1.75rem));
+  }
+
+  .recaps-arc-card {
+    min-height: 12.5rem;
+    grid-template-columns: minmax(0, 1fr) 7rem;
+    gap: 0.8rem;
+    padding: 0.85rem;
+    border-radius: 1.05rem;
+  }
+
+  .recaps-arc-copy {
+    gap: 0.45rem;
+  }
+
+  .recaps-arc-title {
+    font-size: 1.35rem;
+  }
+
+  .recaps-arc-description,
+  .recaps-arc-meta {
+    font-size: 0.68rem;
+    line-height: 1.3;
+  }
+
+  .recaps-arc-cover {
+    width: 6.5rem;
+  }
+
+  .recaps-top-actions {
+    gap: 0.38rem;
+    margin-bottom: 0;
+  }
+
+  .recaps-pill-link {
+    min-height: 2rem;
+    padding: 0.5rem 0.68rem;
+    font-size: 0.66rem;
+  }
+
+  .recaps-detail-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .recaps-reader {
+    gap: 0.8rem;
+  }
+
+  .recaps-mobile-session-nav {
+    top: calc(0.4rem + var(--safe-top));
+    max-width: calc(100vw - var(--mobile-left-rail) - 1.55rem);
+    padding: 0.28rem;
+  }
+
+  .recaps-mobile-session-nav a {
+    width: 1.8rem;
+    height: 1.8rem;
+    flex-basis: 1.8rem;
+    font-size: 0.66rem;
+  }
+
+  .recap-session {
+    padding: 0.95rem;
+    border-radius: 1.05rem;
+  }
+
+  .recap-session-header {
+    gap: 0.32rem;
+    padding-bottom: 0.65rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .recap-session h2 {
+    font-size: 1.45rem;
+  }
+
+  .recap-session-header > p:first-child,
+  .recap-session-summary {
+    font-size: 0.68rem;
+  }
+
+  .recap-section-list {
+    gap: 0.85rem;
+  }
+
+  .recap-story-section {
+    gap: 0.45rem;
+  }
+
+  .recap-story-section h3 {
+    font-size: 1.02rem;
+  }
+
+  .recap-story-section p {
+    font-size: 0.72rem;
+    line-height: 1.42;
+  }
+
+  .recap-session-footer {
+    margin-top: 0.9rem;
+    padding-top: 0.72rem;
+  }
+
+  .recap-session-footer a {
+    min-height: 2.8rem;
+    padding: 0.58rem 0.66rem;
+    font-size: 0.7rem;
   }
 
   .empty-main {
@@ -2091,6 +2756,72 @@ img {
     font-size: 2.35rem;
   }
 
+  .recaps-index-main,
+  .recaps-detail-main {
+    padding-top: calc(0.55rem + var(--safe-top));
+    padding-bottom: calc(0.7rem + var(--safe-bottom));
+  }
+
+  .recaps-hero h1,
+  .recaps-detail-header h1 {
+    font-size: 1.55rem;
+  }
+
+  .recaps-hero p:last-child,
+  .recaps-detail-header > p:last-child {
+    font-size: 0.66rem;
+    line-height: 1.28;
+  }
+
+  .recaps-arc-card {
+    min-height: 10.2rem;
+    grid-template-columns: minmax(0, 1fr) 5.8rem;
+    padding: 0.65rem;
+  }
+
+  .recaps-arc-title {
+    font-size: 1.12rem;
+  }
+
+  .recaps-arc-description,
+  .recaps-arc-meta {
+    font-size: 0.62rem;
+  }
+
+  .recaps-arc-cover {
+    width: 5.6rem;
+  }
+
+  .recaps-pill-link {
+    min-height: 1.72rem;
+    padding: 0.42rem 0.58rem;
+    font-size: 0.6rem;
+  }
+
+  .recaps-mobile-session-nav a {
+    width: 1.58rem;
+    height: 1.58rem;
+    flex-basis: 1.58rem;
+    font-size: 0.6rem;
+  }
+
+  .recap-session {
+    padding: 0.72rem;
+  }
+
+  .recap-session h2 {
+    font-size: 1.28rem;
+  }
+
+  .recap-story-section h3 {
+    font-size: 0.98rem;
+  }
+
+  .recap-story-section p {
+    font-size: 0.72rem;
+    line-height: 1.42;
+  }
+
   .empty-panel {
     padding: 0.8rem 0.95rem;
   }
@@ -2226,7 +2957,7 @@ img {
 }
 
 @media (max-width: 940px) and (orientation: portrait) {
-  body::before {
+  body:not(.session-recaps-page)::before {
     content: "Rotate to landscape";
     position: fixed;
     inset: 0;
@@ -2244,13 +2975,156 @@ img {
     letter-spacing: 0.08em;
   }
 
-  body::after {
+  body:not(.session-recaps-page)::after {
     content: "";
     position: fixed;
     inset: 1rem;
     z-index: 1001;
     border: 1px solid rgba(255, 255, 255, 0.24);
     pointer-events: none;
+  }
+
+  .session-recaps-page {
+    overflow-y: auto;
+  }
+
+  .recaps-index-main,
+  .recaps-detail-main {
+    padding: calc(1rem + var(--safe-top)) var(--mobile-page-pad-x)
+      calc(1.25rem + var(--safe-bottom)) calc(var(--mobile-left-rail) + 0.75rem);
+  }
+
+  .recaps-index-main {
+    align-content: start;
+    gap: 1rem;
+  }
+
+  .recaps-hero,
+  .recaps-detail-header {
+    gap: 0.55rem;
+  }
+
+  .recaps-hero h1,
+  .recaps-detail-header h1 {
+    font-size: 2.05rem;
+    line-height: 1.02;
+  }
+
+  .recaps-hero p:last-child,
+  .recaps-detail-header > p:last-child {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .recaps-arc-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    width: 100%;
+  }
+
+  .recaps-arc-card {
+    min-height: 17rem;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1rem;
+    border-radius: 1.05rem;
+  }
+
+  .recaps-arc-cover {
+    width: 8.8rem;
+    justify-self: end;
+  }
+
+  .recaps-arc-title {
+    font-size: 1.5rem;
+  }
+
+  .recaps-arc-description,
+  .recaps-arc-meta {
+    font-size: 0.76rem;
+  }
+
+  .recaps-detail-header {
+    margin-bottom: 0.95rem;
+  }
+
+  .recaps-top-actions {
+    gap: 0.42rem;
+  }
+
+  .recaps-pill-link {
+    min-height: 2.05rem;
+    padding: 0.52rem 0.68rem;
+    font-size: 0.68rem;
+  }
+
+  .recaps-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .recaps-session-index {
+    display: none;
+  }
+
+  .recaps-reader {
+    gap: 0.9rem;
+  }
+
+  .recaps-mobile-session-nav {
+    top: calc(0.45rem + var(--safe-top));
+    max-width: calc(100vw - var(--mobile-left-rail) - var(--mobile-page-pad-x) - 0.75rem);
+    padding: 0.34rem;
+  }
+
+  .recaps-mobile-session-nav a {
+    width: 1.9rem;
+    height: 1.9rem;
+    flex-basis: 1.9rem;
+    font-size: 0.68rem;
+  }
+
+  .recap-session {
+    scroll-margin-top: 3.4rem;
+    padding: 1rem;
+    border-radius: 1.05rem;
+  }
+
+  .recap-session-header {
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .recap-session h2 {
+    font-size: 1.48rem;
+  }
+
+  .recap-session-summary {
+    font-size: 0.78rem;
+    line-height: 1.42;
+  }
+
+  .recap-section-list {
+    gap: 1rem;
+  }
+
+  .recap-story-section {
+    gap: 0.52rem;
+  }
+
+  .recap-story-section h3 {
+    font-size: 1.08rem;
+  }
+
+  .recap-story-section p {
+    font-size: 0.78rem;
+    line-height: 1.48;
+  }
+
+  .recap-session-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .recap-session-footer a:last-child {
+    text-align: left;
   }
 }
 

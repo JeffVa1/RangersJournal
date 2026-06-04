@@ -37,7 +37,9 @@ const items = [
     href: "/session-recaps",
     label: "Session Recaps",
     icon: "scroll",
-    active: activePath === "/session-recaps"
+    active:
+      activePath === "/session-recaps" ||
+      activePath.startsWith("/session-recaps/")
   },
   {
     href: "/character-profiles",

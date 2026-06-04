@@ -1,12 +1,45 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { recapArcs } from "../lib/session-recaps";
 ---
 
-<BaseLayout title="Session Recaps | Rangers Journal" bodyClass="empty-page">
-  <main class="empty-main" aria-label="Session Recaps">
-    <section class="empty-panel" aria-labelledby="session-recaps-title">
+<BaseLayout title="Session Recaps | Rangers Journal" bodyClass="session-recaps-page">
+  <main class="recaps-main recaps-index-main" aria-labelledby="session-recaps-title">
+    <div class="recaps-backdrop" aria-hidden="true">
+      <div class="recaps-backdrop-image"></div>
+      <div class="recaps-backdrop-vignette"></div>
+    </div>
+
+    <section class="recaps-hero">
+      <p class="recaps-kicker">The Shattered Crown</p>
       <h1 id="session-recaps-title">Session Recaps</h1>
-      <p>Coming soon</p>
+      <p>
+        Follow the campaign by arc, then jump directly into the session you want
+        to revisit.
+      </p>
+    </section>
+
+    <section class="recaps-arc-grid" aria-label="Story arcs">
+      {
+        recapArcs.map((arc) => (
+          <a
+            class="recaps-arc-card"
+            href={arc.href}
+            style={`--arc-color: ${arc.color}; --arc-background: url("${arc.background}");`}
+          >
+            <span class="recaps-arc-background" aria-hidden="true"></span>
+            <span class="recaps-arc-copy">
+              <span class="recaps-kicker">{arc.volumeLabel}</span>
+              <span class="recaps-arc-title">{arc.title}</span>
+              <span class="recaps-arc-description">{arc.description}</span>
+              <span class="recaps-arc-meta">{arc.sessionRange}</span>
+            </span>
+            <span class="recaps-arc-cover" aria-hidden="true">
+              <img src={arc.cover} alt="" loading="eager" decoding="async" />
+            </span>
+          </a>
+        ))
+      }
     </section>
   </main>
 </BaseLayout>
