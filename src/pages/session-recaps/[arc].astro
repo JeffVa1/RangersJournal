@@ -51,12 +51,14 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
         <p>Sessions</p>
         <ol>
           {
-            arc.sessions.map((session) => (
+            arc.sessions.map((session, index) => (
               <li>
                 <a
-                  class="recaps-session-link"
+                  class={`recaps-session-link${index === 0 ? " is-active" : ""}`}
                   href={`#${session.anchor}`}
-                  data-recap-session-link={session.anchor}
+                  aria-current={index === 0 ? "location" : undefined}
+                  data-recap-session-nav={session.anchor}
+                  data-recap-session-trigger={session.anchor}
                 >
                   <span>{session.title}</span>
                   <small>{session.date}</small>
@@ -70,11 +72,13 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
       <section class="recaps-reader" aria-label={`${arc.shortTitle} session recaps`}>
         <nav class="recaps-mobile-session-nav" aria-label="Jump to session">
           {
-            arc.sessions.map((session) => (
+            arc.sessions.map((session, index) => (
               <a
-                class="recaps-mobile-session-link"
+                class={`recaps-mobile-session-link${index === 0 ? " is-active" : ""}`}
                 href={`#${session.anchor}`}
-                data-recap-session-link={session.anchor}
+                aria-current={index === 0 ? "location" : undefined}
+                data-recap-session-nav={session.anchor}
+                data-recap-session-trigger={session.anchor}
               >
                 {session.number}
               </a>
@@ -88,7 +92,12 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
             const nextSession = arc.sessions[index + 1];
 
             return (
-              <article class="recap-session" id={session.anchor} data-recap-session={session.anchor}>
+              <article
+                class={`recap-session${index === 0 ? " is-active" : ""}`}
+                id={session.anchor}
+                data-recap-session={session.anchor}
+                hidden={index > 0}
+              >
                 <header class="recap-session-header">
                   <p>{session.date}</p>
                   <h2>{session.title}</h2>
@@ -108,7 +117,10 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
 
                 <footer class="recap-session-footer" aria-label={`${session.title} adjacent sessions`}>
                   {previousSession ? (
-                    <a href={`#${previousSession.anchor}`}>
+                    <a
+                      href={`#${previousSession.anchor}`}
+                      data-recap-session-trigger={previousSession.anchor}
+                    >
                       <span>Previous</span>
                       {previousSession.title}
                     </a>
@@ -116,7 +128,10 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
                     <span></span>
                   )}
                   {nextSession && (
-                    <a href={`#${nextSession.anchor}`}>
+                    <a
+                      href={`#${nextSession.anchor}`}
+                      data-recap-session-trigger={nextSession.anchor}
+                    >
                       <span>Next</span>
                       {nextSession.title}
                     </a>
@@ -135,13 +150,50 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
 
     if (recapDetail) {
       const sessions = Array.from(recapDetail.querySelectorAll("[data-recap-session]"));
-      const sessionLinks = Array.from(
-        recapDetail.querySelectorAll("[data-recap-session-link]")
+      const sessionNavLinks = Array.from(
+        recapDetail.querySelectorAll("[data-recap-session-nav]")
       );
+      const sessionTriggers = Array.from(
+        recapDetail.querySelectorAll("[data-recap-session-trigger]")
+      );
+      const defaultSessionId = sessions[0]?.id ?? "";
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      const setActiveSession = (sessionId) => {
-        sessionLinks.forEach((link) => {
-          const isActive = link.getAttribute("data-recap-session-link") === sessionId;
+      const hasSession = (sessionId) => sessions.some((session) => session.id === sessionId);
+
+      const getHashSession = () => {
+        const hash = window.location.hash.slice(1);
+        return hasSession(hash) ? hash : "";
+      };
+
+      const scrollToSession = (sessionId, smooth = false) => {
+        const activeSession = sessions.find((session) => session.id === sessionId);
+        const activeNavLink = sessionNavLinks.find(
+          (link) => link.getAttribute("data-recap-session-nav") === sessionId
+        );
+
+        activeSession?.scrollIntoView({
+          block: "start",
+          behavior: smooth && !prefersReducedMotion ? "smooth" : "auto"
+        });
+        activeNavLink?.scrollIntoView({
+          block: "nearest",
+          inline: "center",
+          behavior: smooth && !prefersReducedMotion ? "smooth" : "auto"
+        });
+      };
+
+      const setActiveSession = (sessionId, options = {}) => {
+        const activeSessionId = hasSession(sessionId) ? sessionId : defaultSessionId;
+
+        sessions.forEach((session) => {
+          const isActive = session.id === activeSessionId;
+          session.classList.toggle("is-active", isActive);
+          session.hidden = !isActive;
+        });
+
+        sessionNavLinks.forEach((link) => {
+          const isActive = link.getAttribute("data-recap-session-nav") === activeSessionId;
           link.classList.toggle("is-active", isActive);
 
           if (isActive) {
@@ -150,58 +202,35 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
             link.removeAttribute("aria-current");
           }
         });
-      };
 
-      const getHashSession = () => {
-        const hash = window.location.hash.slice(1);
-        return sessions.some((session) => session.id === hash) ? hash : "";
-      };
-
-      const getVisibleSession = () => {
-        const readingLine = window.innerHeight * 0.36;
-        let activeSession = sessions[0]?.id ?? "";
-
-        sessions.forEach((session) => {
-          const rect = session.getBoundingClientRect();
-          if (rect.top <= readingLine && rect.bottom > readingLine * 0.42) {
-            activeSession = session.id;
-          }
-        });
-
-        return activeSession;
-      };
-
-      const updateActiveSession = () => {
-        setActiveSession(getVisibleSession() || getHashSession());
-      };
-
-      let activeFrame = 0;
-      const queueActiveUpdate = () => {
-        if (activeFrame) {
-          return;
+        if (options.updateHash && window.location.hash.slice(1) !== activeSessionId) {
+          window.history.pushState(null, "", `#${activeSessionId}`);
         }
 
-        activeFrame = window.requestAnimationFrame(() => {
-          activeFrame = 0;
-          updateActiveSession();
-        });
+        if (options.scroll) {
+          scrollToSession(activeSessionId, options.smooth);
+        }
       };
 
-      sessionLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          const sessionId = link.getAttribute("data-recap-session-link");
+      sessionTriggers.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const sessionId = link.getAttribute("data-recap-session-trigger");
           if (sessionId) {
-            setActiveSession(sessionId);
+            event.preventDefault();
+            setActiveSession(sessionId, { updateHash: true, scroll: true, smooth: true });
           }
         });
       });
 
-      window.addEventListener("scroll", queueActiveUpdate, { passive: true });
-      window.addEventListener("resize", queueActiveUpdate);
-      window.addEventListener("hashchange", queueActiveUpdate);
+      const syncFromHash = () => {
+        setActiveSession(getHashSession() || defaultSessionId, { scroll: Boolean(getHashSession()) });
+      };
 
-      window.requestAnimationFrame(updateActiveSession);
-      window.setTimeout(updateActiveSession, 120);
+      window.addEventListener("hashchange", syncFromHash);
+      window.addEventListener("popstate", syncFromHash);
+
+      window.requestAnimationFrame(syncFromHash);
+      window.setTimeout(syncFromHash, 120);
     }
   </script>
 </BaseLayout>

@@ -1987,6 +1987,10 @@ img {
   backdrop-filter: var(--surface-blur);
 }
 
+.recap-session[hidden] {
+  display: none;
+}
+
 .recap-session-header {
   display: grid;
   gap: 0.55rem;
