@@ -1,9 +1,15 @@
 import part1Markdown from "../content/session-recaps/part-1.md?raw";
+import part2Markdown from "../content/session-recaps/part-2.md?raw";
+
+export interface RecapParagraph {
+  text: string;
+  redacted?: boolean;
+}
 
 export interface RecapSection {
   id: string;
   title: string;
-  paragraphs: string[];
+  paragraphs: RecapParagraph[];
 }
 
 export interface RecapSession {
@@ -51,6 +57,11 @@ interface DraftSection {
   lines: string[];
 }
 
+interface ParsedSectionDraft {
+  title: string;
+  paragraphs: RecapParagraph[];
+}
+
 interface DraftSession {
   number: number;
   date: string;
@@ -71,6 +82,57 @@ const arcSources: RecapArcSource[] = [
     background: "/assets/books/book1/background.png",
     color: "#d60000",
     markdown: part1Markdown
+  },
+  {
+    slug: "part-2",
+    title: "The Pit",
+    shortTitle: "Part II",
+    volumeLabel: "Vol II",
+    description:
+      "The road into Ironwell, the depths of the Pit, and the first foothold of a wider rebellion.",
+    sourceFile: "src/content/session-recaps/part-2.md",
+    bookId: "book2",
+    cover: "/assets/books/book2/book_assets/cover.png",
+    background: "/assets/books/book2/background.png",
+    color: "#9900d1",
+    markdown: part2Markdown
+  }
+];
+
+interface RedactionRange {
+  sourceFile: string;
+  startLine: number;
+  endLine: number;
+  label: string;
+}
+
+const redactionNotice = (label: string) =>
+  `[Redacted for player-facing publication: ${label}.]`;
+
+const selectedRedactions: RedactionRange[] = [
+  {
+    sourceFile: "src/content/session-recaps/part-1.md",
+    startLine: 41,
+    endLine: 47,
+    label: "private character vision"
+  },
+  {
+    sourceFile: "src/content/session-recaps/part-2.md",
+    startLine: 255,
+    endLine: 256,
+    label: "Shattered Seraph lore"
+  },
+  {
+    sourceFile: "src/content/session-recaps/part-2.md",
+    startLine: 323,
+    endLine: 339,
+    label: "private Dominion bargain"
+  },
+  {
+    sourceFile: "src/content/session-recaps/part-2.md",
+    startLine: 131,
+    endLine: 131,
+    label: "Nullite lore"
   }
 ];
 
@@ -93,6 +155,34 @@ const toParagraphs = (lines: string[]) =>
     )
     .filter(Boolean);
 
+const toRecapParagraphs = (lines: string[]): RecapParagraph[] =>
+  toParagraphs(lines).map((text) => ({
+    text,
+    redacted: text.startsWith("[Redacted for player-facing publication:")
+  }));
+
+const applyRedactions = (source: RecapArcSource) => {
+  const ranges = selectedRedactions.filter(
+    (redaction) => redaction.sourceFile === source.sourceFile
+  );
+
+  if (ranges.length === 0) {
+    return source.markdown;
+  }
+
+  const lines = source.markdown.replace(/\r\n?/g, "\n").split("\n");
+
+  ranges.forEach((range) => {
+    lines[range.startLine - 1] = redactionNotice(range.label);
+
+    for (let index = range.startLine; index < range.endLine; index += 1) {
+      lines[index] = "";
+    }
+  });
+
+  return lines.join("\n");
+};
+
 const getSessionRange = (sessions: RecapSession[]) => {
   const first = sessions[0]?.number;
   const last = sessions[sessions.length - 1]?.number;
@@ -105,23 +195,23 @@ const getSessionRange = (sessions: RecapSession[]) => {
 };
 
 const parseArc = (source: RecapArcSource): RecapArc => {
-  const lines = source.markdown.replace(/\r\n?/g, "\n").split("\n");
+  const lines = applyRedactions(source).replace(/\r\n?/g, "\n").split("\n");
   const sessions: RecapSession[] = [];
 
   let activeSession: DraftSession | null = null;
   let activeSection: DraftSection | null = null;
-  let draftSections: DraftSection[] = [];
+  let draftSections: ParsedSectionDraft[] = [];
 
   const flushSection = () => {
     if (!activeSection) {
       return;
     }
 
-    const paragraphs = toParagraphs(activeSection.lines);
+    const paragraphs = toRecapParagraphs(activeSection.lines);
     if (paragraphs.length > 0) {
       draftSections.push({
         title: activeSection.title,
-        lines: paragraphs
+        paragraphs
       });
     }
 
@@ -140,13 +230,13 @@ const parseArc = (source: RecapArcSource): RecapArc => {
     const sections = draftSections.map((section, index) => ({
       id: `session-${activeSession?.number}-${slugify(section.title) || index + 1}`,
       title: section.title,
-      paragraphs: section.lines
+      paragraphs: section.paragraphs
     }));
 
     sessions.push({
       ...activeSession,
       anchor: `session-${activeSession.number}`,
-      summary: sections[0]?.paragraphs[0] ?? "",
+      summary: sections[0]?.paragraphs[0]?.text ?? "",
       sections
     });
 

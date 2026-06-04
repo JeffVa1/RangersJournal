@@ -114,7 +114,9 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
                     <section class="recap-story-section" aria-labelledby={section.id}>
                       <h3 id={section.id}>{section.title}</h3>
                       {section.paragraphs.map((paragraph) => (
-                        <p>{paragraph}</p>
+                        <p class={paragraph.redacted ? "recap-redaction-note" : undefined}>
+                          {paragraph.text}
+                        </p>
                       ))}
                     </section>
                   ))}
