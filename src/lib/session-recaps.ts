@@ -17,7 +17,6 @@ export interface RecapSession {
   date: string;
   title: string;
   anchor: string;
-  summary: string;
   sections: RecapSection[];
 }
 
@@ -236,7 +235,6 @@ const parseArc = (source: RecapArcSource): RecapArc => {
     sessions.push({
       ...activeSession,
       anchor: `session-${activeSession.number}`,
-      summary: sections[0]?.paragraphs[0]?.text ?? "",
       sections
     });
 

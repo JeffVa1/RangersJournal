@@ -2043,14 +2043,6 @@ img {
   line-height: 1;
 }
 
-.recap-session-summary {
-  max-width: 58rem;
-  color: rgba(255, 250, 240, 0.72);
-  font-family: "Times New Roman", Georgia, serif;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
 .recap-section-list {
   display: grid;
   gap: 1.35rem;
@@ -2580,8 +2572,7 @@ img {
     font-size: 1.45rem;
   }
 
-  .recap-session-header > p:first-child,
-  .recap-session-summary {
+  .recap-session-header > p:first-child {
     font-size: 0.68rem;
   }
 
@@ -3184,11 +3175,6 @@ img {
 
   .recap-session h2 {
     font-size: 1.48rem;
-  }
-
-  .recap-session-summary {
-    font-size: 0.78rem;
-    line-height: 1.42;
   }
 
   .recap-section-list {
