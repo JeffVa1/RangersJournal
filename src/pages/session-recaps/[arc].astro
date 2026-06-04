@@ -23,6 +23,7 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
     class="recaps-main recaps-detail-main"
     style={`--arc-color: ${arc.color}; --arc-background: url("${arc.background}");`}
     aria-labelledby="recap-arc-title"
+    data-recaps-detail
   >
     <div class="recaps-backdrop" aria-hidden="true">
       <div class="recaps-backdrop-image recaps-arc-backdrop"></div>
@@ -52,7 +53,11 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
           {
             arc.sessions.map((session) => (
               <li>
-                <a href={`#${session.anchor}`}>
+                <a
+                  class="recaps-session-link"
+                  href={`#${session.anchor}`}
+                  data-recap-session-link={session.anchor}
+                >
                   <span>{session.title}</span>
                   <small>{session.date}</small>
                 </a>
@@ -66,7 +71,13 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
         <nav class="recaps-mobile-session-nav" aria-label="Jump to session">
           {
             arc.sessions.map((session) => (
-              <a href={`#${session.anchor}`}>{session.number}</a>
+              <a
+                class="recaps-mobile-session-link"
+                href={`#${session.anchor}`}
+                data-recap-session-link={session.anchor}
+              >
+                {session.number}
+              </a>
             ))
           }
         </nav>
@@ -77,7 +88,7 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
             const nextSession = arc.sessions[index + 1];
 
             return (
-              <article class="recap-session" id={session.anchor}>
+              <article class="recap-session" id={session.anchor} data-recap-session={session.anchor}>
                 <header class="recap-session-header">
                   <p>{session.date}</p>
                   <h2>{session.title}</h2>
@@ -118,4 +129,79 @@ const otherArcs = recapArcs.filter((item) => item.slug !== arc.slug);
       </section>
     </div>
   </main>
+
+  <script>
+    const recapDetail = document.querySelector("[data-recaps-detail]");
+
+    if (recapDetail) {
+      const sessions = Array.from(recapDetail.querySelectorAll("[data-recap-session]"));
+      const sessionLinks = Array.from(
+        recapDetail.querySelectorAll("[data-recap-session-link]")
+      );
+
+      const setActiveSession = (sessionId) => {
+        sessionLinks.forEach((link) => {
+          const isActive = link.getAttribute("data-recap-session-link") === sessionId;
+          link.classList.toggle("is-active", isActive);
+
+          if (isActive) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      };
+
+      const getHashSession = () => {
+        const hash = window.location.hash.slice(1);
+        return sessions.some((session) => session.id === hash) ? hash : "";
+      };
+
+      const getVisibleSession = () => {
+        const readingLine = window.innerHeight * 0.36;
+        let activeSession = sessions[0]?.id ?? "";
+
+        sessions.forEach((session) => {
+          const rect = session.getBoundingClientRect();
+          if (rect.top <= readingLine && rect.bottom > readingLine * 0.42) {
+            activeSession = session.id;
+          }
+        });
+
+        return activeSession;
+      };
+
+      const updateActiveSession = () => {
+        setActiveSession(getVisibleSession() || getHashSession());
+      };
+
+      let activeFrame = 0;
+      const queueActiveUpdate = () => {
+        if (activeFrame) {
+          return;
+        }
+
+        activeFrame = window.requestAnimationFrame(() => {
+          activeFrame = 0;
+          updateActiveSession();
+        });
+      };
+
+      sessionLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          const sessionId = link.getAttribute("data-recap-session-link");
+          if (sessionId) {
+            setActiveSession(sessionId);
+          }
+        });
+      });
+
+      window.addEventListener("scroll", queueActiveUpdate, { passive: true });
+      window.addEventListener("resize", queueActiveUpdate);
+      window.addEventListener("hashchange", queueActiveUpdate);
+
+      window.requestAnimationFrame(updateActiveSession);
+      window.setTimeout(updateActiveSession, 120);
+    }
+  </script>
 </BaseLayout>

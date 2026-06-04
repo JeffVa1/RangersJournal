@@ -1936,6 +1936,21 @@ img {
   outline: none;
 }
 
+.recaps-session-index a.is-active,
+.recaps-session-index a[aria-current="location"] {
+  color: #fff;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--arc-color) 32%, rgba(255, 255, 255, 0.04)),
+      rgba(255, 255, 255, 0.06)
+    );
+  border-color: color-mix(in srgb, var(--arc-color) 66%, rgba(255, 255, 255, 0.28));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--arc-color) 22%, transparent),
+    0 0 1rem color-mix(in srgb, var(--arc-color) 18%, transparent);
+}
+
 .recaps-session-index span {
   font-size: 0.84rem;
   line-height: 1.1;
@@ -1945,6 +1960,11 @@ img {
   color: rgba(255, 250, 240, 0.58);
   font-size: 0.66rem;
   line-height: 1;
+}
+
+.recaps-session-index a.is-active small,
+.recaps-session-index a[aria-current="location"] small {
+  color: rgba(255, 250, 240, 0.78);
 }
 
 .recaps-reader {
@@ -2328,6 +2348,16 @@ img {
     background: var(--surface-hover);
     border-color: var(--surface-border);
     outline: none;
+  }
+
+  .recaps-mobile-session-nav a.is-active,
+  .recaps-mobile-session-nav a[aria-current="location"] {
+    color: #fff;
+    background: color-mix(in srgb, var(--arc-color) 32%, rgba(255, 255, 255, 0.08));
+    border-color: color-mix(in srgb, var(--arc-color) 72%, rgba(255, 255, 255, 0.32));
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--arc-color) 24%, transparent),
+      0 0 0.9rem color-mix(in srgb, var(--arc-color) 18%, transparent);
   }
 
   .library-gallery-grid {
