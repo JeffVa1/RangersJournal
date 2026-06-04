@@ -75,7 +75,7 @@ const arcSources: RecapArcSource[] = [
     shortTitle: "Part II",
     volumeLabel: "Vol II",
     description:
-      "The campaign turns toward Brightmarch, Ironwell, Ebonmere, and the contracts still waiting in shadow.",
+      "The campaign descends from Brightmarch toward Ironwell and the depths beneath the Pit.",
     sourceFile: "src/content/session-recaps/part-2.md",
     cover: "/assets/books/book2/book_assets/cover.png",
     background: "/assets/books/book2/background.png",
