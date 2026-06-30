@@ -2,11 +2,12 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import {
+  seraphAspectNodes,
   seraphIntro,
-  seraphNodes,
+  seraphPhysicalNodes,
   timelineEvents,
   timelineIntro,
-  worldLoreHeroArt,
+  worldLoreSeraphArt,
   worldLoreSigilArt,
   worldTodayGroups,
   worldTodayIntro
@@ -59,6 +60,22 @@ const tabs = [
   { id: "seraph", label: "The Seraph" },
   { id: "world-today", label: "The World Today" }
 ];
+
+const seraphBranches = [
+  {
+    id: "physical-elements",
+    title: "Physical Elements",
+    nodes: seraphPhysicalNodes
+  },
+  {
+    id: "syllables",
+    title: "Syllables of the True Name",
+    nodes: seraphAspectNodes
+  }
+];
+
+const eventArtStyle = (src: string) =>
+  `--event-art-url: url("${src.replace(/"/g, "%22")}")`;
 ---
 
 <BaseLayout title="World Lore | Rangers Journal" bodyClass="world-lore-page">
@@ -114,16 +131,6 @@ const tabs = [
                 imperial history, and current power structure.
               </p>
             </section>
-
-            <figure class="world-lore-hero-art ui-surface">
-              <img
-                src={worldLoreHeroArt}
-                alt="The Lost Scrolls of Irillis"
-                loading="eager"
-                decoding="async"
-              />
-              <figcaption>The sealed warning left for those who would finish Irillis's work.</figcaption>
-            </figure>
           </header>
 
           <nav class="world-lore-tabs" aria-label="World lore sections" role="tablist">
@@ -174,7 +181,6 @@ const tabs = [
                     >
                       <span>{event.era}</span>
                       <strong>{event.title}</strong>
-                      <small>{event.summary}</small>
                     </button>
                   </li>
                 ))}
@@ -191,6 +197,26 @@ const tabs = [
                     <p class="recaps-kicker">{event.era}</p>
                     <h3>{event.title}</h3>
                     <p class="world-lore-event-summary">{event.summary}</p>
+                    {event.images.length > 0 && (
+                      <div class="world-lore-event-gallery">
+                        {event.images.map((image) => (
+                          <figure class="world-lore-event-art">
+                            <div
+                              class="world-lore-event-art-media"
+                              style={eventArtStyle(image.src)}
+                            >
+                              <img
+                                src={image.src}
+                                alt={image.alt}
+                                loading={index === 0 ? "eager" : "lazy"}
+                                decoding="async"
+                              />
+                            </div>
+                            {image.caption && <figcaption>{image.caption}</figcaption>}
+                          </figure>
+                        ))}
+                      </div>
+                    )}
                     <div class="world-lore-copy">
                       {event.blocks.map((block) =>
                         block.type === "list" ? (
@@ -235,40 +261,50 @@ const tabs = [
 
             <section class="world-lore-seraph-tree" aria-label="Seraph fragments">
               <div class="world-lore-seraph-root ui-surface">
-                <img src={worldLoreSigilArt} alt="" loading="lazy" decoding="async" />
+                <img src={worldLoreSeraphArt} alt="" loading="lazy" decoding="async" />
                 <span>The Shattered Seraph</span>
               </div>
 
-              <div class="world-lore-seraph-branches">
-                {seraphNodes.map((node, index) => (
-                  <details
-                    class="world-lore-seraph-node ui-surface"
-                    style={`--node-color: ${node.color};`}
-                    open={index === 0}
+              <div class="world-lore-seraph-branch-grid">
+                {seraphBranches.map((branch, branchIndex) => (
+                  <section
+                    class="world-lore-seraph-branch"
+                    aria-labelledby={`seraph-branch-${branch.id}`}
                   >
-                    <summary>
-                      <span class="world-lore-node-token">{node.syllable}</span>
-                      <span>
-                        <strong>{node.name}</strong>
-                        <small>{node.kind}</small>
-                      </span>
-                    </summary>
-                    <div class="world-lore-seraph-node-body">
-                      {node.image && (
-                        <img src={node.image} alt="" loading="lazy" decoding="async" />
-                      )}
-                      <p class="world-lore-event-summary">{node.summary}</p>
-                      <div class="world-lore-copy">
-                        {node.blocks.map((block) =>
-                          block.type === "list" ? (
-                            <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
-                          ) : (
-                            <p>{block.text}</p>
-                          )
-                        )}
-                      </div>
+                    <h3 id={`seraph-branch-${branch.id}`}>{branch.title}</h3>
+                    <div class="world-lore-seraph-branches">
+                      {branch.nodes.map((node, nodeIndex) => (
+                        <details
+                          class="world-lore-seraph-node ui-surface"
+                          style={`--node-color: ${node.color};`}
+                          open={branchIndex === 0 && nodeIndex === 0}
+                        >
+                          <summary>
+                            <span class="world-lore-node-token">{node.syllable}</span>
+                            <span>
+                              <strong>{node.name}</strong>
+                              <small>{node.kind}</small>
+                            </span>
+                          </summary>
+                          <div class="world-lore-seraph-node-body">
+                            {node.image && (
+                              <img src={node.image} alt="" loading="lazy" decoding="async" />
+                            )}
+                            <p class="world-lore-event-summary">{node.summary}</p>
+                            <div class="world-lore-copy">
+                              {node.blocks.map((block) =>
+                                block.type === "list" ? (
+                                  <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
+                                ) : (
+                                  <p>{block.text}</p>
+                                )
+                              )}
+                            </div>
+                          </div>
+                        </details>
+                      ))}
                     </div>
-                  </details>
+                  </section>
                 ))}
               </div>
             </section>
@@ -295,11 +331,19 @@ const tabs = [
             </header>
 
             <div class="world-lore-world-sections">
-              {worldTodayGroups.map((group) => (
-                <section class="world-lore-world-group" aria-labelledby={`world-group-${group.id}`}>
-                  <header>
-                    <p class="recaps-kicker">{group.summary}</p>
-                    <h3 id={`world-group-${group.id}`}>{group.title}</h3>
+              {worldTodayGroups.map((group, index) => (
+                <details
+                  class="world-lore-world-group"
+                  open={index === 0}
+                >
+                  <summary>
+                    <span>
+                      <span class="recaps-kicker">{group.summary}</span>
+                      <strong id={`world-group-${group.id}`}>{group.title}</strong>
+                    </span>
+                  </summary>
+
+                  <div class="world-lore-world-group-body">
                     <div class="world-lore-copy">
                       {group.blocks.map((block) =>
                         block.type === "list" ? (
@@ -309,46 +353,46 @@ const tabs = [
                         )
                       )}
                     </div>
-                  </header>
 
-                  <div class="world-lore-card-grid">
-                    {group.items.map((item) => (
-                      <article class="world-lore-card ui-surface">
-                        {item.image && (
-                          <img
-                            class="world-lore-card-image"
-                            src={item.image}
-                            alt=""
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        )}
-                        <div class="world-lore-card-copy">
-                          <h4>{item.title}</h4>
-                          {item.meta.length > 0 && (
-                            <dl>
-                              {item.meta.map((meta) => (
-                                <>
-                                  <dt>{meta.label}</dt>
-                                  <dd>{meta.value}</dd>
-                                </>
-                              ))}
-                            </dl>
+                    <div class="world-lore-card-grid">
+                      {group.items.map((item) => (
+                        <article class="world-lore-card ui-surface">
+                          {item.image && (
+                            <img
+                              class="world-lore-card-image"
+                              src={item.image}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
                           )}
-                          <div class="world-lore-copy">
-                            {item.blocks.map((block) =>
-                              block.type === "list" ? (
-                                <ul>{block.items?.map((listItem) => <li>{listItem}</li>)}</ul>
-                              ) : (
-                                <p>{block.text}</p>
-                              )
+                          <div class="world-lore-card-copy">
+                            <h4>{item.title}</h4>
+                            {item.meta.length > 0 && (
+                              <dl>
+                                {item.meta.map((meta) => (
+                                  <>
+                                    <dt>{meta.label}</dt>
+                                    <dd>{meta.value}</dd>
+                                  </>
+                                ))}
+                              </dl>
                             )}
+                            <div class="world-lore-copy">
+                              {item.blocks.map((block) =>
+                                block.type === "list" ? (
+                                  <ul>{block.items?.map((listItem) => <li>{listItem}</li>)}</ul>
+                                ) : (
+                                  <p>{block.text}</p>
+                                )
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </article>
-                    ))}
+                        </article>
+                      ))}
+                    </div>
                   </div>
-                </section>
+                </details>
               ))}
             </div>
           </section>
@@ -439,4 +483,3 @@ const tabs = [
     )
   }
 </BaseLayout>
-

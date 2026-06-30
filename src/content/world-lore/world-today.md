@@ -15,7 +15,7 @@ His rule has lasted for more than two thousand years. He claims divine legitimac
 
 ### Obligators
 Role: Judges, juries, legal overseers, and noble auditors
-Image:
+Image: /assets/WorldLoreArt/obligator-white-robes.png
 
 Obligators are the God-King's law. They judge disputes, enforce imperial doctrine, oversee city rulers, and keep the noble families inside the throne's authority.
 
@@ -235,4 +235,3 @@ The Nytheris Dissemination teaches that the God-King's rule is without beginning
 Its version of history says Irillis rebelled nearly one thousand years ago and was rightly destroyed. It presents the ruins and the suffering of the Irilli people as proof of the God-King's mercy and wrath.
 
 The publication's closing doctrine is simple: so it has been for two thousand years, and so it shall be forever.
-

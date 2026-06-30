@@ -7,6 +7,12 @@ export interface LoreLink {
   href: string;
 }
 
+export interface LoreImage {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
 export interface LoreTextBlock {
   type: "paragraph" | "list";
   text?: string;
@@ -18,6 +24,7 @@ export interface TimelineEvent {
   title: string;
   era: string;
   summary: string;
+  images: LoreImage[];
   links: LoreLink[];
   blocks: LoreTextBlock[];
 }
@@ -27,6 +34,7 @@ export interface SeraphNode {
   name: string;
   kind: string;
   syllable: string;
+  branch: string;
   summary: string;
   color: string;
   image: string;
@@ -188,6 +196,22 @@ const parseLinks = (value: string): LoreLink[] =>
     href: match[2] ?? ""
   }));
 
+const parseImages = (value: string): LoreImage[] =>
+  value
+    .split("|")
+    .map((item) => {
+      const [src = "", alt = "", caption = ""] = item
+        .split("::")
+        .map((part) => part.trim());
+
+      return {
+        src: encodeImagePath(src),
+        alt,
+        caption
+      };
+    })
+    .filter((image) => image.src);
+
 export function parseTextBlocks(lines: string[]): LoreTextBlock[] {
   const blocks: LoreTextBlock[] = [];
   let paragraph: string[] = [];
@@ -252,11 +276,11 @@ export const timelineIntro = timelineSource.intro;
 export const seraphIntro = seraphSource.intro;
 export const worldTodayIntro = worldTodaySource.intro;
 
-export const worldLoreHeroArt = encodeURI(
-  "/assets/WorldLoreArt/The Lost Scrolls of Irillis.png"
-);
 export const worldLoreSigilArt = encodeURI(
   "/assets/WorldLoreArt/elandros_sigil_icon_only.png"
+);
+export const worldLoreSeraphArt = encodeURI(
+  "/assets/WorldLoreArt/shattered-seraph-orb.png"
 );
 
 export const timelineEvents: TimelineEvent[] = timelineSource.sections.map(
@@ -268,6 +292,7 @@ export const timelineEvents: TimelineEvent[] = timelineSource.sections.map(
       title: section.title,
       era: getAttr(attrs, "Era"),
       summary: getAttr(attrs, "Summary"),
+      images: parseImages(getAttr(attrs, "Images") || getAttr(attrs, "Image")),
       links: parseLinks(getAttr(attrs, "Links")),
       blocks: parseTextBlocks(body)
     };
@@ -282,12 +307,21 @@ export const seraphNodes: SeraphNode[] = seraphSource.sections.map((section) => 
     name: section.title,
     kind: getAttr(attrs, "Kind"),
     syllable: getAttr(attrs, "Syllable"),
+    branch: getAttr(attrs, "Branch"),
     summary: getAttr(attrs, "Summary"),
     color: getAttr(attrs, "Color") || "#f2c14e",
     image: encodeImagePath(getAttr(attrs, "Image")),
     blocks: parseTextBlocks(body)
   };
 });
+
+export const seraphPhysicalNodes = seraphNodes.filter(
+  (node) => normalizeKey(node.branch) === "physicalelements"
+);
+
+export const seraphAspectNodes = seraphNodes.filter(
+  (node) => normalizeKey(node.branch) === "syllables"
+);
 
 export const worldTodayGroups: WorldLoreGroup[] = worldTodaySource.sections.map(
   (section) => {

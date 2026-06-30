@@ -5,8 +5,9 @@ The Seraph was the divine being worshiped by the elves before the empire. When t
 ## Nullite
 Kind: Body of the Seraph
 Syllable: Body
+Branch: Physical Elements
 Color: #8f96a3
-Image: /assets/WorldLoreArt/inquisitor_earring.png
+Image: /assets/WorldLoreArt/nullite-damascus-metal.png
 Summary: A rare metal that devours identity, suppresses magic, and lets stronger wills overwrite what remains.
 
 Nullite is the body of the Seraph. It carries anti-magic and anti-identity properties, and it is especially dangerous when used against a person whose sense of self has already been broken.
@@ -18,8 +19,9 @@ Nullite is the material used in Inquisitor spikes and elven thrall mutilations.
 ## Blue Crystals
 Kind: Soul of the Seraph
 Syllable: Soul
+Branch: Physical Elements
 Color: #56a8ff
-Image: /assets/WorldLoreArt/The Lost Scrolls of Irillis.png
+Image: /assets/WorldLoreArt/blue-crystal-cluster.png
 Summary: Rare crystals containing raw identity and soul-force from the Seraph, usable for refined magic.
 
 Blue crystal is not tied to any single aspect. It is pure identity-bearing power from the Seraph's scattered soul.
@@ -31,8 +33,9 @@ Professor Elric Vaunt has discovered how to refine blue crystal into a bridge be
 ## Eternity
 Kind: Aspect
 Syllable: ET
+Branch: Syllables
 Color: #f2c14e
-Image: /assets/WorldLoreArt/elandros_sigil_icon_only.png
+Image:
 Summary: The aspect stolen by the elf who became the God-King, bound in a great gem to grant immortality.
 
 Eternity is the aspect of endlessness, continuance, and immortal authority. During the Shattering, the future God-King betrayed the elves and seized it for himself.
@@ -42,8 +45,9 @@ He trapped Eternity in a large gem and has drawn on its power for more than two 
 ## Dominion
 Kind: Aspect
 Syllable: DO
+Branch: Syllables
 Color: #b468ff
-Image: /assets/WorldLoreArt/elven_thrall.png
+Image:
 Summary: The aspect that attempted to conquer the world from within and now lies beneath the Pit.
 
 Dominion was born with a conquering instinct. It tried to drive itself into the core of the planet and rule from the center of the world, but it fell short.
@@ -53,6 +57,7 @@ The Pit was eventually dug above Dominion's resting place. Nullite is extracted 
 ## Radiance
 Kind: Aspect
 Syllable: RA
+Branch: Syllables
 Color: #ffd36a
 Image:
 Summary: The aspect that sought the most radiant home and became bound to the rising sun.
@@ -64,6 +69,7 @@ Elyndor's patron is Radiance, though he does not yet understand the true nature 
 ## Memory
 Kind: Aspect
 Syllable: MEM
+Branch: Syllables
 Color: #87c7ff
 Image:
 Summary: The aspect that became one with the flow of time and now acts as the world's memory.
@@ -75,8 +81,9 @@ It acts as the memory of the entire world. Its influence is less visible than Do
 ## Awakening
 Kind: Aspect
 Syllable: AW
+Branch: Syllables
 Color: #df4d3f
-Image: /assets/WorldLoreArt/Irillis_Signet.png
+Image:
 Summary: The aspect that entered the Great Wyrm, the ancient progenitor of dragons.
 
 Awakening found the most powerful sleeping creature on the planet: the Great Wyrm, ancient progenitor of dragons.
@@ -86,8 +93,9 @@ It inhabited the Great Wyrm and became one with it. The God-King later allied wi
 ## Identity
 Kind: Aspect
 Syllable: ID
+Branch: Syllables
 Color: #7ef0d2
-Image: /assets/WorldLoreArt/The Lost Scrolls of Irillis.png
+Image:
 Summary: The aspect trapped in the elves' house-sized gemstone during the failed attempt to contain the Seraph.
 
 Identity is the only aspect the elves successfully trapped in their great gemstone. It has not acted directly since the Shattering.
@@ -99,8 +107,9 @@ The elves used Identity's prison-gem to seal the Scrolls of Irillis and the map 
 ## Whimsy
 Kind: Aspect
 Syllable: SY
+Branch: Syllables
 Color: #9be56d
-Image: /assets/WorldLoreArt/Biigs.png
+Image:
 Summary: The aspect that entered living creatures, gave chaos to the world, and took unusual root in Biigs.
 
 Whimsy chose the creatures of the land. Every creature, great or small, carries some piece of it, and that presence gives the world a measure of chaos through free will.
@@ -110,4 +119,3 @@ At the moment Whimsy spread, one man was so beaten down and broken in mind that 
 Through Biigs's consciousness, Whimsy has grown for more than two thousand years. Biigs is effectively immortal, though he does not hold the same concentrated divine force the God-King draws from Eternity.
 
 A few hundred years ago, a coven of hags discovered Whimsy in living creatures and learned to extract it. They imbued it into themselves and now channel Whimsy through Nullite and blue crystal, often through wild magic.
-
