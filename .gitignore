@@ -5,3 +5,4 @@ dist/
 .tmp-edge-crash/
 .astro-*.log
 *.log
+.env*.local
