@@ -34,7 +34,7 @@ Professor Elric Vaunt has discovered how to refine blue crystal into a bridge be
 Kind: Aspect
 Syllable: ET
 Branch: Syllables
-Color: #f2c14e
+Color: #ffffff
 Image:
 Summary: The aspect stolen by the elf who became the God-King, bound in a great gem to grant immortality.
 
@@ -94,7 +94,7 @@ It inhabited the Great Wyrm and became one with it. The God-King later allied wi
 Kind: Aspect
 Syllable: ID
 Branch: Syllables
-Color: #7ef0d2
+Color: #28d7c8
 Image:
 Summary: The aspect trapped in the elves' house-sized gemstone during the failed attempt to contain the Seraph.
 
@@ -108,7 +108,7 @@ The elves used Identity's prison-gem to seal the Scrolls of Irillis and the map 
 Kind: Aspect
 Syllable: SY
 Branch: Syllables
-Color: #9be56d
+Color: #ff9f2f
 Image:
 Summary: The aspect that entered living creatures, gave chaos to the world, and took unusual root in Biigs.
 
