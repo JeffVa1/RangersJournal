@@ -1,0 +1,442 @@
+---
+import { createHash, timingSafeEqual } from "node:crypto";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  seraphIntro,
+  seraphNodes,
+  timelineEvents,
+  timelineIntro,
+  worldLoreHeroArt,
+  worldLoreSigilArt,
+  worldTodayGroups,
+  worldTodayIntro
+} from "../lib/world-lore";
+
+export const prerender = false;
+
+const WORLD_LORE_PASSWORD = "W33pingW1ll0w$";
+const WORLD_LORE_COOKIE = "rangers_world_lore_access";
+const WORLD_LORE_TOKEN = createHash("sha256")
+  .update(WORLD_LORE_PASSWORD)
+  .digest("hex");
+
+const safeEquals = (left: string, right: string) => {
+  const leftBuffer = Buffer.from(left);
+  const rightBuffer = Buffer.from(right);
+
+  return (
+    leftBuffer.length === rightBuffer.length &&
+    timingSafeEqual(leftBuffer, rightBuffer)
+  );
+};
+
+let loginError = "";
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const password = String(formData.get("world-lore-password") ?? "");
+
+  if (safeEquals(password, WORLD_LORE_PASSWORD)) {
+    Astro.cookies.set(WORLD_LORE_COOKIE, WORLD_LORE_TOKEN, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 30,
+      path: "/WorldLore",
+      sameSite: "lax",
+      secure: Astro.url.protocol === "https:"
+    });
+
+    return Astro.redirect("/WorldLore", 303);
+  }
+
+  loginError = "The archive does not open to that phrase.";
+}
+
+const storedToken = Astro.cookies.get(WORLD_LORE_COOKIE)?.value ?? "";
+const isUnlocked = safeEquals(storedToken, WORLD_LORE_TOKEN);
+
+const tabs = [
+  { id: "timeline", label: "Timeline" },
+  { id: "seraph", label: "The Seraph" },
+  { id: "world-today", label: "The World Today" }
+];
+---
+
+<BaseLayout title="World Lore | Rangers Journal" bodyClass="world-lore-page">
+  <main
+    class={`world-lore-main${isUnlocked ? " is-unlocked" : " is-locked"}`}
+    data-world-lore={isUnlocked ? "unlocked" : undefined}
+    aria-labelledby="world-lore-title"
+  >
+    <div class="world-lore-backdrop" aria-hidden="true">
+      <div class="world-lore-backdrop-image"></div>
+      <div class="world-lore-backdrop-vignette"></div>
+    </div>
+
+    {
+      !isUnlocked ? (
+        <section class="world-lore-lock ui-surface" aria-labelledby="world-lore-title">
+          <img
+            class="world-lore-lock-sigil"
+            src={worldLoreSigilArt}
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+          <p class="recaps-kicker">Private Archive</p>
+          <h1 id="world-lore-title">World Lore</h1>
+          <p>
+            Enter the archive phrase to open the Dungeon Master lore record for
+            the Shattered Crown.
+          </p>
+          <form class="world-lore-lock-form" method="post" action="/WorldLore">
+            <label for="world-lore-password">Archive phrase</label>
+            <div class="world-lore-lock-row">
+              <input
+                id="world-lore-password"
+                name="world-lore-password"
+                type="password"
+                autocomplete="current-password"
+                required
+              />
+              <button type="submit">Open</button>
+            </div>
+            {loginError && <p class="world-lore-lock-error">{loginError}</p>}
+          </form>
+        </section>
+      ) : (
+        <>
+          <header class="world-lore-hero">
+            <section class="world-lore-hero-copy" aria-labelledby="world-lore-title">
+              <p class="recaps-kicker">Dungeon Master Archive</p>
+              <h1 id="world-lore-title">World Lore</h1>
+              <p>
+                A private reference for the Shattered Crown's hidden cosmology,
+                imperial history, and current power structure.
+              </p>
+            </section>
+
+            <figure class="world-lore-hero-art ui-surface">
+              <img
+                src={worldLoreHeroArt}
+                alt="The Lost Scrolls of Irillis"
+                loading="eager"
+                decoding="async"
+              />
+              <figcaption>The sealed warning left for those who would finish Irillis's work.</figcaption>
+            </figure>
+          </header>
+
+          <nav class="world-lore-tabs" aria-label="World lore sections" role="tablist">
+            {tabs.map((tab, index) => (
+              <button
+                class={`world-lore-tab${index === 0 ? " is-active" : ""}`}
+                id={`world-lore-tab-${tab.id}`}
+                type="button"
+                role="tab"
+                aria-selected={index === 0 ? "true" : "false"}
+                aria-controls={`world-lore-panel-${tab.id}`}
+                data-lore-tab={tab.id}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+
+          <section
+            class="world-lore-panel is-active"
+            id="world-lore-panel-timeline"
+            role="tabpanel"
+            aria-labelledby="world-lore-tab-timeline"
+            data-lore-panel="timeline"
+          >
+            <header class="world-lore-panel-header">
+              <p class="recaps-kicker">Hidden History</p>
+              <h2>Timeline</h2>
+              {timelineIntro.map((block) =>
+                block.type === "list" ? (
+                  <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
+                ) : (
+                  <p>{block.text}</p>
+                )
+              )}
+            </header>
+
+            <div class="world-lore-timeline">
+              <ol class="world-lore-timeline-nodes" aria-label="Major lore events">
+                {timelineEvents.map((event, index) => (
+                  <li>
+                    <button
+                      class={`world-lore-timeline-node${index === 0 ? " is-active" : ""}`}
+                      type="button"
+                      aria-controls={`world-lore-event-${event.id}`}
+                      aria-expanded={index === 0 ? "true" : "false"}
+                      data-lore-event-trigger={event.id}
+                    >
+                      <span>{event.era}</span>
+                      <strong>{event.title}</strong>
+                      <small>{event.summary}</small>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+
+              <div class="world-lore-event-stack">
+                {timelineEvents.map((event, index) => (
+                  <article
+                    class={`world-lore-event ui-surface${index === 0 ? " is-active" : ""}`}
+                    id={`world-lore-event-${event.id}`}
+                    data-lore-event={event.id}
+                    hidden={index > 0}
+                  >
+                    <p class="recaps-kicker">{event.era}</p>
+                    <h3>{event.title}</h3>
+                    <p class="world-lore-event-summary">{event.summary}</p>
+                    <div class="world-lore-copy">
+                      {event.blocks.map((block) =>
+                        block.type === "list" ? (
+                          <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
+                        ) : (
+                          <p>{block.text}</p>
+                        )
+                      )}
+                    </div>
+                    {event.links.length > 0 && (
+                      <footer class="world-lore-link-row" aria-label="Related recaps">
+                        {event.links.map((link) => (
+                          <a href={link.href}>{link.label}</a>
+                        ))}
+                      </footer>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="world-lore-panel"
+            id="world-lore-panel-seraph"
+            role="tabpanel"
+            aria-labelledby="world-lore-tab-seraph"
+            data-lore-panel="seraph"
+            hidden
+          >
+            <header class="world-lore-panel-header">
+              <p class="recaps-kicker">The Shattered God</p>
+              <h2>The Seraph</h2>
+              {seraphIntro.map((block) =>
+                block.type === "list" ? (
+                  <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
+                ) : (
+                  <p>{block.text}</p>
+                )
+              )}
+            </header>
+
+            <section class="world-lore-seraph-tree" aria-label="Seraph fragments">
+              <div class="world-lore-seraph-root ui-surface">
+                <img src={worldLoreSigilArt} alt="" loading="lazy" decoding="async" />
+                <span>The Shattered Seraph</span>
+              </div>
+
+              <div class="world-lore-seraph-branches">
+                {seraphNodes.map((node, index) => (
+                  <details
+                    class="world-lore-seraph-node ui-surface"
+                    style={`--node-color: ${node.color};`}
+                    open={index === 0}
+                  >
+                    <summary>
+                      <span class="world-lore-node-token">{node.syllable}</span>
+                      <span>
+                        <strong>{node.name}</strong>
+                        <small>{node.kind}</small>
+                      </span>
+                    </summary>
+                    <div class="world-lore-seraph-node-body">
+                      {node.image && (
+                        <img src={node.image} alt="" loading="lazy" decoding="async" />
+                      )}
+                      <p class="world-lore-event-summary">{node.summary}</p>
+                      <div class="world-lore-copy">
+                        {node.blocks.map((block) =>
+                          block.type === "list" ? (
+                            <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
+                          ) : (
+                            <p>{block.text}</p>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
+          </section>
+
+          <section
+            class="world-lore-panel"
+            id="world-lore-panel-world-today"
+            role="tabpanel"
+            aria-labelledby="world-lore-tab-world-today"
+            data-lore-panel="world-today"
+            hidden
+          >
+            <header class="world-lore-panel-header">
+              <p class="recaps-kicker">Aurelion Under the Eternal Reign</p>
+              <h2>The World Today</h2>
+              {worldTodayIntro.map((block) =>
+                block.type === "list" ? (
+                  <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
+                ) : (
+                  <p>{block.text}</p>
+                )
+              )}
+            </header>
+
+            <div class="world-lore-world-sections">
+              {worldTodayGroups.map((group) => (
+                <section class="world-lore-world-group" aria-labelledby={`world-group-${group.id}`}>
+                  <header>
+                    <p class="recaps-kicker">{group.summary}</p>
+                    <h3 id={`world-group-${group.id}`}>{group.title}</h3>
+                    <div class="world-lore-copy">
+                      {group.blocks.map((block) =>
+                        block.type === "list" ? (
+                          <ul>{block.items?.map((item) => <li>{item}</li>)}</ul>
+                        ) : (
+                          <p>{block.text}</p>
+                        )
+                      )}
+                    </div>
+                  </header>
+
+                  <div class="world-lore-card-grid">
+                    {group.items.map((item) => (
+                      <article class="world-lore-card ui-surface">
+                        {item.image && (
+                          <img
+                            class="world-lore-card-image"
+                            src={item.image}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        )}
+                        <div class="world-lore-card-copy">
+                          <h4>{item.title}</h4>
+                          {item.meta.length > 0 && (
+                            <dl>
+                              {item.meta.map((meta) => (
+                                <>
+                                  <dt>{meta.label}</dt>
+                                  <dd>{meta.value}</dd>
+                                </>
+                              ))}
+                            </dl>
+                          )}
+                          <div class="world-lore-copy">
+                            {item.blocks.map((block) =>
+                              block.type === "list" ? (
+                                <ul>{block.items?.map((listItem) => <li>{listItem}</li>)}</ul>
+                              ) : (
+                                <p>{block.text}</p>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </section>
+        </>
+      )
+    }
+  </main>
+
+  {
+    isUnlocked && (
+      <script>
+        const loreRoot = document.querySelector("[data-world-lore='unlocked']");
+
+        if (loreRoot) {
+          const tabs = Array.from(loreRoot.querySelectorAll("[data-lore-tab]"));
+          const panels = Array.from(loreRoot.querySelectorAll("[data-lore-panel]"));
+          const eventButtons = Array.from(
+            loreRoot.querySelectorAll("[data-lore-event-trigger]")
+          );
+          const eventPanels = Array.from(loreRoot.querySelectorAll("[data-lore-event]"));
+
+          const setActiveTab = (tabId, updateHash = false) => {
+            const hasPanel = panels.some(
+              (panel) => panel.getAttribute("data-lore-panel") === tabId
+            );
+            const activeTabId = hasPanel ? tabId : "timeline";
+
+            tabs.forEach((tab) => {
+              const isActive = tab.getAttribute("data-lore-tab") === activeTabId;
+              tab.classList.toggle("is-active", isActive);
+              tab.setAttribute("aria-selected", String(isActive));
+            });
+
+            panels.forEach((panel) => {
+              const isActive = panel.getAttribute("data-lore-panel") === activeTabId;
+              panel.classList.toggle("is-active", isActive);
+              panel.hidden = !isActive;
+            });
+
+            if (updateHash) {
+              window.history.replaceState(null, "", `#${activeTabId}`);
+            }
+          };
+
+          const setActiveEvent = (eventId) => {
+            eventButtons.forEach((button) => {
+              const isActive = button.getAttribute("data-lore-event-trigger") === eventId;
+              button.classList.toggle("is-active", isActive);
+              button.setAttribute("aria-expanded", String(isActive));
+            });
+
+            eventPanels.forEach((panel) => {
+              const isActive = panel.getAttribute("data-lore-event") === eventId;
+              panel.classList.toggle("is-active", isActive);
+              panel.hidden = !isActive;
+            });
+          };
+
+          tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+              const tabId = tab.getAttribute("data-lore-tab");
+              if (tabId) {
+                setActiveTab(tabId, true);
+              }
+            });
+          });
+
+          eventButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              const eventId = button.getAttribute("data-lore-event-trigger");
+              if (eventId) {
+                setActiveEvent(eventId);
+              }
+            });
+          });
+
+          const syncHash = () => {
+            const tabId = window.location.hash.slice(1);
+            if (tabId) {
+              setActiveTab(tabId, false);
+            }
+          };
+
+          window.addEventListener("hashchange", syncHash);
+          syncHash();
+        }
+      </script>
+    )
+  }
+</BaseLayout>
+

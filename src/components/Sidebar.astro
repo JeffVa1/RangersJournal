@@ -36,6 +36,12 @@ const items = [
     active: activePath === "/character-profiles"
   },
   {
+    href: "/WorldLore",
+    label: "World Lore",
+    icon: "lore",
+    active: activePath === "/WorldLore"
+  },
+  {
     href: "/map",
     label: "Map",
     icon: "map",
@@ -106,6 +112,14 @@ const items = [
                   <circle cx="9.5" cy="7" r="4" />
                   <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              )}
+              {item.icon === "lore" && (
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3v18" />
+                  <path d="M12 8c-3.4 0-6 2.15-7 5.2 3.4.1 6-1.45 7-5.2Z" />
+                  <path d="M12 11c3.4 0 6 2.15 7 5.2-3.4.1-6-1.45-7-5.2Z" />
+                  <path d="M9 21h6" />
                 </svg>
               )}
             </span>
