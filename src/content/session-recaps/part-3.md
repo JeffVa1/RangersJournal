@@ -1050,6 +1050,68 @@ Something had exploded within the city.
 
 And the Fifth Flame's victory had begun to burn in ways none of them intended.
 
+## Session 19.5 - 4/9/26
+
+### The Spark Before the Smoke
+
+### A Walk Before Dawn
+
+Ace rose before the rest of the party.
+
+Ebonmere had given him too much to carry quietly. Seralyth Veynar, the young heir who seemed trapped between privilege and conscience. The unsettling rumor that Ace's brother may have passed through the city. The refugees hidden beyond the walls, still needing work, purpose, and a future. Ace meant to find Leucin again when he could, hoping the man might know enough about mining ores to give those people a way to build something of their own.
+
+For the moment, though, he walked.
+
+The city was still half asleep when he noticed them: two pyrotechnics moving with the kind of purpose that did not belong to a harmless festival morning. When Ace fell into step beside them, they claimed to be from House Veynar. The answer did not satisfy him. It was too early, too quiet, and too close to the warning Rellim had already given about eyes fixed on Seralyth.
+
+Ace followed the suspicion toward House Veynar.
+
+He also carried a simpler worry. Seralyth had never come by after resting the night before, and Ace wanted to know that the young dragonborn had made it home safely.
+
+### The Heir's Door
+
+At the estate, Ace spoke with the guards and showed the badge he carried. They let him through, though they had no useful answer about the pyrotechnics.
+
+Inside, Alfred guided him toward Seralyth's room and offered to fetch breakfast while Ace waited. For a brief moment, the morning almost became ordinary: a butler, a hallway, a closed door, and the hope that a difficult night might be answered with food and conversation.
+
+Then the door opened.
+
+Ace saw the trap in the same heartbeat that fire claimed the room.
+
+He threw himself aside, but not quickly enough to escape unmarked. Flame caught his shoulder and carved new scars into him. Worse, Seralyth was still inside, caught at the heart of the blast with no warning and no defense.
+
+Ace ran into the fire.
+
+### Fire and Accusation
+
+Smoke filled the chamber. Heat rolled off the walls. Somewhere inside it all was the heir to House Veynar.
+
+Ace found him and dragged him from the burning room, refusing to let the fire decide the young lord's fate. With no time for caution and no certainty that help would come fast enough, Ace poured every healing potion he carried into Seralyth. One. Then another. Then the last.
+
+Only after he had given everything he had did the guards seize him.
+
+They pulled Ace away from Seralyth, stripped him of his gear, and treated the rescuer as the suspect. Questions came before answers. Blame came before proof. The estate that had opened its doors to him moments earlier now closed around him like a trap.
+
+Before Ace could learn whether Seralyth lived, an Obligator and an Inquisitor arrived.
+
+### Questions Under Magic
+
+Magic settled over the room, cold and exacting.
+
+The Obligator and Inquisitor questioned Ace beneath the weight of their spell. Who was he? Why was he there? What had he done? Why had he come to House Veynar before dawn?
+
+Ace answered truthfully.
+
+He spoke of the suspicious pyrotechnics. He spoke of Seralyth. He spoke of the trap, the fire, and the desperate attempt to save the young dragonborn with every potion he had. If truth could save him, then Ace gave them truth.
+
+But in Ebonmere, truth was not the same as innocence.
+
+The questions ended without comfort. No one told Ace whether Seralyth had survived. No one returned his gear. No one thanked him for running into the flames.
+
+Instead, he was taken away.
+
+By the time the smoke rose above House Veynar and the rest of the Fifth Flame saw it from the city streets, Ace was already on his way to prison.
+
 ## Session 20 - 4/22/26
 
 ### The Viper's Shelter
@@ -1381,3 +1443,235 @@ Only then, perhaps, would she speak further.
 The party left with no clean answer, only another blade placed in their hands. To uncover the master behind Seralyth's death, they would have to decide how far into Sylvara's game they were willing to walk.
 
 ## Session 23 - 6/1/26
+
+## Session 24 - 6/7/26
+
+### Blades at the War Table
+
+### The Iron Aunt's Room
+
+Rellim and Ace entered Lady Valera's chambers under the fading cover of magical dust.
+
+The balcony door opened quietly beneath Rellim's careful hand, but not quietly enough to leave the room unchanged. In the darkness, furniture shifted with wet and unnatural hunger. A chest stirred beside the bed. A velvet rug rippled across the floor.
+
+Mimics.
+
+The memory of Brightmarch returned at once: hidden teeth, false shapes, acid, and the terrible moment when ordinary objects became predators. Rellim stopped Ace before the danger could close around them. The two moved through the room in agonizing silence, invisible but not safe, skirting the living rug and avoiding the chest's blind search for intruders.
+
+Ace's instincts pulled him toward speed. Rellim's pulled him toward proof.
+
+They searched Valera's nightstands and desk, finding scraps of noble correspondence, household records, and a dark sending stone paired with a brief note:
+
+We will contact you when it is done. E.S.
+
+It was suspicious, but suspicion was not enough. If Valera truly stood behind Seralyth's assassination, they needed evidence that could survive more than whispers and instinct.
+
+Then Rellim found the private washroom.
+
+### The Green Book
+
+The dust of disappearance failed as they slipped through the side door.
+
+Behind them waited the mimics. Ahead lay Valera's private dressing chamber, an intimate room of wealth, vanity, and secrets. A diamond necklace rested openly on the counter, valuable enough to tempt almost anyone.
+
+Rellim left it untouched.
+
+The true prize sat inside an aumbry among ledgers and historical volumes: a green cookbook where no cookbook belonged. Its weight was wrong. Its pages were hollowed. Hidden inside were unredacted letters from Sylvara to Valera, explicit enough to bind the Iron Aunt to the conspiracy that had nearly killed Seralyth and set House Veynar aflame.
+
+At last, the missing link had a shape.
+
+Rellim used the sending stone to contact Nyacir, warning him that they had found the evidence. The answer came quickly and sharply: leave the book where it was, get out, and wait for Nyacir to descend upon the estate with the Marshals.
+
+He would arrive in ten minutes.
+
+Ten minutes left Rellim and Ace with only bad options.
+
+The bedroom held mimics. The hall held guards. The balcony offered exposure. That left the chamber pot chute.
+
+Ace went first.
+
+Rellim followed.
+
+### The Sewer Way Out
+
+The escape was not glorious.
+
+The chute dropped them into filth, foulness, and a second miserable journey through the underbelly of a great city. Ace had attempted to leave Valera a parting insult and soften its consequences with dried flowers, but the result only turned the stench into something worse: waste, lavender, roses, and regret.
+
+They pushed through the sewers anyway.
+
+A forgotten exit and a runoff well gave them just enough mercy to scrub away the worst of it before they ran for the Veynar estate. By the time they arrived, Nyacir was already moving through the gates with Marshals at his back.
+
+Rellim gave him the signal.
+
+The trap was set.
+
+Ace and Rellim slipped into the servant quarters, where Alfred intercepted them almost immediately. Whatever question he meant to ask died beneath the smell. He shoved them into a storage room and, at Rellim's insistence, fetched Elyndor.
+
+Elyndor understood the problem the moment he opened the door.
+
+A quick spell of prestidigitation saved what dignity remained, and the two conspirators emerged clean enough to follow Nyacir toward the great hall.
+
+### Treason Named Aloud
+
+Outside the war room, Rellim drifted close to Nyacir and whispered the key detail.
+
+The evidence was in the green book.
+
+Nyacir entered the chamber alone, and the doors shut behind him. Rellim climbed high along the wall and pressed Otto's magical listening ear to the stone, catching the confrontation as it unfolded beyond sight.
+
+Nyacir accused Valera before Maelrix.
+
+The rot, he said, sat at the lord's own table. Valera had orchestrated the attempt on Seralyth. She had pulled the strings behind the fire, the assassination, and the wound now festering inside House Veynar.
+
+Maelrix's fury broke across the chamber.
+
+Valera did not beg.
+
+She answered with contempt. To her, Maelrix was broken, old, and unfit to rule. Seralyth was weak because his father was weak. Ebonmere belonged, she claimed, to those with the strength to take it.
+
+Maelrix ordered the guards to seize her.
+
+Steel answered instead.
+
+The royal guards under Valera's command drew their blades and turned on their own lord and commander. Nyacir shouted treason as the war room erupted into violence.
+
+### The Dragon at the Door
+
+At nearly the same moment, Kaelthar received the warning through his sending stone.
+
+He was still at Aethon Ardyn's villa when the message arrived, and the urgency of it cut through caution. He told Aethon that matters at the Veynar estate were escalating and that he had to leave.
+
+Aethon smiled.
+
+Then he placed a hand on Kaelthar's shoulder, and the world folded.
+
+In an instant, the two of them appeared at the Veynar estate, arriving as House Veynar's hidden civil war broke open behind closed doors.
+
+The evidence had been found. Valera had been named. The guards had chosen their side.
+
+And Ebonmere's throne room had become a battlefield.
+
+## Session 25 - 6/15/26
+
+### Blood in the War Room
+
+### The Heir's Door
+
+The moment the war room erupted, the estate split into a dozen smaller battles.
+
+Evander forced his way into the threshold, his massive frame turning the doorway into a living barricade. Behind him, the hall filled with shouting, steel, and the sudden uncertainty of House Veynar's own guards turning against one another.
+
+Rellim did not stay to watch the center break.
+
+The thought of Seralyth cut through the chaos. If Valera's loyalists had chosen open treason, then the wounded heir was still a target. Rellim sprinted up the stone stairs toward the upper corridor, where Veynar guards were already locked in desperate combat outside Seralyth's chamber.
+
+Wind Walker sang in his hands.
+
+Three arrows flew in quick succession, dropping one traitorous guard before he could force the door. Across the stairwell, Elyndor emerged from the dark and cut another down with a blade lit by celestial power. Ace arrived at the top of the stairs ready to help, but by then Rellim had already reached Seralyth's door and the fight there was nearly finished.
+
+Inside, a priestess bent over Seralyth's burned and bandaged body, weaving what restoration she could into him. A loyal guard took position outside the door. For the moment, the prince still breathed.
+
+Ace lingered only long enough to pass Rellim a silent message.
+
+The diamond necklace.
+
+Rellim understood the shape of the warning, though not yet the need behind it. Ace then turned back toward the greater fight below, leaving Seralyth under Rellim's watch.
+
+### The Iron Aunt Falls
+
+Downstairs, the civil war inside House Veynar burned hotter.
+
+Kaelthar and Aethon Ardyn arrived with impossible speed, appearing at the estate as the fight spilled through the chambers. Kaelthar threw himself into the heart of the danger, bending space and time around the royals as loyalists and traitors clashed in the halls.
+
+Then the air changed.
+
+An Obligator and an Inquisitor moved through the violence with the terrible calm of imperial authority. Their presence pressed against the room like a hand around the throat. Knives walked with them, but not as herself. Something had taken hold of her will, and even Aethon seemed to drift from the battle under the same unseen pressure, wandering toward the kitchens as if the crisis had become no more urgent than hunger.
+
+Ace saw Valera in the doorway.
+
+The Iron Aunt stood at the center of everything he hated about the night: Seralyth's burning room, the betrayal, the guards turning on their own, the rot hiding behind noble walls. In that instant, Ace believed the answer was simple. If she was the hand controlling them, then killing her would break the spell and end the bloodshed.
+
+He struck once.
+
+Valera died before anyone could stop him.
+
+The spell did not break.
+
+The realization hit almost as hard as the hammer had. Valera had been guilty, but she had not been the source of the enchantment pressing against the hall. The Inquisitor's attention turned toward Ace, and the command passed through Knives to the guards around him.
+
+Seize him.
+
+They dragged Ace down beneath the weight of bodies and armor. For a moment, it seemed House Veynar's rebellion would claim him as one more body on the floor.
+
+Then the air folded.
+
+Kaelthar's magic caught Ace at the edge of disaster and pulled him away in a blink of chronurgic force, depositing him near the kitchen before the guards could close their hands around him for good.
+
+### A Diamond Too Late
+
+In the kitchen, Ace found Aethon eating.
+
+It made no sense until the others arrived and the truth became clear: the same control that had moved Knives had bent Aethon away from the battle. Kaelthar broke the spell with a sharp slap and sharper urgency, dragging him back into himself.
+
+By then, Maelrix had fallen.
+
+Word was sent for the priestess. When she arrived, she asked for the one thing that might still bridge the distance between a dying body and a departing soul.
+
+A diamond.
+
+Ace knew where one was.
+
+He pulled Alfred with him and raced back toward Seralyth's chamber, expecting Rellim to have taken the necklace from Valera's room after their silent exchange. But the necklace had not been taken. The sign had been misunderstood, or the moment had passed too quickly, and the diamond remained where Ace could not safely reach it.
+
+He sent Alfred toward Valera's room instead.
+
+The butler opened the door, saw the Inquisitor and Obligator within, and shut it again at once. Whatever loyalty Alfred felt to House Veynar, he was not going to walk willingly into the jaws of imperial judgment for a necklace.
+
+By the time they returned, time had made the decision for them.
+
+Maelrix was gone.
+
+### Judgment in the Hall
+
+Rellim helped Seralyth down the stairs in the aftermath.
+
+The prince moved in pain, his wounds still raw beneath fresh bandages, but he refused to remain hidden from what had happened to his house. In the great hall, he found the cost of the coup laid bare: Valera dead, Maelrix dead, loyalists and traitors scattered among the blood.
+
+Then the empire pronounced its judgment.
+
+The Obligator declared House Veynar stained by sedition. The dead traitors were not enough. Ace, killer of Valera, was to be taken as well. Marshals moved to seize him again, but Kaelthar's temporal magic stole him from their grasp before iron hands could close.
+
+The reprieve nearly cost another life.
+
+Evander, seized by a fury that did not feel wholly his own, turned toward the imperial officers with his axe ready. Heat and madness rolled from him as he advanced. Rellim tried to slow him with conjured thorns and a flashing blade, but it was Elyndor's burst of radiant force that finally struck hard enough to snap the giant back from the edge.
+
+The Obligator watched without surprise.
+
+Evander was condemned with the traitors.
+
+Rellim stepped forward before the sentence could become an execution. He met Nyacir's eye and made a colder argument than mercy alone could carry. Enough blood had been spilled. The empire needed a corpse, a story, and a clean end to the night more than it needed another public killing.
+
+His knife cut Evander's cloak and furs from his shoulders.
+
+The bloodied garments fell among the dead Veynar bodies. Let the report say the giant had fallen in the crossfire. Let the empire count him with the slain. Let the living leave before another spark found powder.
+
+Nyacir accepted the lie.
+
+### Exile Beneath Ebonmere
+
+Mercy came with chains, even if they were unseen.
+
+Nyacir warned that Ace and Evander could no longer walk the upper rings of Ebonmere. If they lived, they would live below, hidden in the deepest slums, dead to the version of the city that mattered to imperial record.
+
+For House Veynar, the night ended in blood and inheritance.
+
+Seralyth stopped the party before they vanished into the streets. Grief had not broken him. Pain had not silenced him. He told them to come to his chambers in the morning, when legacies could be named and the future of the house could be discussed in the light of day.
+
+The Fifth Flame left the estate with the scrolls still safe and Brightmarch still breathing.
+
+Ace slipped away to find Hammond before making his way toward Kaelthar's residence. Rellim carried a quieter burden: the death of his father, the weight of an ancestor's crown, and the hollow calm that comes when too many truths arrive at once.
+
+Behind them, House Veynar smoldered.
+
+Part III ended not with victory, but with survival bought at a terrible price.
