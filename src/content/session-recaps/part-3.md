@@ -1562,21 +1562,25 @@ The moment the war room erupted, the estate split into a dozen smaller battles.
 
 Evander forced his way into the threshold, his massive frame turning the doorway into a living barricade. Behind him, the hall filled with shouting, steel, and the sudden uncertainty of House Veynar's own guards turning against one another.
 
-Rellim did not stay to watch the center break.
+Rellim did not stay to watch the center break, and he was not alone.
 
-The thought of Seralyth cut through the chaos. If Valera's loyalists had chosen open treason, then the wounded heir was still a target. Rellim sprinted up the stone stairs toward the upper corridor, where Veynar guards were already locked in desperate combat outside Seralyth's chamber.
+The thought of Seralyth cut through the chaos. If Valera's loyalists had chosen open treason, then the wounded heir was still a target. Rellim, Ace, and Elyndor fought their way up the stone stairs toward the upper corridor, where Veynar guards were already locked in desperate combat outside Seralyth's chamber.
 
 Wind Walker sang in his hands.
 
-Three arrows flew in quick succession, dropping one traitorous guard before he could force the door. Across the stairwell, Elyndor emerged from the dark and cut another down with a blade lit by celestial power. Ace arrived at the top of the stairs ready to help, but by then Rellim had already reached Seralyth's door and the fight there was nearly finished.
+Three arrows flew in quick succession, dropping one traitorous guard before he could force the door. Across the stairwell, Elyndor cut another down with a blade lit by celestial power while Ace pressed into the same narrow fight. Together, the three of them broke the immediate threat outside the prince's room.
+
+Once the hostiles were confirmed dead, Elyndor turned back downstairs toward the larger battle.
 
 Inside, a priestess bent over Seralyth's burned and bandaged body, weaving what restoration she could into him. A loyal guard took position outside the door. For the moment, the prince still breathed.
 
-Ace lingered only long enough to pass Rellim a silent message.
+Ace and Rellim entered Seralyth's chamber long enough to see that the heir still lived. Then Ace turned back toward the greater fight below, leaving Rellim in the room to protect Seralyth.
+
+Before he left, Ace passed Rellim a silent message.
 
 The diamond necklace.
 
-Rellim understood the shape of the warning, though not yet the need behind it. Ace then turned back toward the greater fight below, leaving Seralyth under Rellim's watch.
+Rellim understood the shape of the warning, though not yet the need behind it.
 
 ### The Iron Aunt Falls
 
