@@ -356,12 +356,19 @@ const eventArtStyle = (src: string) =>
 
                     <div class="world-lore-card-grid">
                       {group.items.map((item) => (
-                        <article class="world-lore-card ui-surface">
+                        <article
+                          class:list={[
+                            "world-lore-card ui-surface",
+                            { "world-lore-family-card": group.id === "the-twelve-royal-families" }
+                          ]}
+                        >
                           {item.image && (
                             <img
                               class="world-lore-card-image"
                               src={item.image}
-                              alt=""
+                              alt={group.id === "the-twelve-royal-families" ? `${item.title} family crest` : ""}
+                              width={group.id === "the-twelve-royal-families" ? 1254 : undefined}
+                              height={group.id === "the-twelve-royal-families" ? 1254 : undefined}
                               loading="lazy"
                               decoding="async"
                             />

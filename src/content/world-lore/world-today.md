@@ -96,7 +96,7 @@ Image:
 Silverhold is the Mountain Forge. It is harsh, unforgiving, and built on dangerous labor that treats people as expendable as ore.
 
 ### Thalmyre
-Ruler: House Ardyn, Blue Dragonborn
+Ruler: House Ardyne, Blue Dragonborn
 Specialty: Magic, scholarship, arcane libraries
 Image:
 
@@ -142,84 +142,84 @@ Summary: All twelve royal families are Dragonborn bloodlines. The Great Six rule
 ### House Veynar
 Lineage: Black Dragonborn
 Seat: Ebonmere
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-veynar.webp
 
 Masters of trade and shadow markets. Wealth and blackmail are their true weapons.
 
 ### House Drakov
 Lineage: Red Dragonborn
 Seat: Silverhold
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-drakov.webp
 
 Lords of mines and forges. Ruthless overseers who treat people as expendable as ore.
 
-### House Ardyn
+### House Ardyne
 Lineage: Blue Dragonborn
 Seat: Thalmyre
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-ardyne.webp
 
 Mages and scholars who understand that knowledge is power, and power must be controlled.
 
 ### House Caelthorne
 Lineage: Green Dragonborn
 Seat: Ravenshade
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-caelthorne.webp
 
 Spymasters and assassins. Few secrets escape their web.
 
 ### House Solmyre
 Lineage: Gold Dragonborn
 Seat: Brightmarch
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-solmyre.webp
 
 Fanatical priests and admirals who claim divine favor as a political weapon.
 
 ### House Gravenforge
 Lineage: Bronze Dragonborn
 Seat: Ironwell
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-gravenforge.webp
 
 Warlords of smoke and steel. They forge the weapons that keep Elandros strong.
 
 ### House Elowen
 Lineage: Silver Dragonborn
 Seat: Drakensport
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-elowen.webp
 
 Controllers of food stores. Petty, greedy, and forever scheming for influence.
 
 ### House Marrak
 Lineage: White Dragonborn
 Seat: Drakensport
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-marrak.webp
 
 Masters of coin and taxes. Their vaults are deep, and their allies are few.
 
 ### House Thalos
 Lineage: Copper Dragonborn
 Seat: Drakensport
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-thalos.webp
 
 Commanders of guards and marshals. Cruel, militaristic, and obsessed with order.
 
 ### House Fenwick
 Lineage: Brass Dragonborn
 Seat: Drakensport
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-fenwick.webp
 
 Bureaucrats and lawmakers. They twist words into chains to bind rivals.
 
 ### House Nytheris
 Lineage: Emerald Dragonborn
 Seat: Drakensport
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-nytheris.webp
 
 Patrons of artists and propagandists. They dictate what stories the people may hear.
 
 ### House Drevik
 Lineage: Rust Dragonborn
 Seat: Drakensport
-Image:
+Image: /assets/WorldLoreArt/family-crests/house-drevik.webp
 
 A fading line desperate to reclaim lost glory. Their ambition makes them dangerous.
 

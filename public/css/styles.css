@@ -3038,6 +3038,15 @@ img {
   filter: saturate(0.92) brightness(0.9);
 }
 
+.world-lore-family-card .world-lore-card-image {
+  height: auto;
+  max-height: none;
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+}
+
 .world-lore-card-copy {
   display: grid;
   gap: 0.7rem;
